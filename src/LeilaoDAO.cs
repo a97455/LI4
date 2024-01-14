@@ -1,5 +1,7 @@
 using System;
 
-public class LeilaoDAO {
+namespace Leilao{
+    public class LeilaoDAO {
 
+    }
 }

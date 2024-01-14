@@ -1,5 +1,7 @@
 using System;
 
-public class LicitacaoDAO {
+namespace Leilao{
+    public class LicitacaoDAO {
 
+    }
 }

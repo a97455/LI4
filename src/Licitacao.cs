@@ -1,9 +1,12 @@
 using System;
+using Utilizador;
 
-public class Licitacao {
-	private int id;
-	private int valor;
-	private String emailLicitador;
+namespace Leilao{
+	public class Licitacao {
+		private int id;
+		private int valor;
+		private String emailLicitador;
 
-	private UtilizadorDAO utilizadores;
+		private UtilizadorDAO utilizadores;
+	}
 }

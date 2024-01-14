@@ -1,5 +1,7 @@
 using System;
 
-public class PinturaDAO {
+namespace Pintura{
+    public class PinturaDAO {
 
-}
+    }
+}    

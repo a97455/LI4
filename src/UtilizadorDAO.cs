@@ -1,6 +1,7 @@
 using System;
 
-public class UtilizadorDAO {
-
-
+namespace Utilizador{
+    public class UtilizadorDAO {
+    
+    }
 }
