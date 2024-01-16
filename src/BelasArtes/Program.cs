@@ -1,4 +1,4 @@
-using app.Components;
+using BelasArtes.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
