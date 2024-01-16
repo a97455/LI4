@@ -3,5 +3,5 @@ out/*
 *.iml
 *.DS_Store
 *bak*
-src/app/obj/
-src/app/bin/
+src/BelasArtes/obj/
+src/BelasArtes/bin/
