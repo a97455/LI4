@@ -70,8 +70,8 @@ BEGIN
         ano_criacao int NOT NULL,
         original bit NOT NULL,
         verificacao_autenticidade bit NOT NULL,
-        id_vendedor varchar(40) NOT NULL,
-        id_movimento_artistico int NOT NULL,
+        id_vendedor varchar(40),
+        id_movimento_artistico int,
         CONSTRAINT [PK_PINTURA] PRIMARY KEY CLUSTERED
         (
             [id] ASC
@@ -98,9 +98,9 @@ BEGIN
         data_inicio datetime2 NOT NULL,
         data_fim datetime2 NOT NULL,
         preco_inicial float NOT NULL,
-        comprador_email varchar(40) NOT NULL,
-        pintura_id int NOT NULL,
-        id_estado int NOT NULL,
+        comprador_email varchar(40),
+        pintura_id int,
+        id_estado int,
         CONSTRAINT [PK_LEILAO] PRIMARY KEY CLUSTERED
         (
             [id] ASC
@@ -130,8 +130,8 @@ BEGIN
     CREATE TABLE [Licitacao] (
         id int NOT NULL UNIQUE,
         valor float NOT NULL,
-        email_licitador varchar(40) NOT NULL,
-        id_leilao int NOT NULL,
+        email_licitador varchar(40),
+        id_leilao int,
         CONSTRAINT [PK_LICITACAO] PRIMARY KEY CLUSTERED
         (
             [id] ASC

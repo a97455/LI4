@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using demo;
 using DataLayer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +8,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IBelasArtes, BelasArtes>();
+builder.Services.AddTransient<ILeilaoDAO, LeilaoDAO>();
+
 
 
 var app = builder.Build();
