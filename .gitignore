@@ -3,5 +3,7 @@ out/*
 *.iml
 *.DS_Store
 *bak*
-src/BelasArtes/obj/
-src/BelasArtes/bin/
+src/BelasArtes/DataLayer/bin
+src/BelasArtes/DataLayer/obj
+src/BelasArtes/demo/bin
+src/BelasArtes/demo/obj
