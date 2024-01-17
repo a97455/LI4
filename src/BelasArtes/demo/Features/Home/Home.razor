@@ -6,26 +6,3 @@
 @inject ILeilaoDAO _db
 
 <PageTitle>BelasArtes</PageTitle>
-
-@if (_leiloes == null)
-{
-    <p>Loading leiloes...</p>
-}
-else
-{
-    <div class="grid">
-        @foreach (var leilao in _leiloes)
-        {
-            <Leilao leilao="leilao" />
-        }
-    </div>
-}
-
-
-@code {
-    private List<DataLayer.Leilao> _leiloes;
-    protected override async Task OnInitializedAsync()
-    {
-        _leiloes = await _db.FindAll();
-    }
-}
