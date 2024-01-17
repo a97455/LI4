@@ -1,0 +1,31 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager;
+@using DataLayer
+
+@inject ICardRepository _db
+
+<PageTitle>Index</PageTitle>
+
+@if (_cards == null)
+{
+    <p>Loading cards...</p>
+}
+else
+{
+    <div class="grid">
+        @foreach (var card in _cards)
+        {
+            <CardComponent card="card" />
+        }
+    </div>
+}
+
+
+@code {
+    private List<DataLayer.CardModel> _cards;
+    protected override async Task OnInitializedAsync()
+    {
+        _cards = await _db.FindAll();
+    }
+}
