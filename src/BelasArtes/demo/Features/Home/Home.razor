@@ -3,29 +3,29 @@
 @inject NavigationManager NavigationManager;
 @using DataLayer
 
-@inject ICardRepository _db
+@inject ILeilaoDAO _db
 
 <PageTitle>AppExemplo</PageTitle>
 
-@if (_cards == null)
+@if (_leiloes == null)
 {
     <p>Loading cards...</p>
 }
 else
 {
     <div class="grid">
-        @foreach (var card in _cards)
+        @foreach (var leilao in _leiloes)
         {
-            <CardComponent card="card" />
+            <Leilao leilao="leilao" />
         }
     </div>
 }
 
 
 @code {
-    private List<DataLayer.CardModel> _cards;
+    private List<DataLayer.Leilao> _leiloes;
     protected override async Task OnInitializedAsync()
     {
-        _cards = await _db.FindAll();
+        _leiloes = await _db.FindAll();
     }
 }

@@ -1,9 +1,9 @@
 namespace DataLayer{
 	public class BelasArtes : IBelasArtes  {
-		private ILeilaoDAO leiloes;
-		private UtilizadorDAO utilizadores;
-		private PinturaDAO pinturas;
-		private ISqlDataAccess _db;
+		public ILeilaoDAO leiloes;
+		public UtilizadorDAO utilizadores;
+		public PinturaDAO pinturas;
+		public ISqlDataAccess _db;
 
 		public BelasArtes(ISqlDataAccess db)
 		{

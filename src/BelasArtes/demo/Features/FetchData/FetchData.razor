@@ -1,7 +1,7 @@
 ﻿@page "/fetchdata"
 @using DataLayer
 
-@inject ICardRepository _db
+@inject ILeilaoDAO _db
 
 <PageTitle>Cards List</PageTitle>
 
@@ -9,7 +9,7 @@
 
 <p>This component demonstrates fetching data from a database.</p>
 
-@if (cards == null)
+@if (leiloes == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -24,12 +24,12 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var card in cards)
+            @foreach (var leilao in leiloes)
             {
                 <tr>
-                    <td>@card.Id</td>
-                    <td>@card.Name</td>
-                    <td>@card.Description</td>
+                    <td>@leilao.Id</td>
+                    <td>@leilao.PrecoInicial</td>
+                    <td>@leilao.CodPintura</td>
                 </tr>
             }
             
@@ -38,10 +38,10 @@ else
 }
 
 @code {
-    private List<DataLayer.CardModel> cards;
+    private List<DataLayer.Leilao> leiloes;
 
     protected override async Task OnInitializedAsync()
     {
-        cards = await _db.FindAll();
+        leiloes = await _db.FindAll();
     }
 }
