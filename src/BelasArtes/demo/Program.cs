@@ -10,7 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
-builder.Services.AddTransient<ICardRepository, CardRepository>();
+builder.Services.AddTransient<IBelasArtes, BelasArtes>();
 
 
 var app = builder.Build();
