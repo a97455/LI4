@@ -169,6 +169,28 @@ namespace DataLayer{
 					.Select(item => item.Leilao)
 					.ToList();
 				return sortedLeiloes;
+			}else if(codModoOrdenacao==3){ //crescente do valor da ultima licitacao
+				List<int> sortingList = new List<int>();
+				foreach(Leilao leilao in leiloes){
+					sortingList.Add(licitacoes.MaiorLicitacaoByLeilao(leilao.Id).Result);
+				}
+				List<Leilao> sortedLeiloes = leiloes
+					.Select((leilao, index) => new { Leilao = leilao, valorOrdenacao = sortingList[index] })
+					.OrderBy(item => item.valorOrdenacao)
+					.Select(item => item.Leilao)
+					.ToList();
+				return sortedLeiloes;
+			}else if(codModoOrdenacao==4){ //decrescente do valor da ultima licitacao
+				List<int> sortingList = new List<int>();
+				foreach(Leilao leilao in leiloes){
+					sortingList.Add(licitacoes.MaiorLicitacaoByLeilao(leilao.Id).Result);
+				}
+				List<Leilao> sortedLeiloes = leiloes
+					.Select((leilao, index) => new { Leilao = leilao, valorOrdenacao = sortingList[index] })
+					.OrderByDescending(item => item.valorOrdenacao)
+					.Select(item => item.Leilao)
+					.ToList();
+				return sortedLeiloes;
 			}else{ //default
 				List<(int,DateTime)> sortingList = new List<(int,DateTime)>();
 				foreach(Leilao leilao in leiloes){
