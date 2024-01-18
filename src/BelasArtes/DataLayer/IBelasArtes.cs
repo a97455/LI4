@@ -3,7 +3,7 @@ using System.Drawing;
 namespace DataLayer{
 	public interface IBelasArtes {
 	bool AutenticarUtilizador(ref string email, ref string palavraPasse);
-	public List<Leilao> Filtrar(ref string artista, ref List<int> movimentos_artistico);
+	public List<Leilao> Filtrar(ref string artista, ref int codido_tipo_leilao ,ref List<int> movimentos_artistico);
 	List<Leilao> GetHistoricoCompras(ref string email);
 	List<Leilao> GetHistoricoVendas(ref string email);
 	bool LicitarPintura(ref int codUtilizador, ref float valor);
