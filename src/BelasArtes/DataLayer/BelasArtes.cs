@@ -60,11 +60,9 @@ namespace DataLayer{
 		        return leiloesList;
 		    } catch (Exception ex) {
 		        Console.WriteLine($"An error occurred: {ex.Message}");
-		        return null;
+		        return new List<Leilao>();
 		    }
 		}
-
-
 
 		public List<Leilao> GetHistoricoCompras(ref string email) {
 			throw new NotImplementedException("Not implemented");
@@ -91,7 +89,13 @@ namespace DataLayer{
 			throw new NotImplementedException("Not implemented");
 		}
 		public bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial) {
-			throw new NotImplementedException("Not implemented");
+			if (DateTime.Now>= dataInicio && DateTime.Now<= dataFim){
+				Leilao leilao = new Leilao(null,dataInicio,dataFim,precoInicial,null,codPintura,2);
+				return leiloes.PutLeilao(leilao).Result;		
+			}else{
+				Leilao leilao = new Leilao(null,dataInicio,dataFim,precoInicial,null,codPintura,1);
+				return leiloes.PutLeilao(leilao).Result;		
+			}
 		}
 		public bool RegistarPintura(ref string nome, ref float altura, ref float largura, ref float peso, 
 		ref string descricao,ref Bitmap? foto,ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
