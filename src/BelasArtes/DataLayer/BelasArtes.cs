@@ -17,15 +17,55 @@ namespace DataLayer{
 			licitacao= new LicitacaoDAO(db);
 			_db = db;
 		}
-	
-	
-		public bool AutenticarUtilizador(ref string email, ref string palavraPasse){
-			throw new NotImplementedException("Not implemented");
+
+		public bool AutenticarUtilizador(ref string email, ref string palavraPasse) {
+		    try {
+		        Task<Utilizador> task = utilizadores.GetUtilizadorByEmail(email);
+		        Utilizador utilizador = task.Result;
+				if (utilizador.PalavraPasse.Equals(palavraPasse)){
+					return true;
+				}else{
+					return false;
+				}
+		    } catch (Exception ex) {
+		        Console.WriteLine($"An error occurred: {ex.Message}");
+		        return false;
+		    }
 		}
-		
-		public List<Leilao> FiltrarArtista(ref string artista) {
-			throw new NotImplementedException("Not implemented");
+
+		public List<Leilao> Filtrar(ref string artista, ref List<int> movimentos_artistico){
+		    try {
+		        Task<List<Leilao>> task1 = leiloes.FindAll();
+		        List<Leilao> leiloesList = task1.Result;
+				
+				foreach (Leilao leilao in leiloesList) {
+					Task<Pintura> task2 = pinturas.GetPinturaById(leilao.CodPintura);
+					Pintura pintura = task2.Result;
+
+					bool cumpre_parametro_filtragem = false;
+					if(pintura.Artista.Equals(artista)){
+						cumpre_parametro_filtragem=true;
+					}else{
+						foreach(int movimento_artistico in movimentos_artistico){
+							if(movimento_artistico == pintura.CodMovimentoArtistico){
+								cumpre_parametro_filtragem=true;
+							}
+						}
+					}
+
+					if (!cumpre_parametro_filtragem){
+						leiloesList.Remove(leilao);
+					}
+				}
+		        return leiloesList;
+		    } catch (Exception ex) {
+		        Console.WriteLine($"An error occurred: {ex.Message}");
+		        return null;
+		    }
 		}
+
+
+
 		public List<Leilao> GetHistoricoCompras(ref string email) {
 			throw new NotImplementedException("Not implemented");
 		}
