@@ -15,12 +15,13 @@ public class UtilizadorDAO : IUtilizadorDAO
         return _db.LoadData<Utilizador, dynamic>(sql, new { });
     }
 
-    public async Task<Pintura> GetUtilizadorById(int utilizadorId){
+    public async Task<Utilizador> GetUtilizadorById(int utilizadorId){
         string sql = "SELECT * FROM Utilizador WHERE Id = @Id";
         var parameters = new { Id = utilizadorId };
-        List<Utilizador> utilizadorList = await _db.LoadData<Pintura, dynamic>(sql, parameters);
+        List<Utilizador> utilizadorList = await _db.LoadData<Utilizador, dynamic>(sql, parameters);
         return utilizadorList.FirstOrDefault()!;
     }
+
     public async Task<bool> UpsertUtilizador(Utilizador utilizador){
         string sql = @"
             MERGE INTO Utilizador AS target
@@ -43,7 +44,6 @@ public class UtilizadorDAO : IUtilizadorDAO
 
         var parameters = new
         {
-            utilizador.UtilizadorId,
             utilizador.Email,
             utilizador.Telefone,
             utilizador.Rua,

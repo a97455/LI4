@@ -63,5 +63,4 @@ public class PinturaDAO : IPinturaDAO
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
         return true;
     }
-
 }

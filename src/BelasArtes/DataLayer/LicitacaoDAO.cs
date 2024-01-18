@@ -17,7 +17,7 @@ public class LicitacaoDAO : ILicitacaoDAO
         string sql = "SELECT * FROM Licitacao WHERE Id = @Id";
         var parameters = new { Id = licitacaoId };
         List<Licitacao> licitacaoList = await _db.LoadData<Licitacao, dynamic>(sql, parameters);
-        return licitacaoList.FirstOrDefault();
+        return licitacaoList.FirstOrDefault()!;
     }
 
     public async Task<bool> UpsertLicitacao(Licitacao licitacao){
@@ -44,5 +44,4 @@ public class LicitacaoDAO : ILicitacaoDAO
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
         return true;
     }
-
 }
