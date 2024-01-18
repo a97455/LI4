@@ -59,7 +59,9 @@ namespace DataLayer{
 		public bool RegistarUtilizador(ref string nome, ref string rua, ref string codigoPostal, ref string cidade, 
 		ref string localidade, ref string paisResidencia, ref string numeroIdentificacaoGovernamental, ref string email, 
 		ref int numeroTelemovel, ref string iBAN, ref string palavraPasse) {
-			throw new NotImplementedException("Not implemented");
+			Utilizador utilizador = new Utilizador(nome,numeroTelemovel,rua,localidade,cidade,codigoPostal,
+			paisResidencia,iBAN,palavraPasse);
+			return utilizadores.PutUtilizador(utilizador).Result;
 		}
 	}
 }
