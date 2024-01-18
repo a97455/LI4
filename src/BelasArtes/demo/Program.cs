@@ -8,8 +8,6 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IBelasArtes, BelasArtes>();
-builder.Services.AddTransient<ILeilaoDAO, LeilaoDAO>();
-
 
 
 var app = builder.Build();
