@@ -7,5 +7,17 @@ public class Leilao {
         public string? EmailComprador { get; set; }
         public int CodPintura { get; set; }
         public int CodEstado { get; set; }
-        public List<int> codLicitacoes { get; set; } = new List<int>();
+        public List<int> CodLicitacoes { get; set; } = new List<int>();
+
+        public Leilao(int id, DateTime dataInicio, DateTime dataFim, float precoInicial, string? emailComprador,
+                  int codPintura, int codEstado){
+                Id = id;
+                DataInicio = dataInicio;
+                DataFim = dataFim;
+                PrecoInicial = precoInicial;
+                EmailComprador = emailComprador;
+                CodPintura = codPintura;
+                CodEstado = codEstado;
+                CodLicitacoes = new List<int>();
+        }
 }
