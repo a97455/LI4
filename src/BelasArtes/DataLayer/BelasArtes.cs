@@ -1,8 +1,8 @@
 namespace DataLayer{
 	public class BelasArtes : IBelasArtes  {
 		public ILeilaoDAO leiloes;
-		public UtilizadorDAO utilizadores;
-		public PinturaDAO pinturas;
+		public IUtilizadorDAO utilizadores;
+		public IPinturaDAO pinturas;
 		public ISqlDataAccess _db;
 
 		public BelasArtes(ISqlDataAccess db)
