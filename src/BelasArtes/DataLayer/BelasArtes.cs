@@ -148,13 +148,27 @@ namespace DataLayer{
 				return 0;
 			}
 		}
-		
+
 		public int NumeroLicitacoes() {
-			throw new NotImplementedException("Not implemented");
+			try{
+				Task<int> task = licitacoes.ContaLicitacoes();
+				int count = task.Result;
+				return count;
+			}catch{
+				return 0;
+			}
+			
 		}
 		public int NumeroUtilizadores() {
-			throw new NotImplementedException("Not implemented");
+			try{
+    			Task<int> task = utilizadores.ContaUtilizadores();
+    			int count = task.Result;
+    		return count;
+			}catch{
+				return 0;
+			}
 		}
+
 		public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,ref int codModoOrdenacao) {
 			if (codModoOrdenacao==1){ //crescente de tempo restante
 				List<(DateTime,int)> sortingList = new List<(DateTime,int)>();

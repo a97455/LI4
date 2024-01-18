@@ -22,6 +22,19 @@ public class UtilizadorDAO : IUtilizadorDAO
         return utilizadorList.FirstOrDefault()!;
     }
 
+    public async Task<int> ContaUtilizadores(){
+        try {
+            string sql = "SELECT COUNT(*) FROM Utilizador";
+            var parameters = new { };
+            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
+            int count = countList.FirstOrDefault();
+            return count;
+        } catch (Exception ex) {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            throw;
+        }
+    }
+
     public async Task<bool> PutUtilizador(Utilizador utilizador){
         string sql = @"
             MERGE INTO Utilizador AS target

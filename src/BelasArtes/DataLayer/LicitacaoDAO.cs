@@ -28,17 +28,30 @@ public class LicitacaoDAO : ILicitacaoDAO
     }
 
     public async Task<int> MaiorLicitacaoByLeilao(int? idLeilao) {
-    try {
-        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
-        var parameters = new { id_leilao = idLeilao };
+        try {
+            string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
+            var parameters = new { id_leilao = idLeilao };
 
-        var result = await _db.LoadData<int, dynamic>(sql, parameters);
+            var result = await _db.LoadData<int, dynamic>(sql, parameters);
 
-        return  result.FirstOrDefault();
-    } catch{
-        return 0;
+            return  result.FirstOrDefault();
+        } catch{
+            return 0;
+        }
     }
-}
+
+    public async Task<int> ContaLicitacoes(){
+        try {
+            string sql = "SELECT COUNT(*) FROM Licitacao";
+            var parameters = new { };
+            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
+            int count = countList.FirstOrDefault();
+            return count;
+        } catch (Exception ex) {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            throw;
+        }
+    }
 
 
     public async Task<bool> PutLicitacao(Licitacao licitacao){
