@@ -28,6 +28,7 @@ public class LeilaoDAO : ILeilaoDAO
             ON target.id = source.id
             WHEN MATCHED THEN
                 UPDATE SET 
+                    target.data_inicio = @data_inicio,
                     target.data_fim = @data_fim,
                     target.preco_inicial = @preco_inicial,
                     target.comprador_email = @comprador_email,
