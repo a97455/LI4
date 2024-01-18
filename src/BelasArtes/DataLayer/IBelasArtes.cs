@@ -1,7 +1,7 @@
 namespace DataLayer{
 	public interface IBelasArtes {
 	bool AutenticarUtilizador(ref string email, ref string palavraPasse);
-	List<Leilao> FiltrarArtista(ref string artista);
+	public List<Leilao> Filtrar(ref string artista, ref List<int> movimentos_artistico);
 	List<Leilao> GetHistoricoCompras(ref string email);
 	List<Leilao> GetHistoricoVendas(ref string email);
 	bool LicitarPintura(ref int codUtilizador, ref float valor);
