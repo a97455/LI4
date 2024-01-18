@@ -15,9 +15,9 @@ public class UtilizadorDAO : IUtilizadorDAO
         return _db.LoadData<Utilizador, dynamic>(sql, new { });
     }
 
-    public async Task<Utilizador> GetUtilizadorById(int utilizadorId){
+    public async Task<Utilizador> GetUtilizadorByEmail(String utilizadoremail){
         string sql = "SELECT * FROM Utilizador WHERE Id = @Id";
-        var parameters = new { Id = utilizadorId };
+        var parameters = new { Id = utilizadoremail };
         List<Utilizador> utilizadorList = await _db.LoadData<Utilizador, dynamic>(sql, parameters);
         return utilizadorList.FirstOrDefault()!;
     }
