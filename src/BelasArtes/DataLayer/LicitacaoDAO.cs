@@ -27,6 +27,22 @@ public class LicitacaoDAO : ILicitacaoDAO
         return count.FirstOrDefault()!;
     }
 
+    public async Task<int?> MaiorLicitacaoByLeilao(int idLeilao) {
+    try {
+        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
+        var parameters = new { id_leilao = idLeilao };
+
+        var result = await _db.LoadData<int?, dynamic>(sql, parameters);
+
+        int? maxValue = result.FirstOrDefault();
+
+        return maxValue;
+    } catch{
+        return 0;
+    }
+}
+
+
     public async Task<bool> PutLicitacao(Licitacao licitacao){
         string sql = @"
             MERGE INTO Licitacao AS target

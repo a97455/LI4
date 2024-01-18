@@ -6,7 +6,7 @@ namespace DataLayer{
 	public List<Leilao> Filtrar(ref string artista, ref int codido_tipo_leilao ,ref List<int> movimentos_artistico);
 	List<Leilao> GetHistoricoCompras(ref string email);
 	List<Leilao> GetHistoricoVendas(ref string email);
-	bool LicitarPintura(ref int codUtilizador, ref float valor);
+	public bool LicitarPintura(ref int cod_leilao,ref string mail_licitador, ref float valor);
 	int NumeroLeiloesDecorrer();
 	int NumeroLeiloesTerminados();
 	int NumeroLicitacoes();
