@@ -131,11 +131,24 @@ namespace DataLayer{
 			}
 		}
 		public int NumeroLeiloesDecorrer() {
-			throw new NotImplementedException("Not implemented");
+		    try {
+		        Task<int> task = leiloes.ContaLeileosDeUmDadoTipo(2);
+		        int count = task.Result;
+		        return count;
+		    } catch{
+				return 0;
+		    }
 		}
 		public int NumeroLeiloesTerminados() {
-			throw new NotImplementedException("Not implemented");
+			try{
+			    Task<int> task = leiloes.ContaLeileosDeUmDadoTipo(2);
+			    int count = task.Result;
+			    return count;
+			}catch{
+				return 0;
+			}
 		}
+		
 		public int NumeroLicitacoes() {
 			throw new NotImplementedException("Not implemented");
 		}

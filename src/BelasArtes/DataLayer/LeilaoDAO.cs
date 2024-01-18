@@ -52,4 +52,23 @@ public class LeilaoDAO : ILeilaoDAO
         // If rowsAffected is greater than 0, the operation was successful
         return true;
     }
+
+    public async Task<int> ContaLeileosDeUmDadoTipo(int tipo_leilao){
+        try {
+            string sql = "SELECT COUNT(*) FROM Leilao WHERE CodEstado = @tipo_leilao;";
+
+            // Fornecendo um objeto vazio como parâmetros, já que a consulta não tem parâmetros
+            var parameters = new { };
+
+            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
+
+            // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
+            int count = countList.FirstOrDefault();
+
+            return count;
+        } catch (Exception ex) {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            throw;
+        }
+    }
 }
