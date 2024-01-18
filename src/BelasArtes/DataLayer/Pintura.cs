@@ -14,7 +14,7 @@ namespace DataLayer{
         public int AnoCriacao { get; set; }
         public bool Original { get; set; }
         public bool VerificacaoAutenticidade { get; set; }
-        public string EmailVendedor { get; set; } = "";
+        public string? EmailVendedor { get; set; } 
         public int CodMovimentoArtistico { get; set; }
     }
 }

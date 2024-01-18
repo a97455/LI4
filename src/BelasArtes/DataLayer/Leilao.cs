@@ -4,7 +4,8 @@ public class Leilao {
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         public float PrecoInicial { get; set; }
-        public string EmailComprador { get; set; } = ""; // Default value of an empty string
+        public string? EmailComprador { get; set; }
         public int CodPintura { get; set; }
         public int CodEstado { get; set; }
+        public List<int> codLicitacoes { get; set; } = new List<int>();
 }

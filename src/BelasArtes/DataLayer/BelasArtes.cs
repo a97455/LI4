@@ -3,6 +3,7 @@ namespace DataLayer{
 		public ILeilaoDAO leiloes;
 		public IUtilizadorDAO utilizadores;
 		public IPinturaDAO pinturas;
+		public ILicitacaoDAO licitacao;
 		public ISqlDataAccess _db;
 
 		public BelasArtes(ISqlDataAccess db)
@@ -10,6 +11,7 @@ namespace DataLayer{
 			leiloes= new LeilaoDAO(db);
 			utilizadores= new UtilizadorDAO(db);
 			pinturas= new PinturaDAO(db);
+			licitacao= new LicitacaoDAO(db);
 			_db = db;
 		}
 
