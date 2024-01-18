@@ -31,7 +31,7 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Movimento_Artistico')
 BEGIN
     CREATE TABLE [Movimento_Artistico] (
-        id int NOT NULL UNIQUE,
+        id int IDENTITY(1,1) NOT NULL UNIQUE,
         nome varchar(40) NOT NULL,
         CONSTRAINT [PK_MOVIMENTO_ARTISTICO] PRIMARY KEY CLUSTERED
         (
@@ -45,7 +45,7 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Estado')
 BEGIN
     CREATE TABLE [Estado] (
-        id int NOT NULL UNIQUE,
+        id int IDENTITY(1,1) NOT NULL UNIQUE,
         nome varchar(40) NOT NULL,
         CONSTRAINT [PK_ESTADO] PRIMARY KEY CLUSTERED
         (
@@ -59,7 +59,7 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Pintura')
 BEGIN
     CREATE TABLE [Pintura] (
-        id int NOT NULL UNIQUE,
+        id int IDENTITY(1,1) NOT NULL UNIQUE,
         nome varchar(40) NOT NULL,
         altura float NOT NULL,
         largura float NOT NULL,
@@ -94,7 +94,7 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Leilao')
 BEGIN
     CREATE TABLE [Leilao] (
-        id int NOT NULL UNIQUE,
+        id int IDENTITY(1,1) NOT NULL UNIQUE,
         data_inicio datetime2 NOT NULL,
         data_fim datetime2 NOT NULL,
         preco_inicial float NOT NULL,
@@ -128,7 +128,7 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Licitacao')
 BEGIN
     CREATE TABLE [Licitacao] (
-        id int NOT NULL UNIQUE,
+        id int IDENTITY(1,1) NOT NULL UNIQUE,
         valor float NOT NULL,
         email_licitador varchar(40),
         id_leilao int,
