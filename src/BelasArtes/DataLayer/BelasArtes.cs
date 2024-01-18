@@ -1,3 +1,4 @@
+using System.Drawing;
 using Datalayer;
 
 namespace DataLayer{
@@ -63,8 +64,6 @@ namespace DataLayer{
 		    }
 		}
 
-
-
 		public List<Leilao> GetHistoricoCompras(ref string email) {
 			try {
 			    Task<List<Leilao>> task1 = leiloes.FindAll();
@@ -103,11 +102,19 @@ namespace DataLayer{
 			throw new NotImplementedException("Not implemented");
 		}
 		public bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial) {
-			throw new NotImplementedException("Not implemented");
+			if (DateTime.Now>= dataInicio && DateTime.Now<= dataFim){
+				Leilao leilao = new Leilao(null,dataInicio,dataFim,precoInicial,null,codPintura,2);
+				return leiloes.PutLeilao(leilao).Result;		
+			}else{
+				Leilao leilao = new Leilao(null,dataInicio,dataFim,precoInicial,null,codPintura,1);
+				return leiloes.PutLeilao(leilao).Result;		
+			}
 		}
 		public bool RegistarPintura(ref string nome, ref float altura, ref float largura, ref float peso, 
-		ref string descricao, ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
-			throw new NotImplementedException("Not implemented");
+		ref string descricao,ref Bitmap? foto,ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
+			Pintura pintura = new Pintura(null,nome,altura,largura,peso,descricao,foto,artista,anoCriacao,autenticidade,
+			false,null,codMovimentoArtistico);
+			return pinturas.PutPintura(pintura).Result;
 		}
 		public bool RegistarUtilizador(ref string nome, ref string rua, ref string codigoPostal, ref string cidade, 
 		ref string localidade, ref string paisResidencia, ref string numeroIdentificacaoGovernamental, ref string email, 
