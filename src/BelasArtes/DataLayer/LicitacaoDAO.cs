@@ -20,7 +20,7 @@ public class LicitacaoDAO : ILicitacaoDAO
         return licitacaoList.FirstOrDefault()!;
     }
 
-    public async Task<bool> UpsertLicitacao(Licitacao licitacao){
+    public async Task<bool> PutLicitacao(Licitacao licitacao){
         string sql = @"
             MERGE INTO Licitacao AS target
             USING (VALUES (DEFAULT)) AS source (Id)

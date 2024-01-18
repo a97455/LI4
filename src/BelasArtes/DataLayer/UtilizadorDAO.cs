@@ -22,7 +22,7 @@ public class UtilizadorDAO : IUtilizadorDAO
         return utilizadorList.FirstOrDefault()!;
     }
 
-    public async Task<bool> UpsertUtilizador(Utilizador utilizador){
+    public async Task<bool> PutUtilizador(Utilizador utilizador){
         string sql = @"
             MERGE INTO Utilizador AS target
             USING (VALUES (@UtilizadorId)) AS source (UtilizadorId)

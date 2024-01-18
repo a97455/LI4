@@ -18,6 +18,9 @@ namespace DataLayer{
 		}
 	
 	
+		public bool AutenticarUtilizador(ref string email, ref string palavraPasse){
+			throw new NotImplementedException("Not implemented");
+		}
 		
 		public List<Leilao> FiltrarArtista(ref string artista) {
 			throw new NotImplementedException("Not implemented");

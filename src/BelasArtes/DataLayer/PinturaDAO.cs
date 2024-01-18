@@ -19,7 +19,7 @@ public class PinturaDAO : IPinturaDAO
         return pinturaList.FirstOrDefault()!;
     }
 
-    public async Task<bool> UpsertPintura(Pintura pintura){
+    public async Task<bool> PutPintura(Pintura pintura){
         string sql = @"
             MERGE INTO Pintura AS target
             USING (VALUES (DEFAULT)) AS source (Id)
