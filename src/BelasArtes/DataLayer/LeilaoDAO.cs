@@ -12,7 +12,7 @@ public class LeilaoDAO : ILeilaoDAO
         return _db.LoadData<Leilao, dynamic>(sql, new { });
     }
     
-    public async Task<Leilao?> GetById(int leilaoId)
+    public async Task<Leilao> GetLeilaoById(int leilaoId)
     {
         string sql = "select * from Leilao where Id = @LeilaoId";
         var parameters = new { LeilaoId = leilaoId };

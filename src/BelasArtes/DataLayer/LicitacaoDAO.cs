@@ -20,6 +20,13 @@ public class LicitacaoDAO : ILicitacaoDAO
         return licitacaoList.FirstOrDefault()!;
     }
 
+    public async Task<int> NumbLicitacoesByLeilao(int idLeilao){
+        string sql = "SELECT COUNT(*) FROM Licitacao WHERE id_leilao = @id_leilao";
+        var parameters = new { id_leilao = idLeilao };
+        List<int> count = await _db.LoadData<int, dynamic>(sql, parameters);
+        return count.FirstOrDefault()!;
+    }
+
     public async Task<bool> PutLicitacao(Licitacao licitacao){
         string sql = @"
             MERGE INTO Licitacao AS target

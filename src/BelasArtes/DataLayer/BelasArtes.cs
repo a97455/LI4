@@ -98,7 +98,7 @@ namespace DataLayer{
 		public int NumeroUtilizadores() {
 			throw new NotImplementedException("Not implemented");
 		}
-		public List<Leilao> OrdenarLeiloesDecorrer(ref int codModoOrdenacao) {
+		public List<Leilao> OrdenarLeiloesDecorrer(ref List<Leilao> leiloes,ref int codModoOrdenacao) {
 			throw new NotImplementedException("Not implemented");
 		}
 		public bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial) {
