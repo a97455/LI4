@@ -12,7 +12,7 @@ public class PinturaDAO : IPinturaDAO
         return _db.LoadData<Pintura, dynamic>(sql, new { });
     }
 
-    public async Task<Pintura> GetPinturaById(int pinturaId){
+    public async Task<Pintura> GetPinturaById(int? pinturaId){
         string sql = "SELECT * FROM Pintura WHERE Id = @Id";
         var parameters = new { Id = pinturaId };
         List<Pintura> pinturaList = await _db.LoadData<Pintura, dynamic>(sql, parameters);

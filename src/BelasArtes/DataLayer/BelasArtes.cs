@@ -6,7 +6,7 @@ namespace DataLayer{
 		public ILeilaoDAO leiloes;
 		public IUtilizadorDAO utilizadores;
 		public IPinturaDAO pinturas;
-		public ILicitacaoDAO licitacao;
+		public ILicitacaoDAO licitacoes;
 		public ISqlDataAccess _db;
 
 		public BelasArtes(ISqlDataAccess db)
@@ -14,7 +14,7 @@ namespace DataLayer{
 			leiloes= new LeilaoDAO(db);
 			utilizadores= new UtilizadorDAO(db);
 			pinturas= new PinturaDAO(db);
-			licitacao= new LicitacaoDAO(db);
+			licitacoes= new LicitacaoDAO(db);
 			_db = db;
 		}
 
@@ -115,8 +115,47 @@ namespace DataLayer{
 		public int NumeroUtilizadores() {
 			throw new NotImplementedException("Not implemented");
 		}
-		public List<Leilao> OrdenarLeiloesDecorrer(ref List<Leilao> leiloes,ref int codModoOrdenacao) {
-			throw new NotImplementedException("Not implemented");
+		public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,ref int codModoOrdenacao) {
+			if (codModoOrdenacao==1){ //crescente de tempo restante
+				List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
+				foreach(Leilao leilao in leiloes){
+					DateTime dataFim = this.leiloes.GetLeilaoById(leilao.Id).Result.DataFim;
+					sortingList.Add((dataFim,licitacoes.NumbLicitacoesByLeilao(leilao.Id).Result));
+				}
+				List<Leilao> sortedLeiloes = leiloes
+					.Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
+					.OrderBy(item => item.SortingTuple.Item1)
+					.ThenBy(item => item.SortingTuple.Item2)
+					.Select(item => item.Leilao)
+					.ToList();
+				return sortedLeiloes;
+			}else if (codModoOrdenacao==2){ //decrescente de tempo restante
+				List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
+				foreach(Leilao leilao in leiloes){
+					DateTime dataFim = this.leiloes.GetLeilaoById(leilao.Id).Result.DataFim;
+					sortingList.Add((dataFim,licitacoes.NumbLicitacoesByLeilao(leilao.Id).Result));
+				}
+				List<Leilao> sortedLeiloes = leiloes
+					.Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
+					.OrderByDescending(item => item.SortingTuple.Item1)
+					.ThenBy(item => item.SortingTuple.Item2)
+					.Select(item => item.Leilao)
+					.ToList();
+				return sortedLeiloes;
+			}else{ //default
+				List<(int,DateTime)> sortingList = new List<(int,DateTime)>();
+				foreach(Leilao leilao in leiloes){
+					DateTime dataFim = this.leiloes.GetLeilaoById(leilao.Id).Result.DataFim;
+					sortingList.Add((licitacoes.NumbLicitacoesByLeilao(leilao.Id).Result,dataFim));
+				}
+				List<Leilao> sortedLeiloes = leiloes
+					.Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
+					.OrderByDescending(item => item.SortingTuple.Item1)
+					.ThenBy(item => item.SortingTuple.Item2)
+					.Select(item => item.Leilao)
+					.ToList();
+				return sortedLeiloes;
+			}
 		}
 		public bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial) {
 			if (DateTime.Now>= dataInicio && DateTime.Now<= dataFim){

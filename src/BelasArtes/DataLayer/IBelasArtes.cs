@@ -11,7 +11,7 @@ namespace DataLayer{
 	int NumeroLeiloesTerminados();
 	int NumeroLicitacoes();
 	int NumeroUtilizadores();
-	List<Leilao> OrdenarLeiloesDecorrer(ref List<Leilao> leiloes,ref int codModoOrdenacao);
+	List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,ref int codModoOrdenacao);
 	bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial);
 	bool RegistarPintura(ref string nome, ref float altura, ref float largura, ref float peso, ref string descricao, 
 		ref Bitmap? foto,ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico);

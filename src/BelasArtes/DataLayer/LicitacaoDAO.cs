@@ -13,14 +13,14 @@ public class LicitacaoDAO : ILicitacaoDAO
         return _db.LoadData<Licitacao, dynamic>(sql, new { });
     }
 
-    public async Task<Licitacao> GetLicitacaoById(int licitacaoId){
+    public async Task<Licitacao> GetLicitacaoById(int? licitacaoId){
         string sql = "SELECT * FROM Licitacao WHERE Id = @Id";
         var parameters = new { Id = licitacaoId };
         List<Licitacao> licitacaoList = await _db.LoadData<Licitacao, dynamic>(sql, parameters);
         return licitacaoList.FirstOrDefault()!;
     }
 
-    public async Task<int> NumbLicitacoesByLeilao(int idLeilao){
+    public async Task<int> NumbLicitacoesByLeilao(int? idLeilao){
         string sql = "SELECT COUNT(*) FROM Licitacao WHERE id_leilao = @id_leilao";
         var parameters = new { id_leilao = idLeilao };
         List<int> count = await _db.LoadData<int, dynamic>(sql, parameters);
