@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace DataLayer;
 public class Pintura {
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string Nome { get; set; } = "";
     public float Altura { get; set; }
     public float Largura { get; set; }
@@ -17,7 +17,7 @@ public class Pintura {
     public string? EmailVendedor { get; set; } 
     public int CodMovimentoArtistico { get; set; }
 
-    public Pintura(int id, string nome, float altura, float largura, float peso, string descricao,
+    public Pintura(int? id, string nome, float altura, float largura, float peso, string descricao,
                 Bitmap? foto, string artista, int anoCriacao, bool original,
                 bool verificacaoAutenticidade, string? emailVendedor, int codMovimentoArtistico){
         Id = id;

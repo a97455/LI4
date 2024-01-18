@@ -1,6 +1,6 @@
 namespace DataLayer;
 public class Leilao {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         public float PrecoInicial { get; set; }
@@ -9,7 +9,7 @@ public class Leilao {
         public int CodEstado { get; set; }
         public List<int> CodLicitacoes { get; set; } = new List<int>();
 
-        public Leilao(int id, DateTime dataInicio, DateTime dataFim, float precoInicial, string? emailComprador,
+        public Leilao(int? id, DateTime dataInicio, DateTime dataFim, float precoInicial, string? emailComprador,
                   int codPintura, int codEstado){
                 Id = id;
                 DataInicio = dataInicio;

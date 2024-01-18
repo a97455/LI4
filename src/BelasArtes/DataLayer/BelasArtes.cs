@@ -1,3 +1,4 @@
+using System.Drawing;
 using Datalayer;
 
 namespace DataLayer{
@@ -53,8 +54,10 @@ namespace DataLayer{
 			throw new NotImplementedException("Not implemented");
 		}
 		public bool RegistarPintura(ref string nome, ref float altura, ref float largura, ref float peso, 
-		ref string descricao, ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
-			throw new NotImplementedException("Not implemented");
+		ref string descricao,ref Bitmap? foto,ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
+			Pintura pintura = new Pintura(null,nome,altura,largura,peso,descricao,foto,artista,anoCriacao,autenticidade,
+			false,null,codMovimentoArtistico);
+			return pinturas.PutPintura(pintura).Result;
 		}
 		public bool RegistarUtilizador(ref string nome, ref string rua, ref string codigoPostal, ref string cidade, 
 		ref string localidade, ref string paisResidencia, ref string numeroIdentificacaoGovernamental, ref string email, 
