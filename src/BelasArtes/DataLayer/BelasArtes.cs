@@ -100,8 +100,35 @@ namespace DataLayer{
 			    return new List<Leilao>();
 			}
 		}
-		public bool LicitarPintura(ref int codUtilizador, ref float valor) {
-			throw new NotImplementedException("Not implemented");
+		public bool LicitarPintura(ref int cod_leilao,ref string mail_licitador, ref float valor){
+			try{
+			   	Task<Leilao> task1 = leiloes.GetLeilaoById(cod_leilao);
+			   	Leilao leilao = task1.Result;
+
+				if(leilao.CodEstado==2){
+					Task<int> task2 = licitacoes.MaiorLicitacaoByLeilao(cod_leilao);
+					int? maximoLicitacao = task2.Result;
+
+					if (valor!=0){
+						if(valor>=maximoLicitacao + maximoLicitacao*0.05){
+							Licitacao nova_licitacao = new Licitacao(null,valor,mail_licitador);
+							licitacoes.PutLicitacao(nova_licitacao);
+							return true;
+						}
+					}else{
+						if(valor>=leilao.PrecoInicial){
+							Licitacao nova_licitacao = new Licitacao(null,valor,mail_licitador);
+							licitacoes.PutLicitacao(nova_licitacao);
+							return true;
+						}
+					}
+				}
+				
+				return false;
+			}catch (Exception ex){
+			   Console.WriteLine($"An error occurred: {ex.Message}");
+			   return false;
+			}
 		}
 		public int NumeroLeiloesDecorrer() {
 			throw new NotImplementedException("Not implemented");
