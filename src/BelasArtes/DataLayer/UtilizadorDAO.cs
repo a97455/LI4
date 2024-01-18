@@ -14,4 +14,50 @@ public class UtilizadorDAO : IUtilizadorDAO
         string sql = "select * from Utilizador";
         return _db.LoadData<Utilizador, dynamic>(sql, new { });
     }
+
+    public async Task<Pintura> GetUtilizadorById(int utilizadorId){
+        string sql = "SELECT * FROM Utilizador WHERE Id = @Id";
+        var parameters = new { Id = utilizadorId };
+        List<Utilizador> utilizadorList = await _db.LoadData<Pintura, dynamic>(sql, parameters);
+        return utilizadorList.FirstOrDefault()!;
+    }
+    public async Task<bool> UpsertUtilizador(Utilizador utilizador){
+        string sql = @"
+            MERGE INTO Utilizador AS target
+            USING (VALUES (@UtilizadorId)) AS source (UtilizadorId)
+            ON target.UtilizadorId = source.UtilizadorId
+            WHEN MATCHED THEN
+                UPDATE SET
+                    Email = @Email,
+                    Telefone = @Telefone,
+                    Rua = @Rua,
+                    Localidade = @Localidade,
+                    Cidade = @Cidade,
+                    CodigoPostal = @CodigoPostal,
+                    PaisResidencia = @PaisResidencia,
+                    IBAN = @IBAN,
+                    PalavraPasse = @PalavraPasse
+            WHEN NOT MATCHED THEN
+                INSERT (UtilizadorId, Email, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, IBAN, PalavraPasse)
+                VALUES (@UtilizadorId, @Email, @Telefone, @Rua, @Localidade, @Cidade, @CodigoPostal, @PaisResidencia, @IBAN, @PalavraPasse);";
+
+        var parameters = new
+        {
+            utilizador.UtilizadorId,
+            utilizador.Email,
+            utilizador.Telefone,
+            utilizador.Rua,
+            utilizador.Localidade,
+            utilizador.Cidade,
+            utilizador.CodigoPostal,
+            utilizador.PaisResidencia,
+            utilizador.IBAN,
+            utilizador.PalavraPasse
+        };
+
+        await _db.SaveData(sql, parameters);
+
+        // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
+        return true;
+    }
 }
