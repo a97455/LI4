@@ -33,7 +33,7 @@ namespace DataLayer{
 		    }
 		}
 
-		public List<Leilao> Filtrar(ref string artista, ref List<int> movimentos_artistico){
+		public List<Leilao> Filtrar(ref string artista, ref int codido_tipo_leilao ,ref List<int> movimentos_artistico){
 		    try {
 		        Task<List<Leilao>> task1 = leiloes.FindAll();
 		        List<Leilao> leiloesList = task1.Result;
@@ -43,12 +43,15 @@ namespace DataLayer{
 					Pintura pintura = task2.Result;
 
 					bool cumpre_parametro_filtragem = false;
-					if(pintura.Artista.Equals(artista)){
-						cumpre_parametro_filtragem=true;
-					}else{
-						foreach(int movimento_artistico in movimentos_artistico){
-							if(movimento_artistico == pintura.CodMovimentoArtistico){
-								cumpre_parametro_filtragem=true;
+					if(leilao.CodEstado==codido_tipo_leilao){
+						if(pintura.Artista.Equals(artista)){
+							cumpre_parametro_filtragem=true;
+						}else{
+							foreach(int movimento_artistico in movimentos_artistico){
+								if(movimento_artistico == pintura.CodMovimentoArtistico){
+									cumpre_parametro_filtragem=true;
+								}
+						
 							}
 						}
 					}
