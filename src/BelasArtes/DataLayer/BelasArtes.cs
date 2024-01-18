@@ -59,14 +59,27 @@ namespace DataLayer{
 		        return leiloesList;
 		    } catch (Exception ex) {
 		        Console.WriteLine($"An error occurred: {ex.Message}");
-		        return null;
+		        return new List<Leilao>();
 		    }
 		}
 
 
 
 		public List<Leilao> GetHistoricoCompras(ref string email) {
-			throw new NotImplementedException("Not implemented");
+			try {
+			    Task<List<Leilao>> task1 = leiloes.FindAll();
+			    List<Leilao> leiloesList = task1.Result;
+
+				foreach (Leilao leilao in leiloesList) {
+					if(leilao.EmailComprador!=null && !leilao.EmailComprador.Equals(email) && leilao.CodEstado==3){
+						leiloesList.Remove(leilao);
+					}
+				}
+			    return leiloesList;
+			} catch (Exception ex) {
+			    Console.WriteLine($"An error occurred: {ex.Message}");
+			    return new List<Leilao>();
+			}
 		}
 		public List<Leilao> GetHistoricoVendas(ref string email) {
 			throw new NotImplementedException("Not implemented");
