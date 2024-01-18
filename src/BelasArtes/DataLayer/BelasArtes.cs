@@ -51,7 +51,6 @@ namespace DataLayer{
 								if(movimento_artistico == pintura.CodMovimentoArtistico){
 									cumpre_parametro_filtragem=true;
 								}
-						
 							}
 						}
 					}
@@ -73,7 +72,7 @@ namespace DataLayer{
 			    List<Leilao> leiloesList = task1.Result;
 
 				foreach (Leilao leilao in leiloesList) {
-					if(leilao.EmailComprador!=null && !leilao.EmailComprador.Equals(email) && leilao.CodEstado==3){
+					if(leilao.EmailComprador==null || leilao.CodEstado!=3 || !leilao.EmailComprador.Equals(email)){
 						leiloesList.Remove(leilao);
 					}
 				}
@@ -83,8 +82,23 @@ namespace DataLayer{
 			    return new List<Leilao>();
 			}
 		}
-		public List<Leilao> GetHistoricoVendas(ref string email) {
-			throw new NotImplementedException("Not implemented");
+		public List<Leilao> GetHistoricoVendas(ref string email){
+			try {
+			    Task<List<Leilao>> task1 = leiloes.FindAll();
+			    List<Leilao> leiloesList = task1.Result;
+
+				foreach (Leilao leilao in leiloesList){
+					Task<Pintura> task2 = pinturas.GetPinturaById(leilao.CodPintura);
+					Pintura pintura = task2.Result;
+					if(pintura.EmailVendedor==null || leilao.CodEstado!=3 || !pintura.EmailVendedor.Equals(email)){
+						leiloesList.Remove(leilao);
+					}
+				}
+			    return leiloesList;
+			} catch (Exception ex) {
+			    Console.WriteLine($"An error occurred: {ex.Message}");
+			    return new List<Leilao>();
+			}
 		}
 		public bool LicitarPintura(ref int codUtilizador, ref float valor) {
 			throw new NotImplementedException("Not implemented");
