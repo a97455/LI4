@@ -1,27 +1,24 @@
 namespace DataLayer;
-public class LeilaoDAO : ILeilaoDAO
-{
+public class LeilaoDAO : ILeilaoDAO{
     private ISqlDataAccess _db;
-    public LeilaoDAO(ISqlDataAccess db)
-    {
+    public LeilaoDAO(ISqlDataAccess db){
         _db = db;
     }
+
     public Task<List<Leilao>> FindAll()
     {
         string sql = "select * from Leilao";
         return _db.LoadData<Leilao, dynamic>(sql, new { });
     }
     
-    public async Task<Leilao> GetLeilaoById(int? leilaoId)
+    public Task<List<Leilao>> GetLeilaoById(int? leilaoId)
     {
         string sql = "select * from Leilao where Id = @LeilaoId";
         var parameters = new { LeilaoId = leilaoId };
-
-        List<Leilao> leilaoList = await _db.LoadData<Leilao, dynamic>(sql, parameters);
-        return leilaoList.FirstOrDefault()!;
+        return _db.LoadData<Leilao, dynamic>(sql, parameters);
     }
 
-    public async Task<bool> PutLeilao(Leilao leilao){
+    public Task PutLeilao(Leilao leilao){
         string mergeSql = @"
             MERGE INTO Leilao AS target
             USING (VALUES (DEFAULT)) AS source (id)
@@ -47,28 +44,18 @@ public class LeilaoDAO : ILeilaoDAO
             leilao.CodEstado
         };
 
-        await _db.SaveData(mergeSql, parameters);
-
         // If rowsAffected is greater than 0, the operation was successful
-        return true;
+        return _db.SaveData(mergeSql, parameters);
     }
 
-    public async Task<int> ContaLeileosDeUmDadoTipo(int tipo_leilao){
-        try {
-            string sql = "SELECT COUNT(*) FROM Leilao WHERE id_estado = @tipo_leilao;";
+    public Task<List<int>> ContaLeiloesDeUmDadoTipo(int tipo_leilao){
+        string sql = "SELECT COUNT(*) FROM Leilao WHERE id_estado = @tipo_leilao;";
 
-            // Fornecendo um objeto vazio como parâmetros, já que a consulta não tem parâmetros
-            var parameters = new {tipo_leilao};
+        // Fornecendo um objeto vazio como parâmetros, já que a consulta não tem parâmetros
+        var parameters = new {tipo_leilao};
 
-            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
+        // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
 
-            // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
-            int count = countList.FirstOrDefault();
-
-            return count;
-        } catch (Exception ex) {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-            throw;
-        }
+        return _db.LoadData<int, dynamic>(sql, parameters);
     }
 }
