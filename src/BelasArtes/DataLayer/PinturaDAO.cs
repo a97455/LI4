@@ -1,9 +1,7 @@
 namespace DataLayer;
-public class PinturaDAO : IPinturaDAO
-{
+public class PinturaDAO : IPinturaDAO{
     private ISqlDataAccess _db;
-    public PinturaDAO(ISqlDataAccess db)
-    {
+    public PinturaDAO(ISqlDataAccess db){
         _db = db;
     }
     public Task<List<Pintura>> FindAll()
@@ -12,14 +10,13 @@ public class PinturaDAO : IPinturaDAO
         return _db.LoadData<Pintura, dynamic>(sql, new { });
     }
 
-    public async Task<Pintura> GetPinturaById(int? pinturaId){
+    public Task<List<Pintura>> GetPinturaById(int? pinturaId){
         string sql = "SELECT * FROM Pintura WHERE Id = @Id";
         var parameters = new { Id = pinturaId };
-        List<Pintura> pinturaList = await _db.LoadData<Pintura, dynamic>(sql, parameters);
-        return pinturaList.FirstOrDefault()!;
+        return _db.LoadData<Pintura, dynamic>(sql, parameters);
     }
 
-    public async Task<bool> PutPintura(Pintura pintura){
+    public Task PutPintura(Pintura pintura){
         string sql = @"
             MERGE INTO Pintura AS target
             USING (VALUES (DEFAULT)) AS source (Id)
@@ -42,8 +39,7 @@ public class PinturaDAO : IPinturaDAO
                 INSERT (Nome, Altura, Largura, Peso, Descricao, Foto, Artista, AnoCriacao, Original, VerificacaoAutenticidade, EmailVendedor, CodMovimentoArtistico)
                 VALUES (@Nome, @Altura, @Largura, @Peso, @Descricao, @Foto, @Artista, @AnoCriacao, @Original, @VerificacaoAutenticidade, @EmailVendedor, @CodMovimentoArtistico);";
 
-        var parameters = new
-        {
+        var parameters = new{
             pintura.Nome,
             pintura.Altura,
             pintura.Largura,
@@ -57,10 +53,8 @@ public class PinturaDAO : IPinturaDAO
             pintura.EmailVendedor,
             pintura.CodMovimentoArtistico
         };
-
-        await _db.SaveData(sql, parameters);
-
+        
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
-        return true;
+        return _db.SaveData(sql, parameters);
     }
 }

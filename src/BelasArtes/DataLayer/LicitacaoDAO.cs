@@ -1,8 +1,7 @@
 namespace DataLayer;
 public class LicitacaoDAO : ILicitacaoDAO{
     private ISqlDataAccess _db;
-    public LicitacaoDAO(ISqlDataAccess db)
-    {
+    public LicitacaoDAO(ISqlDataAccess db){
         _db = db;
     }
 

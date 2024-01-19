@@ -15,27 +15,19 @@ public class UtilizadorDAO : IUtilizadorDAO
         return _db.LoadData<Utilizador, dynamic>(sql, new { });
     }
 
-    public async Task<Utilizador> GetUtilizadorByEmail(String utilizadoremail){
+    public Task<List<Utilizador>> GetUtilizadorByEmail(String utilizadoremail){
         string sql = "SELECT * FROM Utilizador WHERE Id = @Id";
         var parameters = new { Id = utilizadoremail };
-        List<Utilizador> utilizadorList = await _db.LoadData<Utilizador, dynamic>(sql, parameters);
-        return utilizadorList.FirstOrDefault()!;
+        return _db.LoadData<Utilizador, dynamic>(sql, parameters);
     }
 
-    public async Task<int> ContaUtilizadores(){
-        try {
-            string sql = "SELECT COUNT(*) FROM Utilizador";
-            var parameters = new { };
-            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
-            int count = countList.FirstOrDefault();
-            return count;
-        } catch (Exception ex) {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-            throw;
-        }
+    public Task<List<int>> ContaUtilizadores(){
+        string sql = "SELECT COUNT(*) FROM Utilizador";
+        var parameters = new { };
+        return _db.LoadData<int, dynamic>(sql, parameters);
     }
 
-    public async Task<bool> PutUtilizador(Utilizador utilizador){
+    public Task PutUtilizador(Utilizador utilizador){
         string sql = @"
             MERGE INTO Utilizador AS target
             USING (VALUES (@UtilizadorId)) AS source (UtilizadorId)
@@ -55,8 +47,7 @@ public class UtilizadorDAO : IUtilizadorDAO
                 INSERT (UtilizadorId, Email, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, IBAN, PalavraPasse)
                 VALUES (@UtilizadorId, @Email, @Telefone, @Rua, @Localidade, @Cidade, @CodigoPostal, @PaisResidencia, @IBAN, @PalavraPasse);";
 
-        var parameters = new
-        {
+        var parameters = new {
             utilizador.Email,
             utilizador.Telefone,
             utilizador.Rua,
@@ -68,9 +59,7 @@ public class UtilizadorDAO : IUtilizadorDAO
             utilizador.PalavraPasse
         };
 
-        await _db.SaveData(sql, parameters);
-
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
-        return true;
+        return _db.SaveData(sql, parameters);
     }
 }
