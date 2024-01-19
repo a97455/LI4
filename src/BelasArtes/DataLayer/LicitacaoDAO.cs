@@ -1,60 +1,42 @@
 namespace DataLayer;
-public class LicitacaoDAO : ILicitacaoDAO
-{
+public class LicitacaoDAO : ILicitacaoDAO{
     private ISqlDataAccess _db;
     public LicitacaoDAO(ISqlDataAccess db)
     {
         _db = db;
     }
 
-    public Task<List<Licitacao>> FindAll()
-    {
+    public Task<List<Licitacao>> FindAll(){
         string sql = "select * from Licitacao";
         return _db.LoadData<Licitacao, dynamic>(sql, new { });
     }
 
-    public async Task<Licitacao> GetLicitacaoById(int? licitacaoId){
+    public Task<List<Licitacao>> GetLicitacaoById(int? licitacaoId){
         string sql = "SELECT * FROM Licitacao WHERE Id = @Id";
         var parameters = new { Id = licitacaoId };
-        List<Licitacao> licitacaoList = await _db.LoadData<Licitacao, dynamic>(sql, parameters);
-        return licitacaoList.FirstOrDefault()!;
+        return _db.LoadData<Licitacao, dynamic>(sql, parameters);
     }
 
-    public async Task<int> NumbLicitacoesByLeilao(int? idLeilao){
+    public Task<List<int>> NumbLicitacoesByLeilao(int? idLeilao){
         string sql = "SELECT COUNT(*) FROM Licitacao WHERE id_leilao = @id_leilao";
         var parameters = new { id_leilao = idLeilao };
-        List<int> count = await _db.LoadData<int, dynamic>(sql, parameters);
-        return count.FirstOrDefault()!;
+        return _db.LoadData<int, dynamic>(sql, parameters);
     }
 
-    public async Task<int> MaiorLicitacaoByLeilao(int? idLeilao) {
-        try {
-            string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
-            var parameters = new { id_leilao = idLeilao };
-
-            var result = await _db.LoadData<int, dynamic>(sql, parameters);
-
-            return  result.FirstOrDefault();
-        } catch{
-            return 0;
-        }
+    public Task<List<int>> MaiorLicitacaoByLeilao(int? idLeilao) {
+        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
+        var parameters = new { id_leilao = idLeilao };
+        return  _db.LoadData<int, dynamic>(sql, parameters);
     }
 
-    public async Task<int> ContaLicitacoes(){
-        try {
-            string sql = "SELECT COUNT(*) FROM Licitacao";
-            var parameters = new { };
-            List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
-            int count = countList.FirstOrDefault();
-            return count;
-        } catch (Exception ex) {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-            throw;
-        }
+    public Task<List<int>> ContaLicitacoes(){
+        string sql = "SELECT COUNT(*) FROM Licitacao";
+        var parameters = new { };
+        return _db.LoadData<int, dynamic>(sql, parameters);
     }
 
 
-    public async Task<bool> PutLicitacao(Licitacao licitacao){
+    public Task PutLicitacao(Licitacao licitacao){
         string sql = @"
             MERGE INTO Licitacao AS target
             USING (VALUES (DEFAULT)) AS source (Id)
@@ -67,15 +49,12 @@ public class LicitacaoDAO : ILicitacaoDAO
                 INSERT (Valor, EmailLicitador)
                 VALUES (@Valor, @EmailLicitador);";
 
-        var parameters = new
-        {
+        var parameters = new{
             licitacao.Valor,
             licitacao.EmailLicitador
         };
 
-        await _db.SaveData(sql, parameters);
-
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
-        return true;
+        return _db.SaveData(sql, parameters);;
     }
 }

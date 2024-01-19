@@ -37,13 +37,11 @@
 
 
 @code {
-    private int numeroLeiloes { get; set; } = 25;
-    private int numeroUtilizadores { get; set; } = 40;
-    private int numeroLicitacoes { get; set; } = 20;
+    private int numeroLeiloes { get; set; }
+    private int numeroUtilizadores { get; set;}
+    private int numeroLicitacoes { get; set; }
 
-    private void estatisticas(){
-        numeroLeiloes = _ba.NumeroLeiloesDecorrer();
-        numeroUtilizadores= _ba.NumeroUtilizadores();
-        numeroLicitacoes= _ba.NumeroLicitacoes();
+    protected override async Task OnInitializedAsync(){
+        numeroLicitacoes= (await _ba.NumeroLicitacoes()).FirstOrDefault();
     }
 }

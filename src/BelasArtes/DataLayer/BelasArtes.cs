@@ -149,16 +149,10 @@ namespace DataLayer{
 			}
 		}
 
-		public int NumeroLicitacoes() {
-			try{
-				Task<int> task = licitacoes.ContaLicitacoes();
-				int count = task.Result;
-				return count;
-			}catch{
-				return 0;
-			}
-			
+		public Task<List<int>> NumeroLicitacoes() {
+			return licitacoes.ContaLicitacoes();
 		}
+		
 		public int NumeroUtilizadores() {
 			try{
     			Task<int> task = utilizadores.ContaUtilizadores();

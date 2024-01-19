@@ -9,7 +9,7 @@ namespace DataLayer{
 	public bool LicitarPintura(ref int cod_leilao,ref string mail_licitador, ref float valor);
 	int NumeroLeiloesDecorrer();
 	int NumeroLeiloesTerminados();
-	int NumeroLicitacoes();
+	Task<List<int>> NumeroLicitacoes();
 	int NumeroUtilizadores();
 	List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,ref int codModoOrdenacao);
 	bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial);
