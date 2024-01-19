@@ -141,7 +141,7 @@ namespace DataLayer{
 		}
 		public int NumeroLeiloesTerminados() {
 			try{
-			    Task<int> task = leiloes.ContaLeileosDeUmDadoTipo(2);
+			    Task<int> task = leiloes.ContaLeileosDeUmDadoTipo(3);
 			    int count = task.Result;
 			    return count;
 			}catch{

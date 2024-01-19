@@ -55,10 +55,10 @@ public class LeilaoDAO : ILeilaoDAO
 
     public async Task<int> ContaLeileosDeUmDadoTipo(int tipo_leilao){
         try {
-            string sql = "SELECT COUNT(*) FROM Leilao WHERE CodEstado = @tipo_leilao;";
+            string sql = "SELECT COUNT(*) FROM Leilao WHERE id_estado = @tipo_leilao;";
 
             // Fornecendo um objeto vazio como parâmetros, já que a consulta não tem parâmetros
-            var parameters = new { };
+            var parameters = new {tipo_leilao};
 
             List<int> countList = await _db.LoadData<int, dynamic>(sql, parameters);
 
