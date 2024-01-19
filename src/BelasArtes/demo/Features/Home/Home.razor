@@ -3,7 +3,9 @@
 @inject NavigationManager NavigationManager;
 @using DataLayer
 
-@inject IBelasArtes _ba
+@inject ILeilaoDAO leiloes
+@inject IUtilizadorDAO utilizadores
+@inject ILicitacaoDAO licitacoes
 
 <PageTitle>BelasArtes</PageTitle>
 
@@ -14,16 +16,22 @@
 <div style="width: 10%; height: 10%; left: 80%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
 <div style="width: 0%; height: 8%; left: 88.7%; top: 3.5%; position: absolute; border: 1px black solid"></div>
 <div style="width: 30%; height: 50%; left: 67.5%; top: 140%; position: absolute; background: #D9D9D9; border-radius: 48px"></div>
+<img style="width: 30%; height: 50%; left: 67.5%; top: 140%; position: absolute" src="Estatistica1.png" />
+
 <div style="width: 30%; height: 20%; left: 1.5%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
 <div style="width: 30%; height: 50%; left: 2.5%; top: 140%; position: absolute; background: #D9D9D9; border-radius: 48px"></div>
-<div style="width: 30%; height: 10%; left: 2.5%; top: 150%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">@numeroLeiloes</div>
+<img style="width: 30%; height: 50%; left: 2.5%; top: 140%; position: absolute" src="Estatistica1.png" />
+
 <div style="width: 30%; height: 10%; left: 2.5%; top: 195%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Número de Leilões a decorrer</div>
+<div style="width: 30%; height: 10%; left: 2.5%; top: 150%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">@numeroLeiloesDecorrer</div>
 <div style="width: 30%; height: 10%; left: 35%; top: 195%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Número de Utilizadores</div>
-<div style="width: 50%; height: 10%; left: 4%; top: 122.5%; position: absolute; color: black; font-size: 275%; font-family: Inter; font-weight: 800; word-wrap: break-word">Descobre mais sobre nós:</div>
-<div style="width: 30%; height: 10%; left: 67.5%; top: 150%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">@numeroLicitacoes</div>
-<div style="width: 30%; height: 10%; left: 67.5%; top: 195%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Número de Licitações efetuadas</div>
-<div style="width: 30%; height: 50%; left: 35%; top: 140%; position: absolute; background: #D9D9D9; border-radius: 48px"></div>
 <div style="width: 30%; height: 10%; left: 35%; top: 150%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">@numeroUtilizadores</div>
+<div style="width: 50%; height: 10%; left: 4%; top: 122.5%; position: absolute; color: black; font-size: 275%; font-family: Inter; font-weight: 800; word-wrap: break-word">Descobre mais sobre nós:</div>
+<div style="width: 30%; height: 10%; left: 67.5%; top: 195%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Número de Licitações efetuadas</div>
+<div style="width: 30%; height: 10%; left: 67.5%; top: 150%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">@numeroLicitacoes</div>
+<div style="width: 30%; height: 50%; left: 35%; top: 140%; position: absolute; background: #D9D9D9; border-radius: 48px"></div>
+<img style="width: 30%; height: 50%; left: 35%; top: 140%; position: absolute" src="Estatistica1.png" />
+
 <div style="width: 35%; height: 10%; left: 8%; top: 82.5%; position: absolute; color: white; font-size: 175%; font-family: Inter; font-weight: 600; word-wrap: break-word">Licite, venda e explore o mundo da arte</div>
 <div style="width: 35%; height: 10%; left: 8%; top: 37.5%; position: absolute; color: white; font-size: 400%; font-family: Inter; font-weight: 800; word-wrap: break-word">Descubra uma peça única nos nossos leilões</div>
 <div style="width: 15%; height: 10%; left: 5%; top: 100%; position: absolute; background: black"></div>
@@ -37,11 +45,13 @@
 
 
 @code {
-    private int numeroLeiloes { get; set; }
+    private int numeroLeiloesDecorrer { get; set; }
     private int numeroUtilizadores { get; set;}
     private int numeroLicitacoes { get; set; }
 
     protected override async Task OnInitializedAsync(){
-        numeroLicitacoes= (await _ba.NumeroLicitacoes()).FirstOrDefault();
+        numeroUtilizadores= (await utilizadores.ContaUtilizadores()).FirstOrDefault();
+        numeroLeiloesDecorrer= (await leiloes.ContaLeiloesDeUmDadoTipo(2)).FirstOrDefault();
+        numeroLicitacoes= (await licitacoes.ContaLicitacoes()).FirstOrDefault();
     }
 }
