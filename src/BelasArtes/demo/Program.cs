@@ -7,7 +7,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
-builder.Services.AddTransient<IBelasArtes, BelasArtes>();
+builder.Services.AddTransient<ILeilaoDAO, LeilaoDAO>();
+builder.Services.AddTransient<ILicitacaoDAO, LicitacaoDAO>();
+builder.Services.AddTransient<IPinturaDAO, PinturaDAO>();
+builder.Services.AddTransient<IUtilizadorDAO, UtilizadorDAO>();
+
 
 
 var app = builder.Build();
