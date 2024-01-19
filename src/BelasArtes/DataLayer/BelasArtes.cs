@@ -1,8 +1,8 @@
-using System.Drawing;
+/* using System.Drawing;
 using Datalayer;
 
 namespace DataLayer{
-	public class BelasArtes : IBelasArtes  {
+	public class BelasArtes {
 		public ILeilaoDAO leiloes;
 		public IUtilizadorDAO utilizadores;
 		public IPinturaDAO pinturas;
@@ -18,7 +18,7 @@ namespace DataLayer{
 			_db = db;
 		}
 
-		public bool AutenticarUtilizador(ref string email, ref string palavraPasse) {
+		public async bool AutenticarUtilizador(string email, string palavraPasse) {
 		    try {
 		        Task<Utilizador> task = utilizadores.GetUtilizadorByEmail(email);
 		        Utilizador utilizador = task.Result;
@@ -33,7 +33,7 @@ namespace DataLayer{
 		    }
 		}
 
-		public List<Leilao> Filtrar(ref string artista, ref int codido_tipo_leilao ,ref List<int> movimentos_artistico){
+		public List<Leilao> Filtrar(string artista, int codido_tipo_leilao , List<int> movimentos_artistico){
 		    try {
 		        Task<List<Leilao>> task1 = leiloes.FindAll();
 		        List<Leilao> leiloesList = task1.Result;
@@ -66,7 +66,7 @@ namespace DataLayer{
 		    }
 		}
 
-		public List<Leilao> GetHistoricoCompras(ref string email) {
+		public List<Leilao> GetHistoricoCompras(string email) {
 			try {
 			    Task<List<Leilao>> task1 = leiloes.FindAll();
 			    List<Leilao> leiloesList = task1.Result;
@@ -82,7 +82,7 @@ namespace DataLayer{
 			    return new List<Leilao>();
 			}
 		}
-		public List<Leilao> GetHistoricoVendas(ref string email){
+		public List<Leilao> GetHistoricoVendas(string email){
 			try {
 			    Task<List<Leilao>> task1 = leiloes.FindAll();
 			    List<Leilao> leiloesList = task1.Result;
@@ -100,7 +100,7 @@ namespace DataLayer{
 			    return new List<Leilao>();
 			}
 		}
-		public bool LicitarPintura(ref int cod_leilao,ref string mail_licitador, ref float valor){
+		public bool LicitarPintura(int cod_leilao,string mail_licitador, float valor){
 			try{
 			   	Task<Leilao> task1 = leiloes.GetLeilaoById(cod_leilao);
 			   	Leilao leilao = task1.Result;
@@ -163,7 +163,7 @@ namespace DataLayer{
 			}
 		}
 
-		public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,ref int codModoOrdenacao) {
+		public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,int codModoOrdenacao) {
 			if (codModoOrdenacao==1){ //crescente de tempo restante
 				List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
 				foreach(Leilao leilao in leiloes){
@@ -227,7 +227,7 @@ namespace DataLayer{
 				return sortedLeiloes;
 			}
 		}
-		public bool RegistarLeilao(ref int codPintura, ref DateTime dataInicio, ref DateTime dataFim, ref float precoInicial) {
+		public bool RegistarLeilao(int codPintura, DateTime dataInicio, DateTime dataFim, float precoInicial) {
 			if (DateTime.Now>= dataInicio && DateTime.Now<= dataFim){
 				Leilao leilao = new Leilao(null,dataInicio,dataFim,precoInicial,null,codPintura,2);
 				return leiloes.PutLeilao(leilao).Result;		
@@ -236,18 +236,18 @@ namespace DataLayer{
 				return leiloes.PutLeilao(leilao).Result;		
 			}
 		}
-		public bool RegistarPintura(ref string nome, ref float altura, ref float largura, ref float peso, 
-		ref string descricao,ref Bitmap? foto,ref string artista, ref bool autenticidade, ref int anoCriacao, ref int codMovimentoArtistico) {
+		public bool RegistarPintura(string nome, float altura, float largura, float peso, 
+		string descricao,Bitmap? foto,string artista, bool autenticidade, int anoCriacao, int codMovimentoArtistico) {
 			Pintura pintura = new Pintura(null,nome,altura,largura,peso,descricao,foto,artista,anoCriacao,autenticidade,
 			false,null,codMovimentoArtistico);
 			return pinturas.PutPintura(pintura).Result;
 		}
-		public bool RegistarUtilizador(ref string nome, ref string rua, ref string codigoPostal, ref string cidade, 
-		ref string localidade, ref string paisResidencia, ref string numeroIdentificacaoGovernamental, ref string email, 
-		ref int numeroTelemovel, ref string iBAN, ref string palavraPasse) {
+		public bool RegistarUtilizador(string nome, string rua, string codigoPostal, string cidade, 
+		string localidade, string paisResidencia, string numeroIdentificacaoGovernamental, string email, 
+		int numeroTelemovel, string iBAN, string palavraPasse) {
 			Utilizador utilizador = new Utilizador(nome,numeroTelemovel,rua,localidade,cidade,codigoPostal,
 			paisResidencia,iBAN,palavraPasse);
 			return utilizadores.PutUtilizador(utilizador).Result;
 		}
 	}
-}
+} */
