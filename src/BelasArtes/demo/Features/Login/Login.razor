@@ -55,15 +55,12 @@
 
 
     private async Task LoginButton(){
-        List<Datalayer.Utilizador> list = (await utilizadores.GetUtilizadorByEmail(Email));
-        if (list.Count == 0) {
-            NavigationManager.NavigateTo("/",forceLoad: true);
-        }
+        List<Datalayer.Utilizador> list = await utilizadores.GetUtilizadorByEmail(Email);
 
-        if (list.First().PalavraPasse.Equals(PalavraPasse)) {
-            NavigationManager.NavigateTo("/",forceLoad: true);
+        if (list.Any() && list.First().PalavraPasse.Equals(PalavraPasse)){
+            NavigationManager.NavigateTo("/leiloes", forceLoad: true);
         }else{
-            NavigationManager.NavigateTo("/",forceLoad: true);
-        } 
+            NavigationManager.NavigateTo("/login", forceLoad: true);
+        }
     }
 }
