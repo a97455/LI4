@@ -11,6 +11,8 @@ public class Utilizador{
         public string PalavraPasse { get; set; } = "";
         public List<int> CodPinturas { get; set; } = new List<int>();
 
+        public Utilizador() { }
+
         public Utilizador(string email, int telefone, string rua, string localidade, 
                 string cidade, string codigoPostal, string paisResidencia,
                 string iban, string palavraPasse){

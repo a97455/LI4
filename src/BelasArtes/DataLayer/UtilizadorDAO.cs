@@ -16,8 +16,8 @@ public class UtilizadorDAO : IUtilizadorDAO
     }
 
     public Task<List<Utilizador>> GetUtilizadorByEmail(String utilizadoremail){
-        string sql = "SELECT * FROM Utilizador WHERE Id = @Id";
-        var parameters = new { Id = utilizadoremail };
+        string sql = "SELECT * FROM Utilizador WHERE e_mail = @e_mail";
+        var parameters = new { e_mail = utilizadoremail };
         return _db.LoadData<Utilizador, dynamic>(sql, parameters);
     }
 
