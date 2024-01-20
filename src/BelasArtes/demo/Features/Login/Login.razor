@@ -57,13 +57,13 @@
     private async Task LoginButton(){
         List<Datalayer.Utilizador> list = (await utilizadores.GetUtilizadorByEmail(Email));
         if (list.Count == 0) {
-            NavigationManager.NavigateTo("/register");
+            NavigationManager.NavigateTo("/",forceLoad: true);
         }
 
         if (list.First().PalavraPasse.Equals(PalavraPasse)) {
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/",forceLoad: true);
         }else{
-            NavigationManager.NavigateTo("/register");
+            NavigationManager.NavigateTo("/",forceLoad: true);
         } 
     }
 }
