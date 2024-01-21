@@ -1,0 +1,217 @@
+@page "/profile"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager;
+@using DataLayer
+
+<PageTitle>BelasArtes</PageTitle>
+
+<div style="width: 100%; height: 155%; position: absolute; background: white"></div>
+
+<!-- Cabecalho -->
+<img style="width: 5; height: 14%; left: 0%; top: 0.5%; position: absolute" src="logo.png" />
+<div style="width: 30%; height: 20%; left: 2%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
+<div style="width: 100%; height: 0px; left: 0%; top: 14.5% ; position: absolute; border: 1px #1E1E1E solid"></div>
+
+
+<button onclick="window.location.href='/profile'">
+<div style="width: 10%; height: 10%; left: 89%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
+<div style="width: 7%; height: 0px; left: 90.7%; top: 10%; position: absolute; border: 1px #1E1E1E solid"></div>
+</button>
+<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<button onclick="window.location.href='/leiloes'">
+<div style="width: 20%; height: 10%; left: 71%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados</div>
+</button>
+<div style="width: 0%; height: 8%; left: 72.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<button onclick="window.location.href='/leiloes'">
+<div style="width: 20%; height: 10%; left: 54%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões a decorrer</div>
+</button>
+<div style="width: 0%; height: 8%; left: 55.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<button onclick="window.location.href='/'">
+<div style="width: 10%; height: 10%; left: 46%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
+</button>
+<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<div style="width: 80%; height: 40%; left: 10%; position: absolute; top: 20%; background: #D9D9D9; border-radius: 30px;"> <!-- Caixa com os dados pessoais -->
+    <button>
+        <div style="width: 9%; height: 10%; left: 85.4%; top: 6%; position: absolute; background: white; border-radius: 4.12%; border-radius: 10px "></div>
+        <img style="width: 2; height: 6.5%; left: 86%; top: 8%; position: absolute" src="pencil.png" />
+        <div style="width: 8%; height: 0.46%; left: 87%; top: 5%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Editar</div>
+    </button>
+    <div style="width: 25%; height: 0.52%; left: 10%; top: 3.5%; position: absolute; color: rgb(0, 0, 0); font-size: 2.6vw; font-family: Inter; font-weight: 700; word-wrap: break-word">Dados pessoais</div>
+    
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Nome: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileName</span></div>
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Morada: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileAddress</span></div>
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Código-Postal: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileZipCode</span></div>
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Localidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileLocalidade</span></div>
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Cidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileCity</span></div>
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">País de residência: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileCountry</span></div>
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">NIG: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileNIG</span></div>
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">IBAN: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileIBAN</span></div>
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Telemóvel: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profilePhoneNumber</span></div>
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">E-mail: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileEmail</span></div>
+</div>
+
+<div style="width: 37.5%; height: 90%; left: 10%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Compras-->
+    <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Compras</div>
+    <div> <!--Leilao 1 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 10%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 10%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 11%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase1Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 16%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@purchase1Seller </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 22%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @purchase1Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 28%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase1Date </div>
+    </div>
+    <div> <!--Leilao 2 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 37.5%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 37.5%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 38.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase2Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 43.5%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@purchase2Seller </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 49.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @purchase2Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 55.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase2Date </div>
+    </div>
+    <div> <!--Leilao 3 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 65%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 65%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 66%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase3Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 71%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@purchase3Seller </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 77%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @purchase3Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 83%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@purchase3Date </div>
+    </div>
+    <!--Seta-->
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@currentPagePurchases/@totalPagesPurchases</div>
+    <button>
+    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+    <button>
+    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+</div>
+
+<div style="width: 37.5%; height: 90%; left: 52.5%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Vendas-->
+    <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Vendas</div>
+    <div> <!--Leilao 1 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 10%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 10%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 11%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell1Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 16%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@sell1Buyer </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 22%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @sell1Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 28%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell1Date </div>
+    </div>
+    <div> <!--Leilao 2 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 37.5%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 37.5%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 38.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell2Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 43.5%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@sell2Buyer </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 49.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @sell2Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 55.5%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell2Date </div>
+    </div>
+    <div> <!--Leilao 3 Compras-->
+        <div style="width: 85%; height: 25%; left: 7.5%; top: 65%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+        <div style="width: 35%; height: 25%; left: 7.5%; top: 65%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 66%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell3Name</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 71%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@sell3Buyer </div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 77%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ @sell3Price</div>
+        <div style="width: 50%; height: 8%; left: 42.5%; top: 83%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@sell3Date </div>
+    </div>
+    <!--Seta-->
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@currentPageSells/@totalPagesSells</div>
+    <button>
+    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+    <button>
+    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+</div>
+
+
+@code {
+    // Dados pessoais
+    private String profileName = "Afonso Oliveira e Silva";
+    private String profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
+    private String profileZipCode = "4700-000";
+    private String profileLocalidade = "Cabreiros";
+    private String profileCity = "Braga";
+    private String profileCountry = "Portugal";
+    private String profileNIG = "00000000 0 XY0";
+    private String profileIBAN = "PT50 000000000000";
+    private String profilePhoneNumber = "+351 912345678";
+    private String profileEmail = "someone@gmail.com";
+
+    // Dados das obras compradas
+    private String purchase1Name = "Nome da obra";
+    private String purchase1Seller = "Nome do vendedor";
+    private int purchase1Price = 160;
+    private String purchase1Date = "01/01/2000";
+    private String purchase2Name = "Nome da obra";
+    private String purchase2Seller = "Nome do vendedor";
+    private int purchase2Price = 120;
+    private String purchase2Date = "01/01/2000";
+    private String purchase3Name = "Nome da obra";
+    private String purchase3Seller = "Nome do vendedor";
+    private int purchase3Price = 230;
+    private String purchase3Date = "01/01/2000";
+    private int currentPagePurchases = 1;
+    private int totalPagesPurchases = 3;
+
+    // Dados das obras vendidas
+    private String sell1Name = "Nome da obra";
+    private String sell1Buyer = "Nome do comprador";
+    private int sell1Price = 160;
+    private String sell1Date = "01/01/2000";
+    private String sell2Name = "Nome da obra";
+    private String sell2Buyer = "Nome do comprador";
+    private int sell2Price = 120;
+    private String sell2Date = "01/01/2000";
+    private String sell3Name = "Nome da obra";
+    private String sell3Buyer = "Nome do comprador";
+    private int sell3Price = 230;
+    private String sell3Date = "01/01/2000";
+    private int currentPageSells = 1;
+    private int totalPagesSells = 2;
+
+    private void values(){ // Substituir valores por funções da Interface
+        profileName = "Afonso Oliveira e Silva";
+        profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
+        profileZipCode = "4700-000";
+        profileLocalidade = "Cabreiros";
+        profileCity = "Braga";
+        profileCountry = "Portugal";
+        profileNIG = "00000000 0 XY0";
+        profileIBAN = "PT50 000000000000";
+        profilePhoneNumber = "+351 912345678";
+        profileEmail = "someone@gmail.com";
+        purchase1Name = "Nome da obra";
+        purchase1Seller = "Nome do vendedor";
+        purchase1Price = 160;
+        purchase1Date = "01/01/2000";
+        purchase2Name = "Nome da obra";
+        purchase2Seller = "Nome do vendedor";
+        purchase2Price = 120;
+        purchase2Date = "01/01/2000";
+        purchase3Name = "Nome da obra";
+        purchase3Seller = "Nome do vendedor";
+        purchase3Price = 230;
+        purchase3Date = "01/01/2000";
+        currentPagePurchases = 1;
+        totalPagesPurchases = 3;
+        sell1Name = "Nome da obra";
+        sell1Buyer = "Nome do comprador";
+        sell1Price = 160;
+        sell1Date = "01/01/2000";
+        sell2Name = "Nome da obra";
+        sell2Buyer = "Nome do comprador";
+        sell2Price = 120;
+        sell2Date = "01/01/2000";
+        sell3Name = "Nome da obra";
+        sell3Buyer = "Nome do comprador";
+        sell3Price = 230;
+        sell3Date = "01/01/2000";
+        currentPageSells = 1;
+        totalPagesSells = 2;
+    }
+}
