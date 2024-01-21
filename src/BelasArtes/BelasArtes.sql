@@ -11,12 +11,14 @@ IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Utili
 BEGIN
     CREATE TABLE [Utilizador] (
         [Email] varchar(40) NOT NULL UNIQUE,
+        [Nome] varchar(100) NOT NULL,
         [Telefone] int NOT NULL,
         [Rua] varchar(30) NOT NULL,
         [Localidade] varchar(30) NOT NULL,
         [Cidade] varchar(30) NOT NULL,
         [CodigoPostal] varchar(30) NOT NULL,
         [PaisResidencia] varchar(30) NOT NULL,
+        [NIG] varchar(40) NOT NULL,
         [IBAN] varchar(30) NOT NULL UNIQUE,
         [PalavraPasse] varchar(30) NOT NULL,
         CONSTRAINT [PK_UTILIZADOR] PRIMARY KEY CLUSTERED
@@ -151,13 +153,13 @@ END
 GO
 
 -- Inserting data into Utilizador table
-INSERT INTO Utilizador (Email, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, IBAN, PalavraPasse)
+INSERT INTO Utilizador (Email, Nome, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, NIG, IBAN, PalavraPasse)
 VALUES 
-('user1@example.com', 123456789, 'Street 1', 'Location 1', 'City 1', '12345', 'Country 1', 'IBAN123', 'password1'),
-('user2@example.com', 987654321, 'Street 2', 'Location 2', 'City 2', '54321', 'Country 2', 'IBAN456', 'password2'),
-('user3@example.com', 555555555, 'Street 3', 'Location 3', 'City 3', '67890', 'Country 3', 'IBAN789', 'password3'),
-('user4@example.com', 111111111, 'Street 4', 'Location 4', 'City 4', '98765', 'Country 4', 'IBAN987', 'password4'),
-('user5@example.com', 999999999, 'Street 5', 'Location 5', 'City 5', '54321', 'Country 5', 'IBAN654', 'password5');
+('user1@example.com','user1', 123456789, 'Street 1', 'Location 1', 'City 1', '12345', 'Country 1','00000000 0 XY0', 'IBAN123', 'password1'),
+('user2@example.com','user2', 987654321, 'Street 2', 'Location 2', 'City 2', '54321', 'Country 2','00000000 0 AY9', 'IBAN456', 'password2'),
+('user3@example.com','user3', 555555555, 'Street 3', 'Location 3', 'City 3', '67890', 'Country 3','00000000 0 KY6', 'IBAN789', 'password3'),
+('user4@example.com','user4', 111111111, 'Street 4', 'Location 4', 'City 4', '98765', 'Country 4','00000000 2 XY0', 'IBAN987', 'password4'),
+('user5@example.com','user5', 999999999, 'Street 5', 'Location 5', 'City 5', '54321', 'Country 5','00000000 5 XY0', 'IBAN654', 'password5');
 
 -- Inserting data into Movimento_Artistico table
 INSERT INTO Movimento_Artistico (Nome)

@@ -1,6 +1,7 @@
 @page "/register"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
+@inject IUtilizadorDAO utilizadores;
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -32,25 +33,34 @@
 
 <!--Caixa Branca-->
 <div style="width: 66%; height: 10%; left: 16.5%; top: 77.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 16.5%; top: 71%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Nome:</div>
+<input type="text" @bind="Nome" style="width: 30%; height: 10%; left: 16.5%; top: 71%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Nome:>
+
 <div style="width: 30%; height: 10%; left: 16.5%; top: 97.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 16.5%; top: 91%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Email:</div>
+<input type="text" @bind="Email" style="width: 30%; height: 10%; left: 16.5%; top: 91%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Email:>
+
 <div style="width: 30%; height: 10%; left: 52.5%; top: 97.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 52.5%; top: 91%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Senha:</div>
+<input type="text" @bind="Senha" style="width: 30%; height: 10%; left: 52.5%; top: 91%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Senha:>
+
 <div style="width: 30%; height: 10%; left: 16.5%; top: 117.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 16.5%; top: 111%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">País:</div>
+<input type="text" @bind="País" style="width: 30%; height: 10%; left: 16.5%; top: 111%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">País:>
+
 <div style="width: 30%; height: 10%; left: 52.5%; top: 117.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 52.5%; top: 111%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Telemóvel:</div>
+<input type="text" @bind="Telemovel" style="width: 30%; height: 10%; left: 52.5%; top: 111%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Telemóvel:>
+
 <div style="width: 12.5%; height: 10%; left: 16.5%; top: 137.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 16.5%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">IBAN:</div>
+<input type="text" @bind="IBAN" style="width: 30%; height: 10%; left: 16.5%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">IBAN:>
+
 <div style="width: 12.5%; height: 10%; left: 34%; top: 137.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 34%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Cidade:</div>
+<input type="text" @bind="Cidade" style="width: 30%; height: 10%; left: 34%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Cidade:>
+
 <div style="width: 12.5%; height: 10%; left: 52.5%; top: 137.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 52.5%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Localidade:</div>
+<input type="text" @bind="Localidade" style="width: 30%; height: 10%; left: 52.5%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Localidade:>
+
 <div style="width: 12.5%; height: 10%; left: 70%; top: 137.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 70%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Código-Postal:</div>
+<input type="text" @bind="CodigoPostal" style="width: 30%; height: 10%; left: 70%; top: 131%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Código-Postal:>
+
 <div style="width: 66%; height: 10%; left: 16.5%; top: 157.5%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
-<div style="width: 30%; height: 10%; left: 16.5%; top: 151%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Rua, Porta, Andar:</div>
+<input type="text" @bind="Rua" style="width: 30%; height: 10%; left: 16.5%; top: 151%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 167; word-wrap: break-word">Rua, Porta, Andar:>
 
 
 <!--Mensagem Login e Butão-->
@@ -62,3 +72,18 @@
     <div style="width: 12.5%; height: 10%; left: 43.25%; top: 177.5%; position: absolute; background: black; border-radius: 59px"></div>
     <div style="width: 12.5%; height: 10%; left: 43.3%; top: 178.5%; position: absolute; text-align: center; color: white; font-size: 35px; font-family: Inter; font-weight: 400; word-wrap: break-word">Registar</div>
 </button>
+
+
+
+@code{
+    private string Nome {get;set;} = "";
+    private string Email {get;set;} = "";
+    private string Senha {get;set;} = "";
+    private string País {get;set;} = "";
+    private string Telemovel {get;set;} = "";
+    private string IBAN {get;set;} = "";
+    private string Cidade {get;set;} = "";
+    private string Localidade {get;set;} = "";
+    private string CodigoPostal {get;set;} = "";
+    private string Rua {get;set;} = "";
+}
