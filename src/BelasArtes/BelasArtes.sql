@@ -43,7 +43,6 @@ BEGIN
 END
 GO
 
-
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Estado')
 BEGIN
     CREATE TABLE [Estado] (
@@ -99,7 +98,7 @@ BEGIN
         [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
         [DataInicio] datetime2 NOT NULL,
         [DataFim] datetime2 NOT NULL,
-        [PrecoFinal] float NOT NULL,
+        [PrecoInicial] float NOT NULL,
         [EmailComprador] varchar(40),
         [CodPintura] int,
         [CodEstado] int,
@@ -185,20 +184,41 @@ VALUES
 ('Painting 2', 40.0, 20.0, 3.0, 'Description 2', 0xFEDCBA9876543210, 'Artist 2', 2021, 1, 0, 'user2@example.com', 2),
 ('Painting 3', 60.0, 40.0, 4.0, 'Description 3', 0x0123456789ABCDEF, 'Artist 3', 2023, 1, 1, 'user3@example.com', 3),
 ('Painting 4', 45.5, 25.5, 2.0, 'Description 4', 0xFEDCBA9876543210, 'Artist 4', 2020, 1, 1, 'user4@example.com', 4),
-('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 0x0123456789ABCDEF, 'Artist 5', 2024, 0, 1, 'user5@example.com', 5);
+('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 0x0123456789ABCDEF, 'Artist 5', 2022, 0, 0, 'user5@example.com', 5),
+('Painting 6', 60.0, 35.0, 3.5, 'Description 6', 0x0123456789ABCDEF, 'Artist 6', 2022, 0, 0, 'user5@example.com', 4),
+('Painting 7', 65.0, 35.0, 3.5, 'Description 7', 0x0123456789ABCDEF, 'Artist 7', 2021, 0, 0, 'user5@example.com', 3),
+('Painting 8', 70.0, 35.0, 3.5, 'Description 8', 0x0123456789ABCDEF, 'Artist 8', 2022, 0, 0, 'user5@example.com', 2),
+('Painting 9', 75.0, 35.0, 3.5, 'Description 9', 0x0123456789ABCDEF, 'Artist 9', 2023, 0, 0, 'user5@example.com', 1),
+('Painting 10', 80.0, 35.0, 3.5, 'Description 10', 0x0123456789ABCDEF, 'Artist 10', 2023, 0, 0, 'user5@example.com', 1);
+
 
 -- Inserting data into Leilao table
-INSERT INTO Leilao (DataInicio, DataFim, PrecoFinal, EmailComprador, CodPintura, CodEstado)
+INSERT INTO Leilao (DataInicio, DataFim, PrecoInicial, EmailComprador, CodPintura, CodEstado)
 VALUES 
-('2023-01-18 12:00:00', '2023-01-20 12:00:00', 100.00, 'user1@example.com', 1, 3),
-('2023-01-19 12:00:00', '2023-01-21 12:00:00', 150.00, 'user2@example.com', 2, 3),
-('2024-12-20 12:00:00', '2024-02-22 12:00:00', 200.00, NULL, 3, 1),
+('2023-01-18 12:00:00', '2023-01-20 12:00:00', 100.00, 'user2@example.com', 1, 3),
+('2023-01-19 12:00:00', '2023-01-21 12:00:00', 150.00, 'user1@example.com', 2, 3),
+('2022-12-20 12:00:00', '2021-02-22 12:00:00', 200.00, 'user1@example.com', 3, 3),
 ('2023-01-01 12:00:00', '2024-12-23 12:00:00', 120.00, NULL, 4, 2),
-('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 5, 2);
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 5, 2),
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 6, 2),
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 7, 2),
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 8, 2),
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 9, 2),
+('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 10, 2);
+
 
 -- Inserting data into Licitacao table
 INSERT INTO Licitacao (Valor, EmailLicitador, IdLeilao)
 VALUES 
 (120.00, 'user2@example.com', 1),
-(160.00, 'user1@example.com', 1),
-(220.00, 'user2@example.com', 2);
+(170.00, 'user1@example.com', 2),
+(270.00, 'user1@example.com', 3),
+(220.00, 'user4@example.com', 4),
+(230.00, 'user4@example.com', 4),
+(160.00, 'user3@example.com', 5),
+(200.00, 'user1@example.com', 6),
+(260.00, 'user2@example.com', 7),
+(360.00, 'user3@example.com', 8),
+(380.00, 'user3@example.com', 8),
+(190.00, 'user4@example.com', 9),
+(190.00, 'user1@example.com', 10);

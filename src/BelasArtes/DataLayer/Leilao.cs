@@ -3,13 +3,13 @@ public class Leilao {
         public int? Id { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
-        public float? PrecoInicial { get; set; }
+        public double? PrecoInicial { get; set; }
         public string? EmailComprador { get; set; }
         public int? CodPintura { get; set; }
         public int? CodEstado { get; set; }
         public List<int> CodLicitacoes { get; set; } = new List<int>();
 
-        public Leilao(int? id, DateTime dataInicio, DateTime dataFim, float? precoInicial,
+        public Leilao(int? id, DateTime dataInicio, DateTime dataFim, double? precoInicial,
         string? emailComprador, int? codPintura, int? codEstado){
             Id = id;
             DataInicio = dataInicio;

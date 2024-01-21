@@ -5,11 +5,11 @@ namespace DataLayer;
 public class Pintura {
     public int? Id { get; set; }
     public string Nome { get; set; } = "";
-    public float? Altura { get; set; }
-    public float? Largura { get; set; }
-    public float? Peso { get; set; }
+    public double? Altura { get; set; }
+    public double? Largura { get; set; }
+    public double? Peso { get; set; }
     public string Descricao { get; set; } = "";
-    public Bitmap Foto { get; set; }
+    public byte[]? Foto { get; set; }
     public string Artista { get; set; } = "";
     public int? AnoCriacao { get; set; }
     public bool? Original { get; set; }
@@ -17,8 +17,8 @@ public class Pintura {
     public string? EmailVendedor { get; set; } 
     public int? CodMovimentoArtistico { get; set; }
 
-    public Pintura(int? id, string nome, float? altura, float? largura, float? peso, string descricao,
-    Bitmap? foto, string artista, int? anoCriacao, bool? original,
+    public Pintura(int? id, string nome, double? altura, double? largura, double? peso, string descricao,
+    byte[]? foto, string artista, int? anoCriacao, bool? original,
     bool? verificacaoAutenticidade, string? emailVendedor, int? codMovimentoArtistico){
         Id = id;
         Nome = nome;

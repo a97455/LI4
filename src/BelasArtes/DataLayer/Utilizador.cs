@@ -1,5 +1,3 @@
-using System.Dynamic;
-
 namespace Datalayer;
 public class Utilizador{
         public string Email { get; set; } = "";
