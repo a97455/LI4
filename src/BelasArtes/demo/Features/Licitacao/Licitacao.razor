@@ -181,14 +181,13 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
-    private DataLayer.Licitacao licitacao { get; set; } = null;
-    private DataLayer.Pintura pintura { get; set; } = null;
-
+    private DataLayer.Licitacao? licitacao { get; set; }
+    private DataLayer.Pintura? pintura { get; set; }
 
     protected override async Task OnInitializedAsync(){
         try{
-            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(1)).FirstOrDefault();
-            pintura = (await _pinturas.GetPinturaById(2)).FirstOrDefault(); // Mudar id
+            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(1)).First();
+            pintura = (await _pinturas.GetPinturaById(2)).First(); // Mudar id
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }
