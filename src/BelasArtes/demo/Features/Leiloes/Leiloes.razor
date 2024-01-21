@@ -1,6 +1,7 @@
 @page "/leiloes"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
+@inject ILeilaoDAO leiloes
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -15,35 +16,33 @@
 <!-- Cabecalho -->
 <img style="width: 5; height: 14%; left: 0%; top: 0.5%; position: absolute" src="logo.png" />
 <div style="width: 30%; height: 20%; left: 2%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
-<div style="width: 100%; height: 0px; left: 0%; top: 14.5% ; position: absolute; border: 1px #1E1E1E solid"></div>
-
+<div style="width: 100%; height: 0px; left: 0%; top: 15% ; position: absolute; border: 1px #1E1E1E solid"></div>
 
 <button onclick="window.location.href='/profile'">
-<div style="width: 10%; height: 10%; left: 89%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
+<div style="width: 10%; height: 10%; left: 90%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
 </button>
-<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
-
-<button onclick="window.location.href='/leiloes'">
-<div style="width: 20%; height: 10%; left: 71%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados</div>
-</button>
-<div style="width: 0%; height: 8%; left: 72.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
-
-<button onclick="window.location.href='/leiloes'">
-<div style="width: 20%; height: 10%; left: 54%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões a decorrer</div>
-</button>
-<div style="width: 0%; height: 8%; left: 55.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+<div style="width: 0%; height: 8%; left: 91%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <button onclick="window.location.href='/'">
-<div style="width: 10%; height: 10%; left: 46%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
+<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
 </button>
-<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+<div style="width: 0%; height: 8%; left: 83%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<button onclick="window.location.href='/leiloes'">
+<div style="width: 10%; height: 10%; left: 74%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
+</button>
 
 
 <!--Botoes de ordenar filtrar-->
-<div style="width: 15%; height: 7.5%; left: 76%; top: 47%; position: absolute; background: #D9D9D9"></div>
+<button>
 <div style="width: 15%; height: 7.5%; left: 57%; top: 47%; position: absolute; background: #D9D9D9"></div>
-<div style="width: 15%; height: 7.5%; left: 80%; top: 47%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar</div>
-<div style="width: 15%; height: 7.5%; left: 62.5%; top: 47%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Filtrar</div>
+<div style="width: 15%; height: 7.5%; left: 57%; top: 47%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Filtrar</div>
+</button>
+
+<button>
+<div style="width: 15%; height: 7.5%; left: 76%; top: 47%; position: absolute; background: #D9D9D9"></div>
+<div style="width: 15%; height: 7.5%; left: 76%; top: 47%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar</div>
+</button>
 
 
 <!--Barra pesquisa-->
@@ -134,3 +133,9 @@
 <button>
 <img style="width: auto; height: 3.5%; left: 52.5%; top: 258.9%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
 </button>
+
+
+
+@code{
+
+}
