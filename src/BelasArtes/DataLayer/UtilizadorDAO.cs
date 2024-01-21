@@ -35,12 +35,14 @@ public class UtilizadorDAO : IUtilizadorDAO
             WHEN MATCHED THEN
                 UPDATE SET
                     Email = @Email,
+                    Nome = @Nome,
                     Telefone = @Telefone,
                     Rua = @Rua,
                     Localidade = @Localidade,
                     Cidade = @Cidade,
                     CodigoPostal = @CodigoPostal,
                     PaisResidencia = @PaisResidencia,
+                    NIG = @NIG,
                     IBAN = @IBAN,
                     PalavraPasse = @PalavraPasse
             WHEN NOT MATCHED THEN
@@ -49,12 +51,14 @@ public class UtilizadorDAO : IUtilizadorDAO
 
         var parameters = new {
             utilizador.Email,
+            utilizador.Nome,
             utilizador.Telefone,
             utilizador.Rua,
             utilizador.Localidade,
             utilizador.Cidade,
             utilizador.CodigoPostal,
             utilizador.PaisResidencia,
+            utilizador.NIG,
             utilizador.IBAN,
             utilizador.PalavraPasse
         };
