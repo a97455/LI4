@@ -15,6 +15,11 @@ public class LicitacaoDAO : ILicitacaoDAO{
         var parameters = new { Id = Id };
         return _db.LoadData<Licitacao, dynamic>(sql, parameters);
     }
+    public Task<List<Licitacao>>  LicitacoesDoLeilaoOrdenadasPorValor(int Id){
+        string sql = "SELECT * FROM Licitacao WHERE Id = @Id ORDER BY Valor";
+        var parameters = new { Id = Id };
+        return _db.LoadData<Licitacao, dynamic>(sql, parameters);
+    }
 
     public Task<List<int>> NumbLicitacoesByLeilao(int? IdLeilao){
         string sql = "SELECT COUNT(*) FROM Licitacao WHERE IdLeilao = @IdLeilao";
