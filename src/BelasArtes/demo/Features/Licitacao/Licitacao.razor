@@ -1,4 +1,4 @@
-@page "/"
+@page "/licitacao"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
@@ -10,13 +10,12 @@
 
 <!-- Fundo -->
 <div style="width: 100%; height: 90%; position: absolute; background: white"></div>
-<div style="width: 100%; height: 200%; left: 0%; top: 15%; position: absolute; background: rgba(64, 64, 64, 0.72)"></div>
+<div style="width: 100%; height: 180%; left: 0%; top: 15%; position: absolute; background: rgba(64, 64, 64, 0.72)"></div>
 
 
 <!-- Cabecalho -->
 <img style="width: 5; height: 14%; left: 0%; top: 0.5%; position: absolute" src="logo.png" />
 <div style="width: 30%; height: 20%; left: 2%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
-<div style="width: 100%; height: 0px; left: 0%; top: 14.5% ; position: absolute; border: 1px #1E1E1E solid"></div>
 
 <button onclick="window.location.href='/profile'">
 <div style="width: 10%; height: 10%; left: 89%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
@@ -75,15 +74,29 @@ border: none; outline: none;">
 
 
 <!--Fundo da pagina-->
-<div style="width: 166px; height: 56px; left: 107px; top: 1107px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Dimensão:</div>
-<div style="width: 166px; height: 56px; left: 108px; top: 977px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Descrição:</div>
-<div style="width: 181px; height: 56px; left: 108px; top: 1237px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Autenticidade:</div>
-<div style="width: 248px; height: 56px; left: 107px; top: 1367px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Movimento artístico:</div>
-<div style="width: 166px; height: 56px; left: 477px; top: 1107px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Peso:</div>
-<div style="width: 200px; height: 56px; left: 477px; top: 1237px; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Data de criação:</div>
-<div style="width: 450px; height: 39px; left: 108px; top: 1027px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Pequeno texto a descrever a obra.</div>
-<div style="width: 202px; height: 39px; left: 108px; top: 1163px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">A: 000cm x L: 000cm</div>
-<div style="width: 202px; height: 39px; left: 107px; top: 1293px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Original/Réplica</div>
-<div style="width: 202px; height: 39px; left: 108px; top: 1423px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento</div>
-<div style="width: 202px; height: 39px; left: 477px; top: 1293px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">01/01/2000</div>
-<div style="width: 202px; height: 39px; left: 478px; top: 1163px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">00.00 kg</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 130%; position: absolute; color: black; font-size: 25px; font-family: 
+Inter; font-weight: 400; word-wrap: break-word">Descrição:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 135.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">Pequeno texto a descrever a obra.</div>
+
+<div style="width: 30%; height: 15%; left: 7.5%; top: 145%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Dimensão:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 150.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">A: 000cm x L: 000cm</div>
+
+<div style="width: 30%; height: 15%; left: 35%; top: 145%; position: absolute; color: black; font-size: 25px; font-family: 
+Inter; font-weight: 400; word-wrap: break-word">Peso:</div>
+<div style="width: 30%; height: 15%; left: 35%; top: 150.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">00.00 kg</div>
+
+<div style="width: 30%; height: 15%; left: 7.5%; top: 160%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Autenticidade:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 165.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">Original/Réplica</div>
+
+<div style="width: 30%; height: 15%; left: 35%; top: 160%; position: absolute; color: black; font-size: 25px; font-family: 
+Inter; font-weight: 400; word-wrap: break-word">Data de criação:</div>
+<div style="width: 30%; height: 15%; left: 35%; top: 165.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">01/01/2000</div>
+
+<div style="width: 30%; height: 15%; left: 7.5%; top: 175%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Movimento artístico:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 180.5%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento</div>
+
