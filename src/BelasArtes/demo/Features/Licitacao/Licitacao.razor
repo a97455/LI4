@@ -120,17 +120,4 @@ Inter; font-weight: 167; word-wrap: break-word">01/01/2000</div>
 @code {
     private int leilaoId { get; set; } = 1;
     private DataLayer.Licitacao licitacao { get; set; }
-
-    protected override async Task OnInitializedAsync(){
-        try{
-            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilaoId)).FirstOrDefault();
-        }catch (Exception ex){
-            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-        }
-    }
 }
-
-
-
-
-
