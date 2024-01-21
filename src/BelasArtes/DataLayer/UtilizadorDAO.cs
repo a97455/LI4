@@ -30,8 +30,8 @@ public class UtilizadorDAO : IUtilizadorDAO
     public Task PutUtilizador(Utilizador utilizador){
         string sql = @"
             MERGE INTO Utilizador AS target
-            USING (VALUES (@UtilizadorId)) AS source (UtilizadorId)
-            ON target.UtilizadorId = source.UtilizadorId
+            USING (VALUES (@Email)) AS source (Email)
+            ON target.Email = source.Email
             WHEN MATCHED THEN
                 UPDATE SET
                     Email = @Email,
@@ -46,8 +46,8 @@ public class UtilizadorDAO : IUtilizadorDAO
                     IBAN = @IBAN,
                     PalavraPasse = @PalavraPasse
             WHEN NOT MATCHED THEN
-                INSERT (UtilizadorId, Email, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, IBAN, PalavraPasse)
-                VALUES (@UtilizadorId, @Email, @Telefone, @Rua, @Localidade, @Cidade, @CodigoPostal, @PaisResidencia, @IBAN, @PalavraPasse);";
+                INSERT (Email, Nome, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, NIG, IBAN, PalavraPasse)
+                VALUES (@Email, @Nome, @Telefone, @Rua, @Localidade, @Cidade, @CodigoPostal, @PaisResidencia, @NIG, @IBAN, @PalavraPasse);";
 
         var parameters = new {
             utilizador.Email,

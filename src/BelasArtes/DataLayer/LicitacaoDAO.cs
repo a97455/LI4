@@ -51,7 +51,7 @@ public class LicitacaoDAO : ILicitacaoDAO{
                     EmailLicitador = @EmailLicitador
             WHEN NOT MATCHED THEN
                 INSERT (Valor, EmailLicitador)
-                VALUES (@Valor, @EmailLicitador)";
+                VALUES (@Valor, @EmailLicitador);";
 
         var parameters = new{
             licitacao.Valor,
