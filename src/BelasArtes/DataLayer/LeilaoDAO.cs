@@ -11,10 +11,10 @@ public class LeilaoDAO : ILeilaoDAO{
         return _db.LoadData<Leilao, dynamic>(sql, new { });
     }
     
-    public Task<List<Leilao>> GetLeilaoById(int? leilaoId)
+    public Task<List<Leilao>> GetLeilaoById(int? Id)
     {
-        string sql = "select * from Leilao where Id = @LeilaoId";
-        var parameters = new { LeilaoId = leilaoId };
+        string sql = "select * from Leilao where Id = @Id";
+        var parameters = new {Id};
         return _db.LoadData<Leilao, dynamic>(sql, parameters);
     }
 
@@ -25,15 +25,15 @@ public class LeilaoDAO : ILeilaoDAO{
             ON target.id = source.id
             WHEN MATCHED THEN
                 UPDATE SET 
-                    target.data_inicio = @data_inicio,
-                    target.data_fim = @data_fim,
-                    target.preco_inicial = @preco_inicial,
-                    target.comprador_email = @comprador_email,
-                    target.pintura_id = @pintura_id,
-                    target.id_estado = @id_estado
+                    target.DataInicio = @DataInicio,
+                    target.DataFim = @DataFim,
+                    target.PrecoFinal = @PrecoFinal,
+                    target.EmailComprador = @EmailComprador,
+                    target.CodPintura = @CodPintura,
+                    target.CodEstado = @CodEstado
             WHEN NOT MATCHED THEN
-                INSERT (data_inicio, data_fim, preco_inicial, comprador_email, pintura_id, id_estado)
-                VALUES (@data_inicio, @data_fim, @preco_inicial, @comprador_email, @pintura_id, @id_estado);";
+                INSERT (DataInicio, DataFim, PrecoFinal, EmailComprador, CodPintura, CodEstado)
+                VALUES (@DataInicio, @DataFim, @PrecoFinal, @EmailComprador, @CodPintura, @CodEstado)";
 
         var parameters = new{
             leilao.DataInicio,
@@ -48,14 +48,13 @@ public class LeilaoDAO : ILeilaoDAO{
         return _db.SaveData(mergeSql, parameters);
     }
 
-    public Task<List<int>> ContaLeiloesDeUmDadoTipo(int tipo_leilao){
-        string sql = "SELECT COUNT(*) FROM Leilao WHERE id_estado = @tipo_leilao;";
+    public Task<List<int>> ContaLeiloesDeUmDadoTipo(int CodEstado){
+        string sql = "SELECT COUNT(*) FROM Leilao WHERE CodEstado = @CodEstado";
 
         // Fornecendo um objeto vazio como parâmetros, já que a consulta não tem parâmetros
-        var parameters = new {tipo_leilao};
+        var parameters = new {CodEstado};
 
         // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
-
         return _db.LoadData<int, dynamic>(sql, parameters);
     }
 }

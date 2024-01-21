@@ -8,18 +8,4 @@ public class Leilao {
         public int CodPintura { get; set; }
         public int CodEstado { get; set; }
         public List<int> CodLicitacoes { get; set; } = new List<int>();
-
-        public Leilao(){}
-
-        public Leilao(int? id, DateTime dataInicio, DateTime dataFim, float precoInicial, string? emailComprador,
-                int codPintura, int codEstado){
-                Id = id;
-                DataInicio = dataInicio;
-                DataFim = dataFim;
-                PrecoInicial = precoInicial;
-                EmailComprador = emailComprador;
-                CodPintura = codPintura;
-                CodEstado = codEstado;
-                CodLicitacoes = new List<int>();
-        }
 }

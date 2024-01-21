@@ -10,21 +10,21 @@ public class LicitacaoDAO : ILicitacaoDAO{
         return _db.LoadData<Licitacao, dynamic>(sql, new { });
     }
 
-    public Task<List<Licitacao>> GetLicitacaoById(int? licitacaoId){
+    public Task<List<Licitacao>> GetLicitacaoById(int? Id){
         string sql = "SELECT * FROM Licitacao WHERE Id = @Id";
-        var parameters = new { Id = licitacaoId };
+        var parameters = new { Id = Id };
         return _db.LoadData<Licitacao, dynamic>(sql, parameters);
     }
 
-    public Task<List<int>> NumbLicitacoesByLeilao(int? idLeilao){
-        string sql = "SELECT COUNT(*) FROM Licitacao WHERE id_leilao = @id_leilao";
-        var parameters = new { id_leilao = idLeilao };
+    public Task<List<int>> NumbLicitacoesByLeilao(int? IdLeilao){
+        string sql = "SELECT COUNT(*) FROM Licitacao WHERE IdLeilao = @IdLeilao";
+        var parameters = new {IdLeilao};
         return _db.LoadData<int, dynamic>(sql, parameters);
     }
 
-    public Task<List<int>> MaiorLicitacaoByLeilao(int? idLeilao) {
-        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE id_leilao = @id_leilao;";
-        var parameters = new { id_leilao = idLeilao };
+    public Task<List<int>> MaiorLicitacaoByLeilao(int? IdLeilao) {
+        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE IdLeilao = @IdLeilao";
+        var parameters = new {IdLeilao};
         return  _db.LoadData<int, dynamic>(sql, parameters);
     }
 
@@ -46,7 +46,7 @@ public class LicitacaoDAO : ILicitacaoDAO{
                     EmailLicitador = @EmailLicitador
             WHEN NOT MATCHED THEN
                 INSERT (Valor, EmailLicitador)
-                VALUES (@Valor, @EmailLicitador);";
+                VALUES (@Valor, @EmailLicitador)";
 
         var parameters = new{
             licitacao.Valor,
@@ -54,6 +54,6 @@ public class LicitacaoDAO : ILicitacaoDAO{
         };
 
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
-        return _db.SaveData(sql, parameters);;
+        return _db.SaveData(sql, parameters);
     }
 }

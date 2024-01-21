@@ -10,18 +10,18 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Utilizador')
 BEGIN
     CREATE TABLE [Utilizador] (
-        e_mail varchar(40) NOT NULL UNIQUE,
-        telefone int NOT NULL,
-        rua varchar(30) NOT NULL,
-        localidade varchar(30) NOT NULL,
-        cidade varchar(30) NOT NULL,
-        codigo_postal varchar(30) NOT NULL,
-        pais_de_residencia varchar(30) NOT NULL,
-        IBAN varchar(30) NOT NULL UNIQUE,
-        palavra_passe varchar(30) NOT NULL,
+        [Email] varchar(40) NOT NULL UNIQUE,
+        [Telefone] int NOT NULL,
+        [Rua] varchar(30) NOT NULL,
+        [Localidade] varchar(30) NOT NULL,
+        [Cidade] varchar(30) NOT NULL,
+        [CodigoPostal] varchar(30) NOT NULL,
+        [PaisResidencia] varchar(30) NOT NULL,
+        [IBAN] varchar(30) NOT NULL UNIQUE,
+        [PalavraPasse] varchar(30) NOT NULL,
         CONSTRAINT [PK_UTILIZADOR] PRIMARY KEY CLUSTERED
         (
-            [e_mail] ASC
+            [Email] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 END
@@ -31,11 +31,11 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Movimento_Artistico')
 BEGIN
     CREATE TABLE [Movimento_Artistico] (
-        id int IDENTITY(1,1) NOT NULL UNIQUE,
-        nome varchar(40) NOT NULL,
+        [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
+        [Nome] varchar(40) NOT NULL,
         CONSTRAINT [PK_MOVIMENTO_ARTISTICO] PRIMARY KEY CLUSTERED
         (
-            [id] ASC
+            [Id] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 END
@@ -45,11 +45,11 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Estado')
 BEGIN
     CREATE TABLE [Estado] (
-        id int IDENTITY(1,1) NOT NULL UNIQUE,
-        nome varchar(40) NOT NULL,
+        [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
+        [Nome] varchar(40) NOT NULL,
         CONSTRAINT [PK_ESTADO] PRIMARY KEY CLUSTERED
         (
-            [id] ASC
+            [Id] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 END
@@ -59,31 +59,31 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Pintura')
 BEGIN
     CREATE TABLE [Pintura] (
-        id int IDENTITY(1,1) NOT NULL UNIQUE,
-        nome varchar(40) NOT NULL,
-        altura float NOT NULL,
-        largura float NOT NULL,
-        peso float NOT NULL,
-        descricao varchar(100) NOT NULL,
-        foto varbinary(max) NOT NULL,
-        artista varchar(40) NOT NULL,
-        ano_criacao int NOT NULL,
-        original bit NOT NULL,
-        verificacao_autenticidade bit NOT NULL,
-        id_vendedor varchar(40),
-        id_movimento_artistico int,
+        [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
+        [Nome] varchar(40) NOT NULL,
+        [Altura] float NOT NULL,
+        [Largura] float NOT NULL,
+        [Peso] float NOT NULL,
+        [Descricao] varchar(100) NOT NULL,
+        [Foto] varbinary(max) NOT NULL,
+        [Artista] varchar(40) NOT NULL,
+        [AnoCriacao] int NOT NULL,
+        [Original] bit NOT NULL,
+        [VerificacaoAutenticidade] bit NOT NULL,
+        [EmailVendedor] varchar(40),
+        [CodMovimentoArtistico] int,
         CONSTRAINT [PK_PINTURA] PRIMARY KEY CLUSTERED
         (
             [id] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 
-    ALTER TABLE [Pintura] WITH CHECK ADD CONSTRAINT [Pintura_fk0] FOREIGN KEY ([id_vendedor]) REFERENCES [Utilizador]([e_mail])
+    ALTER TABLE [Pintura] WITH CHECK ADD CONSTRAINT [Pintura_fk0] FOREIGN KEY ([EmailVendedor]) REFERENCES [Utilizador]([Email])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Pintura] CHECK CONSTRAINT [Pintura_fk0];
 
-    ALTER TABLE [Pintura] WITH CHECK ADD CONSTRAINT [Pintura_fk1] FOREIGN KEY ([id_movimento_artistico]) REFERENCES [Movimento_Artistico]([id])
+    ALTER TABLE [Pintura] WITH CHECK ADD CONSTRAINT [Pintura_fk1] FOREIGN KEY ([CodMovimentoArtistico]) REFERENCES [Movimento_Artistico]([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Pintura] CHECK CONSTRAINT [Pintura_fk1];
@@ -94,30 +94,30 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Leilao')
 BEGIN
     CREATE TABLE [Leilao] (
-        id int IDENTITY(1,1) NOT NULL UNIQUE,
-        data_inicio datetime2 NOT NULL,
-        data_fim datetime2 NOT NULL,
-        preco_inicial float NOT NULL,
-        comprador_email varchar(40),
-        pintura_id int,
-        id_estado int,
+        [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
+        [DataInicio] datetime2 NOT NULL,
+        [DataFim] datetime2 NOT NULL,
+        [PrecoFinal] float NOT NULL,
+        [EmailComprador] varchar(40),
+        [CodPintura] int,
+        [CodEstado] int,
         CONSTRAINT [PK_LEILAO] PRIMARY KEY CLUSTERED
         (
             [id] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 
-    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk0] FOREIGN KEY ([comprador_email]) REFERENCES [Utilizador]([e_mail])
+    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk0] FOREIGN KEY ([EmailComprador]) REFERENCES [Utilizador]([Email])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Leilao] CHECK CONSTRAINT [Leilao_fk0];
 
-    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk1] FOREIGN KEY ([pintura_id]) REFERENCES [Pintura]([id])
+    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk1] FOREIGN KEY ([CodPintura]) REFERENCES [Pintura]([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Leilao] CHECK CONSTRAINT [Leilao_fk1];
 
-    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk2] FOREIGN KEY ([id_estado]) REFERENCES [Estado]([id])
+    ALTER TABLE [Leilao] WITH CHECK ADD CONSTRAINT [Leilao_fk2] FOREIGN KEY ([CodEstado]) REFERENCES [Estado]([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Leilao] CHECK CONSTRAINT [Leilao_fk2];
@@ -128,22 +128,22 @@ GO
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Licitacao')
 BEGIN
     CREATE TABLE [Licitacao] (
-        id int IDENTITY(1,1) NOT NULL UNIQUE,
-        valor float NOT NULL,
-        email_licitador varchar(40),
-        id_leilao int,
+        [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
+        [Valor] float NOT NULL,
+        [EmailLicitador] varchar(40),
+        [IdLeilao] int,
         CONSTRAINT [PK_LICITACAO] PRIMARY KEY CLUSTERED
         (
             [id] ASC
         ) WITH (IGNORE_DUP_KEY = OFF)
     );
 
-    ALTER TABLE [Licitacao] WITH CHECK ADD CONSTRAINT [Licitacao_fk0] FOREIGN KEY ([email_licitador]) REFERENCES [Utilizador]([e_mail])
+    ALTER TABLE [Licitacao] WITH CHECK ADD CONSTRAINT [Licitacao_fk0] FOREIGN KEY ([EmailLicitador]) REFERENCES [Utilizador]([Email])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Licitacao] CHECK CONSTRAINT [Licitacao_fk0];
 
-    ALTER TABLE [Licitacao] WITH CHECK ADD CONSTRAINT [Licitacao_fk1] FOREIGN KEY ([id_leilao]) REFERENCES [Leilao]([id])
+    ALTER TABLE [Licitacao] WITH CHECK ADD CONSTRAINT [Licitacao_fk1] FOREIGN KEY ([IdLeilao]) REFERENCES [Leilao]([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION
 
     ALTER TABLE [Licitacao] CHECK CONSTRAINT [Licitacao_fk1];
@@ -151,7 +151,7 @@ END
 GO
 
 -- Inserting data into Utilizador table
-INSERT INTO Utilizador (e_mail, telefone, rua, localidade, cidade, codigo_postal, pais_de_residencia, IBAN, palavra_passe)
+INSERT INTO Utilizador (Email, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, IBAN, PalavraPasse)
 VALUES 
 ('user1@example.com', 123456789, 'Street 1', 'Location 1', 'City 1', '12345', 'Country 1', 'IBAN123', 'password1'),
 ('user2@example.com', 987654321, 'Street 2', 'Location 2', 'City 2', '54321', 'Country 2', 'IBAN456', 'password2'),
@@ -160,7 +160,7 @@ VALUES
 ('user5@example.com', 999999999, 'Street 5', 'Location 5', 'City 5', '54321', 'Country 5', 'IBAN654', 'password5');
 
 -- Inserting data into Movimento_Artistico table
-INSERT INTO Movimento_Artistico (nome)
+INSERT INTO Movimento_Artistico (Nome)
 VALUES 
 ('Antiguidade Ocidental e Oriental,'),
 ('Idade Média'),
@@ -170,14 +170,14 @@ VALUES
 ('Outro');
 
 -- Inserting data into Estado table
-INSERT INTO Estado (nome)
+INSERT INTO Estado (Nome)
 VALUES 
 ('Agendado'),
 ('A decorrer'),
 ('Terminado');
 
 -- Inserting data into Pintura table
-INSERT INTO Pintura (nome, altura, largura, peso, descricao, foto, artista, ano_criacao, original, verificacao_autenticidade, id_vendedor, id_movimento_artistico)
+INSERT INTO Pintura (Nome, Altura, Largura, Peso, Descricao, Foto, Artista, AnoCriacao, Original, VerificacaoAutenticidade, EmailVendedor, CodMovimentoArtistico)
 VALUES 
 ('Painting 1', 50.5, 30.2, 2.5, 'Description 1', 0x0123456789ABCDEF, 'Artist 1', 2022, 1, 1, 'user1@example.com', 1),
 ('Painting 2', 40.0, 20.0, 3.0, 'Description 2', 0xFEDCBA9876543210, 'Artist 2', 2021, 1, 0, 'user2@example.com', 2),
@@ -186,7 +186,7 @@ VALUES
 ('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 0x0123456789ABCDEF, 'Artist 5', 2024, 0, 1, 'user5@example.com', 5);
 
 -- Inserting data into Leilao table
-INSERT INTO Leilao (data_inicio, data_fim, preco_inicial, comprador_email, pintura_id, id_estado)
+INSERT INTO Leilao (DataInicio, DataFim, PrecoFinal, EmailComprador, CodPintura, CodEstado)
 VALUES 
 ('2023-01-18 12:00:00', '2023-01-20 12:00:00', 100.00, 'user1@example.com', 1, 3),
 ('2023-01-19 12:00:00', '2023-01-21 12:00:00', 150.00, 'user2@example.com', 2, 3),
@@ -195,7 +195,7 @@ VALUES
 ('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 5, 2);
 
 -- Inserting data into Licitacao table
-INSERT INTO Licitacao (valor, email_licitador, id_leilao)
+INSERT INTO Licitacao (Valor, EmailLicitador, IdLeilao)
 VALUES 
 (120.00, 'user2@example.com', 1),
 (160.00, 'user1@example.com', 1),

@@ -10,9 +10,9 @@ public class PinturaDAO : IPinturaDAO{
         return _db.LoadData<Pintura, dynamic>(sql, new { });
     }
 
-    public Task<List<Pintura>> GetPinturaById(int? pinturaId){
+    public Task<List<Pintura>> GetPinturaById(int? Id){
         string sql = "SELECT * FROM Pintura WHERE Id = @Id";
-        var parameters = new { Id = pinturaId };
+        var parameters = new {Id};
         return _db.LoadData<Pintura, dynamic>(sql, parameters);
     }
 
