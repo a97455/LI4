@@ -33,7 +33,7 @@ public class LeilaoDAO : ILeilaoDAO{
                     target.CodEstado = @CodEstado
             WHEN NOT MATCHED THEN
                 INSERT (DataInicio, DataFim, PrecoFinal, EmailComprador, CodPintura, CodEstado)
-                VALUES (@DataInicio, @DataFim, @PrecoFinal, @EmailComprador, @CodPintura, @CodEstado)";
+                VALUES (@DataInicio, @DataFim, @PrecoFinal, @EmailComprador, @CodPintura, @CodEstado);";
 
         var parameters = new{
             leilao.DataInicio,
