@@ -1,10 +1,10 @@
-@page "/licitacao"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
-@inject ILeilaoDAO leiloes
-@inject IUtilizadorDAO utilizadores
-@inject ILicitacaoDAO licitacoes
+@inject IPinturaDAO _pinturas
+@inject ILicitacaoDAO _licitacoes
 @using DataLayer
+
 
 <PageTitle>BelasArtes</PageTitle>
 
@@ -49,18 +49,35 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
 
 <div style="width: 42.5%; height: 87.5%; left: 40%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 
 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação atual:</div>
-<div style="width: 42.5%; height: 87.5%; left: 40%; top: 44.5%; position: absolute; text-align: center; color: black; font-size: 55px; font-family: Inter; font-weight: 300; word-wrap: break-word">€ 000</div>
+<div style="width: 42.5%; height: 87.5%; left: 40%; top: 44.5%; position: absolute; text-align: center; color: black; font-size: 55px; font-family: Inter; font-weight: 300; word-wrap: break-word">
+    @if (licitacao != null){
+        @($"{licitacao.Valor} €")
+    }else{
+        <span>Loading...</span>
+    }</div>
 
 <div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 
 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Efetuada por:</div>
-<div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 47%; position: absolute; text-align: center; color: black; font-size: 28px; font-family: Inter; font-weight: 400; word-wrap: break-word">Nome do comprador</div>
+<div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 47%; position: absolute; text-align: center; color: black; font-size: 28px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+    @if (licitacao != null){
+        @($"{licitacao.EmailLicitador} €")
+    }else{
+        <span>Loading...</span>
+    }
+</div>
 
 <div style="width: 20%; height: 15%; left: 61.5%; top: 65%; position: absolute; background: white"></div>
 <div style="width: 20%; height: 15%; left: 54.5%; top: 65%; position: absolute; text-align: center; color: black; font-size: 70px; 
 font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 <input type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;" placeholder="Valor da licitação...">
 <div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 
-23px; font-family: Inter; font-weight: 167; word-wrap: break-word">Valor mínimo: € 000</div>
+23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+    @if (licitacao != null){
+        @($"Valor mínimo: {licitacao.Valor*1.05}€")
+    }else{
+        <span>Loading...</span>
+    }
+</div>
 
 
 <div style="width: 30%; height: 10%; left: 58.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">€00 para Portugal, €00 envio internacional</div>
@@ -99,4 +116,21 @@ Inter; font-weight: 167; word-wrap: break-word">01/01/2000</div>
 
 <div style="width: 30%; height: 15%; left: 7.5%; top: 175%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Movimento artístico:</div>
 <div style="width: 30%; height: 15%; left: 7.5%; top: 180.5%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento</div>
+
+@code {
+    private int leilaoId { get; set; } = 1;
+    private DataLayer.Licitacao licitacao { get; set; }
+
+    protected override async Task OnInitializedAsync(){
+        try{
+            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilaoId)).FirstOrDefault();
+        }catch (Exception ex){
+            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
+        }
+    }
+}
+
+
+
+
 
