@@ -6,4 +6,5 @@ public interface ILicitacaoDAO{
    public Task PutLicitacao(Licitacao licitacao);
    public Task<List<int>> MaiorLicitacaoByLeilao(int? IdLeilao);
     public Task<List<int>> ContaLicitacoes();
+    public Task<List<Licitacao>>  LicitacoesDoLeilaoOrdenadasPorValor(int Id);
 }

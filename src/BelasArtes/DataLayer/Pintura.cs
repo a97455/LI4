@@ -9,7 +9,7 @@ public class Pintura {
     public float Largura { get; set; }
     public float Peso { get; set; }
     public string Descricao { get; set; } = "";
-    public Bitmap? Foto { get; set; }
+    public Byte[] Foto { get; set; }
     public string Artista { get; set; } = "";
     public int AnoCriacao { get; set; }
     public bool Original { get; set; }
