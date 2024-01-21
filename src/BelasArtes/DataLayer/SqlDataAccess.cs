@@ -14,9 +14,10 @@ public class SqlDataAccess : ISqlDataAccess
         _config = config;
     }
     public async Task<List<T>> LoadData<T, U>(string sql, U parameters)
-    {
+    {   
         string? connectionString = _config.GetConnectionString(ConnectionStringName);
         using IDbConnection connection = new SqlConnection(connectionString);
+         Console.WriteLine(connection);
         var data = await connection.QueryAsync<T>(sql, parameters);
         return data.ToList();
     }
