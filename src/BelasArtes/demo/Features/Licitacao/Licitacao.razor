@@ -71,6 +71,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
 </div>
 
 
+
 <div style="width: 42.5%; height: 87.5%; left: 40%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 
 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação atual:</div>
 <div style="width: 42.5%; height: 87.5%; left: 40%; top: 44.5%; position: absolute; text-align: center; color: black; font-size: 55px; font-family: Inter; font-weight: 300; word-wrap: break-word">
@@ -93,7 +94,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
 <div style="width: 20%; height: 15%; left: 61.5%; top: 65%; position: absolute; background: white"></div>
 <div style="width: 20%; height: 15%; left: 54.5%; top: 65%; position: absolute; text-align: center; color: black; font-size: 70px; 
 font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
-<input type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;" placeholder="Valor da licitação...">
+<input id="valorLicitacao" type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;" @bind="idValorLicitacao" placeholder="Valor da licitação...">
 <div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 
 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (licitacao != null && leilao != null){
@@ -114,12 +115,27 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 </div>
 <img style="width: 7.5%; height: 15%; left: 52.5%; top: 93%; position: absolute" src="truckLogo.png" />
 
-<button style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
-border: none; outline: none;">
+
+<button id="submeterBtn" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
+border: none; outline: none;" @onclick="OnButtonClick">
     <span style="color: white; font-size: 250%; font-family: Inter;">Submeter</span>
 </button>
 
-
+@code {
+    string idValorLicitacao { get; set; }
+    void OnButtonClick(){
+        if(licitacao != null){
+            if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
+                if (valorLicitacao > licitacao.Valor * 1.05){
+                    NavigationManager.NavigateTo("/home"); //MUDAR PAGINASSSSSSSSSSSSSSSSSSSSSSSsss
+                } else {
+                    NavigationManager.NavigateTo("/"); //MUdaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrr
+                }
+            }  
+        }
+        idValorLicitacao = "";
+    }
+}
 
 <!--Fundo da pagina-->
 <div style="width: 30%; height: 15%; left: 7.5%; top: 130%; position: absolute; color: black; font-size: 25px; font-family: 
@@ -209,10 +225,9 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
-    private DataLayer.Leilao leilao{get;set;} = null;
-    private DataLayer.Licitacao licitacao{ get; set; } = null;
-    private DataLayer.Pintura pintura{ get; set;} = null;
-
+    private DataLayer.Licitacao licitacao { get; set; }
+    private DataLayer.Pintura pintura { get; set; }
+    private DataLayer.Leilao leilao {get; set; }
 
     protected override async Task OnInitializedAsync(){
         try{
