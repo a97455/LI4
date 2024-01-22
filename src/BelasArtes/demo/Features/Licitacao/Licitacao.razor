@@ -41,6 +41,8 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
 
 <!--Caixa Esquerda-->
 <div style="width: 42.5%; height: 87.5%; left: 5%; top: 35%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+<img id="imagemPintura" style="width: 42.5%; height: 87.5%; left: 5%; top: 35%; position: absolute" />
+
 <div style="width: 42.5%; height: 87.5% ; left : 5%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 
 64px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
@@ -207,9 +209,9 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
-    private DataLayer.Leilao leilao {get;set;} = null;
-    private DataLayer.Licitacao licitacao { get; set; } = null;
-    private DataLayer.Pintura pintura { get; set; } = null;
+    private DataLayer.Leilao? leilao{get;set;}
+    private DataLayer.Licitacao? licitacao{ get; set; }
+    private DataLayer.Pintura? pintura{ get; set;}
 
 
     protected override async Task OnInitializedAsync(){
