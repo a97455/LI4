@@ -191,9 +191,9 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
-    private DataLayer.Leilao leilao {get;set;} = null;
-    private DataLayer.Licitacao licitacao { get; set; } = null;
-    private DataLayer.Pintura pintura { get; set; } = null;
+    private DataLayer.Leilao? leilao {get;set;}
+    private DataLayer.Licitacao? licitacao { get; set; }
+    private DataLayer.Pintura? pintura { get; set; }
 
 
     protected override async Task OnInitializedAsync(){
