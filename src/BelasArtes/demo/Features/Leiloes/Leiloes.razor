@@ -1,4 +1,4 @@
-@page "/leiloes"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
@@ -26,13 +26,13 @@
 </button>
 <div style="width: 0%; height: 8%; left: 91%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button onclick="window.location.href='/'">
-<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
+<button onclick="window.location.href='/leiloes'">
+<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
 </button>
 <div style="width: 0%; height: 8%; left: 83%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button onclick="window.location.href='/leiloes'">
-<div style="width: 10%; height: 10%; left: 74%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
+<button onclick="window.location.href='/'">
+<div style="width: 10%; height: 10%; left: 74%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
 </button>
 
 
@@ -52,31 +52,29 @@
 <div style="width: 100%; height: 25.5%; left: 0%; top: 14.5%; position: absolute; background: #404040;"></div>
 <div style="width: 60%; height: 10%; left: 20%; top: 22.5%; position: absolute; background: #f1f1f1; border-radius: 39px;"></div>
 <img style="width: 4%; height: 7.5%; left: 22%; top: 23.5%; position: absolute;" src="lupa.png" />
-<input type="text" style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;" placeholder="Pesquisar autor...">
+<input type="text" placeholder="Pesquisar autor..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
 
 
 @for (int i = 0; i < Math.Min(8, listLeiloes.Count); i++){
     var leilao = listLeiloes[i];
 
-    foreach (LeilaoFacade leilaofacade in listLeiloesFacade){
-        if (leilaofacade.Leilao.Id.Equals(leilao.Id)){  
-            if(@i%2==0){
-                <!--Leilao 1-->
-                <div style="width: 40%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-                <div style="width: 20%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-                <div style="width: 20%; height: 10%; left: 27.5%; top: @(64+(25*i))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @leilaofacade.Pintura.Nome </div>
-                <div style="width: 10%; height: 5%; left: 27.5%; top: @(73+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @leilaofacade.Vendedor.Nome</div>
-                <div style="width: 15%; height: 7%; left: 27.5%; top: @(80+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @leilaofacade.MaiorLicitacao</div>
-                <div style="width: 15%; height: 10%; left: 27.5%; top: @(87+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
-            }else{
-                <!--Leilao 2-->
-                <div style="width: 40%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-                <div style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-                <div style="width: 20%; height: 10%; left: 77.5%; top: @(64+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @leilaofacade.Pintura.Nome </div>
-                <div style="width: 10%; height: 5%; left: 77.5%; top: @(73+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @leilaofacade.Vendedor.Nome</div>
-                <div style="width: 15%; height: 7%; left: 77.5%; top: @(80+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @leilaofacade.MaiorLicitacao</div>
-                <div style="width: 15%; height: 10%; left: 77.5%; top: @(87+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
-            }
+    if (dictLeilaoFacade[leilao.Id].Leilao.Id.Equals(leilao.Id)){  
+        if(@i%2==0){
+            <!--Leilao 1-->
+            <div style="width: 40%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+            <div style="width: 20%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <div style="width: 20%; height: 10%; left: 27.5%; top: @(64+(25*i))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+            <div style="width: 10%; height: 5%; left: 27.5%; top: @(73+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+            <div style="width: 15%; height: 7%; left: 27.5%; top: @(80+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+            <div style="width: 15%; height: 10%; left: 27.5%; top: @(87+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
+        }else{
+            <!--Leilao 2-->
+            <div style="width: 40%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+            <div style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <div style="width: 20%; height: 10%; left: 77.5%; top: @(64+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+            <div style="width: 10%; height: 5%; left: 77.5%; top: @(73+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+            <div style="width: 15%; height: 7%; left: 77.5%; top: @(80+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+            <div style="width: 15%; height: 10%; left: 77.5%; top: @(87+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
         }
     }
 }
@@ -95,12 +93,14 @@
 
 
 @code{
-    private List<Leilao> listLeiloes = new List<Leilao>();
-    private List<LeilaoFacade> listLeiloesFacade = new List<LeilaoFacade>();    
-    private List<int> listNumLicitacoesByLeilao = new List<int>();
-    private List<int> listMaiorLicitacaoByLeilao = new List<int>();
+    private List<Leilao> listLeiloes = new List<Leilao>(); //tem todos os leiloes
+    private Dictionary<int,LeilaoFacade> dictLeilaoFacade = new Dictionary<int, LeilaoFacade>(); //tem todos os leiloes
+    private List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
+    private List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
 
-    private class LeilaoFacade{
+    private string artistaPretendido {get;set;} = "";
+
+    class LeilaoFacade{
         public Leilao Leilao;
         public int MaiorLicitacao {get;set;}
         public Pintura Pintura {get;set;}
@@ -112,6 +112,22 @@
             this.Pintura=Pintura;
             this.Vendedor=Vendedor;
         }
+    }
+
+    private void HandleEnterDown(KeyboardEventArgs e){
+        if (e.Key == "Enter"){
+            List<Leilao> leiloesByArtista=FiltrarByArtista(artistaPretendido);
+        }
+    }
+
+    private List<Leilao> FiltrarByArtista(string artistaPretendido){
+        List<Leilao> aux = new List<Leilao>();
+        foreach (Leilao leilao in this.listLeiloes) {
+            if(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(artistaPretendido)){
+                aux.Add(leilao);
+            }
+        }
+        return aux;
     }
     
     public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
@@ -182,21 +198,24 @@
 
     protected override async Task OnInitializedAsync(){
         listLeiloes = await leiloes.LeiloesByEstado(2); //so leiloes ativos
+        List<Leilao> auxLicitados = new List<Leilao>();
+        List<Leilao> auxNaoLicitados = new List<Leilao>();
 
         foreach(Leilao leilao in listLeiloes){
             if ((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).Any()){        
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
-
-                int maiorLicitacao = (await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First();
-                listMaiorLicitacaoByLeilao.Add(maiorLicitacao);
-
-                Pintura pintura = (await pinturas.GetPinturaById(leilao.CodPintura)).First();
-                if (pintura.EmailVendedor!= null){
-                    listLeiloesFacade.Add(new LeilaoFacade(leilao,maiorLicitacao,pintura,
-                    (await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
-                }
+                listMaiorLicitacaoByLeilao.Add((await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First());
+                auxLicitados.Add(leilao);
+            }else{
+                auxNaoLicitados.Add(leilao);
+            }
+            Pintura pintura = (await pinturas.GetPinturaById(leilao.CodPintura)).First();
+            if (pintura.EmailVendedor!= null){
+                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,(await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First(),
+                pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
             }
         }
-        listLeiloes=OrdenarLeiloesDecorrer(listLeiloes,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,0);
+        listLeiloes=OrdenarLeiloesDecorrer(auxLicitados,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,0);
+        listLeiloes.AddRange(auxNaoLicitados);
     }
 }
