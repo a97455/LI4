@@ -1,6 +1,7 @@
 @page "/profile"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
+@inject IUtilizadorDAO _users;
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -10,29 +11,21 @@
 <!-- Cabecalho -->
 <img style="width: 5; height: 14%; left: 0%; top: 0.5%; position: absolute" src="logo.png" />
 <div style="width: 30%; height: 20%; left: 2%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
-<div style="width: 100%; height: 0px; left: 0%; top: 14.5% ; position: absolute; border: 1px #1E1E1E solid"></div>
-
+<div style="width: 100%; height: 0px; left: 0%; top: 15% ; position: absolute; border: 1px #1E1E1E solid"></div>
 
 <button onclick="window.location.href='/profile'">
-<div style="width: 10%; height: 10%; left: 89%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
-<div style="width: 7%; height: 0px; left: 90.7%; top: 10%; position: absolute; border: 1px #1E1E1E solid"></div>
+<div style="width: 10%; height: 10%; left: 90%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
 </button>
-<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+<div style="width: 0%; height: 8%; left: 91%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <button onclick="window.location.href='/leiloes'">
-<div style="width: 20%; height: 10%; left: 71%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados</div>
+<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
 </button>
-<div style="width: 0%; height: 8%; left: 72.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
-
-<button onclick="window.location.href='/leiloes'">
-<div style="width: 20%; height: 10%; left: 54%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões a decorrer</div>
-</button>
-<div style="width: 0%; height: 8%; left: 55.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+<div style="width: 0%; height: 8%; left: 83%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <button onclick="window.location.href='/'">
-<div style="width: 10%; height: 10%; left: 46%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
+<div style="width: 10%; height: 10%; left: 74%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
 </button>
-<div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <div style="width: 80%; height: 40%; left: 10%; position: absolute; top: 20%; background: #D9D9D9; border-radius: 30px;"> <!-- Caixa com os dados pessoais -->
     <button style="border: none; padding: 0; margin: 0;">
@@ -130,6 +123,8 @@
 
 
 @code {
+    //private DataLayer.Utilizador user { get; set; }
+
     // Dados pessoais
     private String profileName = "Afonso Oliveira e Silva";
     private String profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
@@ -174,7 +169,13 @@
     private int currentPageSells = 1;
     private int totalPagesSells = 2;
 
-    private void values(){ // Substituir valores por funções da Interface
+    protected override async Task OnInitializedAsync(){ // Substituir valores por funções da Interface
+        try{
+            String userEmail = "user1";
+            //user = (await _users.GetUtilizadorPorEmail(userEmail)).FirstOrDefault();
+        }catch (Exception ex){
+            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
+        }
         profileName = "Afonso Oliveira e Silva";
         profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
         profileZipCode = "4700-000";
