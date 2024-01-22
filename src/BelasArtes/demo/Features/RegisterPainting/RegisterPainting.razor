@@ -124,14 +124,17 @@
     private string DataFinal {get;set;} = "";
 
     private async Task RegisterButton(){
-        // get id do utilizador
-        //Datalayer.Pintura painting = new Datalayer.Pintura(Nome,Altura,Largura,Peso,DescricaoObra,Foto,Artista,
+        // String EmailVendedor = get email do utilizador
+        int IdPintura = await _pinturas.GetMaxPinturaId() + 1;
+        //Meter a foto no wwwroot
+
+        //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Largura,Peso,DescricaoObra,Foto,Artista,
         //DataCriacao,Autenticidade,Certificado,EmailVendedor,CodMovimentoArtistico);
 
         try{
             //await _pinturas.PutPintura(painting);
             // Get id da pintura
-            //DataLayer.Leilao leilao = new DataLayer.Leilao(DataIncioDT, DataFinalDT, PrecoInicial, emailComprador, codPintura, codEstado);
+            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdPintura,DataIncioDT, DataFinalDT, PrecoInicial, emailComprador, codPintura, codEstado);
             //await _leiloes.PutLeilao();
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){

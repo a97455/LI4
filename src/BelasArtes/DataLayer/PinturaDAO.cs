@@ -57,4 +57,11 @@ public class PinturaDAO : IPinturaDAO{
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
         return _db.SaveData(sql, parameters);
     }
+
+    public async Task<int> GetMaxPinturaId(){
+        string sql = "SELECT MAX(Id) FROM Pintura";
+        var result = await _db.ExecuteScalar<int, dynamic>(sql, new { });
+        return result;
+    }
+
 }
