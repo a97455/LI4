@@ -1,4 +1,4 @@
-@page "/"
+@page "/leiloes"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
@@ -27,7 +27,7 @@
 </button>
 <div style="width: 0%; height: 8%; left: 91%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button @onclick="@RefreshPage">
+<button @onclick="RefreshPage">
 <div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
 </button>
 <div style="width: 0%; height: 8%; left: 83%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
@@ -43,18 +43,20 @@
 <div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Filtrar</div>
 </button>
 
-<button>
+<button @onclick="OrdenaByValor">
 <div style="width: 15%; height: 7.5%; left: 76%; top: 47%; position: absolute; background: #D9D9D9"></div>
-<div style="width: 15%; height: 7.5%; left: 76%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar</div>
+<div style="width: 15%; height: 7.5%; left: 76%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar por Valor</div>
 </button>
 
 
 <!--Barra pesquisa-->
 <div style="width: 100%; height: 25.5%; left: 0%; top: 14.5%; position: absolute; background: #404040;"></div>
 <div style="width: 60%; height: 10%; left: 20%; top: 22.5%; position: absolute; background: #f1f1f1; border-radius: 39px;"></div>
+
 <button  @onclick="SearchByArtista">
 <img style="width: 4%; height: 7.5%; left: 22%; top: 23.5%; position: absolute;" src="lupa.png" />
 </button>
+
 <input type="text" @bind="artistaPretendido" placeholder="Pesquisar autor..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
 
 
@@ -104,7 +106,9 @@
 
 @code{
     private List<Leilao> listLeiloesAtivos = new List<Leilao>(); //tem os leiloes ativos
-    private List<Leilao> listLeiloesTerminados = new List<Leilao>(); //tem os leiloes terminados
+    private List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
+    private List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
+    private List<Leilao> listLeiloesAgendados = new List<Leilao>(); //tem os leiloes agendados
     private List<Leilao> listLeiloesMostrar = new List<Leilao>(); //tem os leiloes para mostrar na pagina
     private Dictionary<int,LeilaoFacade> dictLeilaoFacade = new Dictionary<int, LeilaoFacade>(); //tem todos os leiloes
 
@@ -126,25 +130,32 @@
 
     private void RefreshPage(){
         AppState.ListLeiloesMostrar=listLeiloesAtivos;
-        NavigationManager.NavigateTo("/",forceLoad:true);
+        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
     }
 
     private void SearchByArtista(){
-        AppState.ListLeiloesMostrar=FiltrarByArtista(artistaPretendido);
-        NavigationManager.NavigateTo("/",forceLoad:true);
-    }
-
-    private List<Leilao> FiltrarByArtista(string artistaPretendido){
         List<Leilao> aux = new List<Leilao>();
         foreach (Leilao leilao in this.listLeiloesAtivos) {
             if(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(artistaPretendido)){
                 aux.Add(leilao);
             }
         }
-        return aux;
+        AppState.ListLeiloesMostrar=aux;
+        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
     }
-    
-    public List<Leilao> OrdenarLeiloesDecorrer(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
+
+    public void OrdenaByValor(){
+        if (!AppState.buttonOrdenarSelecionado){
+            AppState.ListLeiloesMostrar=OrdenarLeiloes(listLeiloesMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,3);
+            AppState.buttonOrdenarSelecionado=true;
+        }else{
+            AppState.ListLeiloesMostrar=OrdenarLeiloes(listLeiloesMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,4);
+            AppState.buttonOrdenarSelecionado=false;
+        }
+        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
+    }
+
+    public List<Leilao> OrdenarLeiloes(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
     List<int> listMaiorLicitacaoByLeilao,int codModoOrdenacao) {
         if (codModoOrdenacao==1){ //crescente de tempo restante
             List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
@@ -211,14 +222,20 @@
     }
 
     protected override async Task OnInitializedAsync(){
-        listLeiloesAtivos = await leiloes.LeiloesByEstado(2); 
+        listLeiloesAgendados = await leiloes.LeiloesByEstado(1);
+        listLeiloesAtivos = await leiloes.LeiloesByEstado(2);
         listLeiloesMostrar = AppState.ListLeiloesMostrar; 
-        if(!listLeiloesMostrar.Any()) listLeiloesMostrar=listLeiloesAtivos;
+        if(!listLeiloesMostrar.Any()){
+            listLeiloesMostrar=listLeiloesAtivos;
+        }else{
+            foreach(Leilao leilao in listLeiloesMostrar){
+                listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
+                listMaiorLicitacaoByLeilao.Add((await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First());
+            }
+        }
 
         List<Leilao> auxLicitados = new List<Leilao>();
         List<Leilao> auxNaoLicitados = new List<Leilao>();
-        List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
-        List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
         foreach(Leilao leilao in listLeiloesAtivos){
             if ((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).Any()){        
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
@@ -233,7 +250,7 @@
                 pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
             }
         }
-        listLeiloesAtivos=OrdenarLeiloesDecorrer(auxLicitados,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,0);
+        listLeiloesAtivos=OrdenarLeiloes(auxLicitados,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,0);
         listLeiloesAtivos.AddRange(auxNaoLicitados);
     }
 }
