@@ -66,7 +66,7 @@ BEGIN
         [Largura] float NOT NULL,
         [Peso] float NOT NULL,
         [Descricao] varchar(100) NOT NULL,
-        [Foto] varbinary(max) NOT NULL,
+        [Foto] varchar(40) NOT NULL,
         [Artista] varchar(40) NOT NULL,
         [AnoCriacao] int NOT NULL,
         [Original] bit NOT NULL,
@@ -180,16 +180,16 @@ VALUES
 -- Inserting data into Pintura table
 INSERT INTO Pintura (Nome, Altura, Largura, Peso, Descricao, Foto, Artista, AnoCriacao, Original, VerificacaoAutenticidade, EmailVendedor, CodMovimentoArtistico)
 VALUES 
-('Painting 1', 50.5, 30.2, 2.5, 'Description 1', 0x0123456789ABCDEF, 'Artist 1', 2022, 1, 1, 'user1@example.com', 1),
-('Painting 2', 40.0, 20.0, 3.0, 'Description 2', 0xFEDCBA9876543210, 'Artist 2', 2021, 1, 0, 'user2@example.com', 2),
-('Painting 3', 60.0, 40.0, 4.0, 'Description 3', 0x0123456789ABCDEF, 'Artist 3', 2023, 1, 1, 'user3@example.com', 3),
-('Painting 4', 45.5, 25.5, 2.0, 'Description 4', 0xFEDCBA9876543210, 'Artist 4', 2020, 1, 1, 'user4@example.com', 4),
-('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 0x0123456789ABCDEF, 'Artist 5', 2022, 0, 0, 'user5@example.com', 5),
-('Painting 6', 60.0, 35.0, 3.5, 'Description 6', 0x0123456789ABCDEF, 'Artist 6', 2022, 0, 0, 'user5@example.com', 4),
-('Painting 7', 65.0, 35.0, 3.5, 'Description 7', 0x0123456789ABCDEF, 'Artist 7', 2021, 0, 0, 'user5@example.com', 3),
-('Painting 8', 70.0, 35.0, 3.5, 'Description 8', 0x0123456789ABCDEF, 'Artist 8', 2022, 0, 0, 'user5@example.com', 2),
-('Painting 9', 75.0, 35.0, 3.5, 'Description 9', 0x0123456789ABCDEF, 'Artist 9', 2023, 0, 0, 'user5@example.com', 1),
-('Painting 10', 80.0, 35.0, 3.5, 'Description 10', 0x0123456789ABCDEF, 'Artist 10', 2023, 0, 0, 'user5@example.com', 1);
+('Painting 1', 50.5, 30.2, 2.5, 'Description 1', 'leilao1.jpg', 'Artist 1', 2022, 1, 1, 'user1@example.com', 1),
+('Painting 2', 40.0, 20.0, 3.0, 'Description 2', 'leilao2.jpg', 'Artist 2', 2021, 1, 0, 'user2@example.com', 2),
+('Painting 3', 60.0, 40.0, 4.0, 'Description 3', 'leilao3.jpg', 'Artist 3', 2023, 1, 1, 'user3@example.com', 3),
+('Painting 4', 45.5, 25.5, 2.0, 'Description 4', 'leilao4.jpg', 'Artist 4', 2020, 1, 1, 'user4@example.com', 4),
+('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 'leilao5.jpg', 'Artist 5', 2022, 0, 0, 'user5@example.com', 5),
+('Painting 6', 60.0, 35.0, 3.5, 'Description 6', 'leilao6.jpg', 'Artist 6', 2022, 0, 0, 'user5@example.com', 4),
+('Painting 7', 65.0, 35.0, 3.5, 'Description 7', 'leilao7.jpg', 'Artist 7', 2021, 0, 0, 'user5@example.com', 3),
+('Painting 8', 70.0, 35.0, 3.5, 'Description 8', 'leilao8.jpg', 'Artist 8', 2022, 0, 0, 'user5@example.com', 2),
+('Painting 9', 75.0, 35.0, 3.5, 'Description 9', 'leilao9.jpg', 'Artist 9', 2023, 0, 0, 'user5@example.com', 1),
+('Painting 10', 80.0, 35.0, 3.5, 'Description 10', 'leilao10.jpg', 'Artist 10', 2023, 0, 0, 'user5@example.com', 1);
 
 
 -- Inserting data into Leilao table
