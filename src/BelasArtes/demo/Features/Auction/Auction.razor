@@ -1,4 +1,4 @@
-@page "/auction"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject IPinturaDAO _pinturas
@@ -66,57 +66,77 @@
 <div style="width: 40%; height: 80%; position: absolute; top: 25%; left: 55%; background: #D9D9D9; border-radius: 10px; border: 2px solid black;"> <!-- Contorno caixa licitações -->
     <div style="width: 40%; height: 3.7%; left: 5%; top: 3%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Licitação atual</div>
     <div style="width: 40%; height: 5.8%; left: 5%; top: 12%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.Valor} €")
-    }else{
-        <span>0€</span>
-    }</div>
+        @if (licitacoes != null && licitacoes.Count > 0){
+            @($"{licitacoes[0].Valor} €")
+        }else{
+            <span>0€</span>
+        }</div>
 
     <div style="width: 40%; height: 3.7%; left: 55%; top: 3%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Efetuada por</div>
     <div style="width: 40%; height: 5.8%; left: 55%; top: 12%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.EmailLicitador}")
-    }else{
-        <span>0€</span>
-    }</div>
-
+        @if (licitacoes != null && licitacoes.Count > 0){
+            @($"{licitacoes[0].EmailLicitador}")
+        }else{
+            <span>Não existe</span>
+        }</div>
+    
+    
     <div style="width: 40%; height: 3.7%; left: 5%; top: 35%; position: absolute; text-align: center; color: black; font-size: 1.9vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Últimas licitações:</div>
     <div style="width: 20%; height: 1.7%; left: 40%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.Valor} €")
-    }else{
-        <span>0€</span>
-    }</div>
-    <div style="width: 40%; height: 1.3%; left: 60%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.EmailLicitador}")
-    }else{
-        <span>0€</span>
-    }</div>
+        @if (licitacoes != null && licitacoes.Count > 0){
+            @($"{licitacoes[0].Valor} €")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 40%; height: 1.7%; left: 60%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 0){
+            @($"{licitacoes[0].EmailLicitador}")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 30%; height: 1.7%; left: 10%; top: 47%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 0){
+            @($"{licitacoes[0].Data}")
+        }else{
+            <span></span>
+        }</div>
+
     <div style="width: 20%; height: 1.7%; left: 40%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.Valor} €")
-    }else{
-        <span>0€</span>
-    }</div>
-    <div style="width: 40%; height: 1.3%; left: 60%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.EmailLicitador}")
-    }else{
-        <span>0€</span>
-    }</div>
+        @if (licitacoes != null && licitacoes.Count > 1){
+            @($"{licitacoes[1].Valor} €")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 40%; height: 1.7%; left: 60%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 1){
+            @($"{licitacoes[1].EmailLicitador}")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 30%; height: 1.7%; left: 10%; top: 58%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 1){
+            @($"{licitacoes[1].Data}")
+        }else{
+            <span></span>
+        }</div>
     <div style="width: 20%; height: 1.7%; left: 40%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.Valor} €")
-    }else{
-        <span>0€</span>
-    }</div>
-    <div style="width: 40%; height: 1.3%; left: 60%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"{licitacao.EmailLicitador}")
-    }else{
-        <span>0€</span>
-    }</div>
+        @if (licitacoes != null && licitacoes.Count > 2){
+            @($"{licitacoes[2].Valor} €")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 40%; height: 1.7%; left: 60%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 2){
+            @($"{licitacoes[2].EmailLicitador}")
+        }else{
+            <span></span>
+        }</div>
+    <div style="width: 30%; height: 1.7%; left: 10%; top: 68%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+        @if (licitacoes != null && licitacoes.Count > 2){
+            @($"{licitacoes[2].Data}")
+        }else{
+            <span></span>
+        }</div>
 
     <div style="width: 50%; height: 3.7%; left: 7%; top: 83%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 300; word-wrap: break-word">Número de licitações:</div>
     <div style="width: 20%; height: 8%; left: 52%; top: 83%; position: absolute; background: white">
@@ -131,10 +151,11 @@
         }
         </div>
     <img style="width: auto; height: 15%; left: 8%; top: 87%; position: absolute" src="truckLogo.png" />
-    <button style="border: none; padding: 0; margin: 0;">
-        <div style="width: 80%; height: 15%; position: absolute; top: 103%; left: 10%; background: #1E1E1E; border-radius: 30px;"></div> <!-- Botão Licitar -->
-        <div style="width: 80%; height: 15%; position: absolute; top: 103.5%; left: 10%; text-align: center; color: white; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;">LICITAR</div>
+    <button style="border: none; padding: 0; margin: 0; " onclick="window.location.href='/licitacao'">
+        <div style="width: 80%; height: 15%; position: absolute; top: 103%; left: 10%; background: #1E1E1E; border-radius: 30px;"></div>
+        <div style="width: 80%; height: 15%; position: absolute; top: 104.5%; left: 10%; text-align: center; color: white; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;">LICITAR</div>
     </button>
+
 </div>
 
 
@@ -229,14 +250,14 @@ font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
 
 
 @code {
-    private DataLayer.Licitacao licitacao { get; set; }
+    private List<DataLayer.Licitacao> licitacoes { get; set; }
     private DataLayer.Pintura pintura { get; set; }
     private DataLayer.Leilao leilao {get; set; }
     private int numLicitacoesDoLeilao {get; set;}
     protected override async Task OnInitializedAsync(){
     try{
         leilao = (await _leilao.GetLeilaoById(4)).First();// Mudar id
-        licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(4)).First();// Mudar id
+        licitacoes = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(4));// Mudar id
         pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
         numLicitacoesDoLeilao = (await _licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First();
     }catch (Exception ex){

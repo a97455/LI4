@@ -132,6 +132,7 @@ BEGIN
         [Id] int IDENTITY(1,1) NOT NULL UNIQUE,
         [Valor] float NOT NULL,
         [EmailLicitador] varchar(40),
+		[Data] datetime NOT NULL,
         [IdLeilao] int,
         CONSTRAINT [PK_LICITACAO] PRIMARY KEY CLUSTERED
         (
@@ -208,17 +209,17 @@ VALUES
 
 
 -- Inserting data into Licitacao table
-INSERT INTO Licitacao (Valor, EmailLicitador, IdLeilao)
+INSERT INTO Licitacao (Valor, EmailLicitador, IdLeilao, Data)
 VALUES 
-(120.00, 'user2@example.com', 1),
-(170.00, 'user1@example.com', 2),
-(270.00, 'user1@example.com', 3),
-(220.00, 'user4@example.com', 4),
-(230.00, 'user4@example.com', 4),
-(160.00, 'user3@example.com', 5),
-(200.00, 'user1@example.com', 6),
-(260.00, 'user2@example.com', 7),
-(360.00, 'user3@example.com', 8),
-(380.00, 'user3@example.com', 8),
-(190.00, 'user4@example.com', 9),
-(190.00, 'user1@example.com', 10);
+(120.00, 'user2@example.com', 1,'2023-01-18 12:30:00'),
+(170.00, 'user1@example.com', 2,'2023-01-19 12:28:00'),
+(270.00, 'user1@example.com', 3,'2022-12-20 12:17:23'),
+(220.00, 'user4@example.com', 4,'2023-01-01 15:10:23'),
+(230.00, 'user4@example.com', 4,'2023-01-01 16:07:12'),
+(160.00, 'user3@example.com', 5,'2023-01-02 13:26:10'),
+(200.00, 'user1@example.com', 6,'2023-01-02 17:23:05'),
+(260.00, 'user2@example.com', 7,'2023-01-02 12:12:30'),
+(360.00, 'user3@example.com', 8,'2023-01-02 20:10:49'),
+(380.00, 'user3@example.com', 8,'2023-01-02 22:01:20'),
+(190.00, 'user4@example.com', 9,'2023-01-02 12:02:00'),
+(190.00, 'user1@example.com', 10,'2023-01-02 17:03:23');

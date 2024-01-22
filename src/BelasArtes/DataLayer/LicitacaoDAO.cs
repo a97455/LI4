@@ -50,13 +50,15 @@ public class LicitacaoDAO : ILicitacaoDAO{
                 UPDATE SET
                     Valor = @Valor,
                     EmailLicitador = @EmailLicitador
+                    Data = @Data
             WHEN NOT MATCHED THEN
-                INSERT (Valor, EmailLicitador)
-                VALUES (@Valor, @EmailLicitador);";
+                INSERT (Valor, EmailLicitador,Data)
+                VALUES (@Valor, @EmailLicitador,@Data);";
 
         var parameters = new{
             licitacao.Valor,
-            licitacao.EmailLicitador
+            licitacao.EmailLicitador,
+            licitacao.Data
         };
 
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
