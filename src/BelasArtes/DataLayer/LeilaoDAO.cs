@@ -10,6 +10,13 @@ public class LeilaoDAO : ILeilaoDAO{
         string sql = "select * from Leilao";
         return _db.LoadData<Leilao, dynamic>(sql, new { });
     }
+
+    public Task<List<Leilao>> LeiloesByEstado(int CodEstado)
+    {
+        string sql = "select * from Leilao where CodEstado=@codEstado";
+        var parameters = new {CodEstado};
+        return _db.LoadData<Leilao, dynamic>(sql,parameters);
+    }
     
     public Task<List<Leilao>> GetLeilaoById(int? Id)
     {
