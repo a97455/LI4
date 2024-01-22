@@ -62,9 +62,13 @@
                     <div style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data de criação:</div>
                 </div>
-                <div style="width: 90%; height: 11%; left: 5%; top: 42%; position: absolute">
+                <div style="width: 40%; height: 11%; left: 5%; top: 42%; position: absolute">
                     <div style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Descrição da obra:</div>
+                </div>
+                <div style="width: 40%; height: 11%; left: 55%; top: 42%; position: absolute">
+                    <div style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
+                    <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Artista:</div>
                 </div>
                 <div style="width: 40%; height: 9%; left: 5%; top: 62%; position: absolute">
                     <div style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></div>
@@ -117,6 +121,7 @@
     private int? Peso { get; set; }
     private string DataCriacao { get; set; } = "";
     private string DescricaoObra { get; set; } = "";
+    private string Artista { get; set; } = "";
     private string Autenticidade { get; set; } = "";
     // 2 documentos, foto e certicado
     private int? PrecoInicial { get; set; }
@@ -126,15 +131,17 @@
     private async Task RegisterButton(){
         // String EmailVendedor = get email do utilizador
         int IdPintura = await _pinturas.GetMaxPinturaId() + 1;
-        //Meter a foto no wwwroot
+        //Meter a foto e talvez certificado no wwwroot
+        //Se tiver certificado, int Verified = 1, else 0
+        //String NomeFoto = "";
 
-        //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Largura,Peso,DescricaoObra,Foto,Artista,
-        //DataCriacao,Autenticidade,Certificado,EmailVendedor,CodMovimentoArtistico);
+        //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Largura,Peso,DescricaoObra,NomeFoto,Artista,
+        //DataCriacao,Autenticidade,Verified,EmailVendedor,CodMovimentoArtistico);
 
         try{
             //await _pinturas.PutPintura(painting);
-            // Get id da pintura
-            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdPintura,DataIncioDT, DataFinalDT, PrecoInicial, emailComprador, codPintura, codEstado);
+            //Ir buscar int IdLeilao
+            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataIncioDT, DataFinalDT, PrecoInicial, EmailVendedor, IdPintura, 0);
             //await _leiloes.PutLeilao();
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){
