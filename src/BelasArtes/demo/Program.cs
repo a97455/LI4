@@ -11,6 +11,7 @@ builder.Services.AddTransient<ILeilaoDAO, LeilaoDAO>();
 builder.Services.AddTransient<ILicitacaoDAO, LicitacaoDAO>();
 builder.Services.AddTransient<IPinturaDAO, PinturaDAO>();
 builder.Services.AddTransient<IUtilizadorDAO, UtilizadorDAO>();
+builder.Services.AddSingleton<AppState>();
 
 
 

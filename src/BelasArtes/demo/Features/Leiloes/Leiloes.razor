@@ -1,10 +1,11 @@
-@page "/"
+@page "/leiloes"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
 @inject IPinturaDAO pinturas
 @inject ILicitacaoDAO licitacoes
 @inject IUtilizadorDAO utilizadores
+@inject AppState AppState
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -52,8 +53,7 @@
 <div style="width: 100%; height: 25.5%; left: 0%; top: 14.5%; position: absolute; background: #404040;"></div>
 <div style="width: 60%; height: 10%; left: 20%; top: 22.5%; position: absolute; background: #f1f1f1; border-radius: 39px;"></div>
 <img style="width: 4%; height: 7.5%; left: 22%; top: 23.5%; position: absolute;" src="lupa.png" />
-<input type="text" placeholder="Pesquisar autor..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
-
+<input type="text" @bind="artistaPretendido" @onkeypress="HandleEnterDown" placeholder="Pesquisar autor..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
 
 @for (int i = 0; i < Math.Min(8, listLeiloes.Count); i++){
     var leilao = listLeiloes[i];
@@ -95,8 +95,6 @@
 @code{
     private List<Leilao> listLeiloes = new List<Leilao>(); //tem todos os leiloes
     private Dictionary<int,LeilaoFacade> dictLeilaoFacade = new Dictionary<int, LeilaoFacade>(); //tem todos os leiloes
-    private List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
-    private List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
 
     private string artistaPretendido {get;set;} = "";
 
@@ -116,14 +114,20 @@
 
     private void HandleEnterDown(KeyboardEventArgs e){
         if (e.Key == "Enter"){
-            List<Leilao> leiloesByArtista=FiltrarByArtista(artistaPretendido);
+            AppState.ListLeiloes=FiltrarByArtista(artistaPretendido);
+            NavigationManager.NavigateTo("/",forceLoad:true);
         }
     }
 
     private List<Leilao> FiltrarByArtista(string artistaPretendido){
         List<Leilao> aux = new List<Leilao>();
         foreach (Leilao leilao in this.listLeiloes) {
+            Console.WriteLine(leilao.Id);
+            Console.WriteLine(artistaPretendido);
+            Console.WriteLine(dictLeilaoFacade[leilao.Id].Pintura.Artista);
+            Console.WriteLine(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(artistaPretendido));
             if(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(artistaPretendido)){
+                Console.WriteLine(dictLeilaoFacade[leilao.Id]);
                 aux.Add(leilao);
             }
         }
@@ -197,10 +201,15 @@
     }
 
     protected override async Task OnInitializedAsync(){
-        listLeiloes = await leiloes.LeiloesByEstado(2); //so leiloes ativos
+        listLeiloes = AppState.ListLeiloes;
+        if (!listLeiloes.Any()){
+            listLeiloes = await leiloes.LeiloesByEstado(2); //so leiloes ativos
+        }
+
         List<Leilao> auxLicitados = new List<Leilao>();
         List<Leilao> auxNaoLicitados = new List<Leilao>();
-
+        List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
+        List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem dos leiloes com licitacoes
         foreach(Leilao leilao in listLeiloes){
             if ((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).Any()){        
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
