@@ -5,6 +5,8 @@ public class Licitacao {
         public double? Valor { get; set; }
         public string? EmailLicitador { get; set; }
 
+        public Licitacao(){}
+
         public Licitacao(int? id, double? valor, string? emailLicitador){
             Id = id;
             Valor = valor;

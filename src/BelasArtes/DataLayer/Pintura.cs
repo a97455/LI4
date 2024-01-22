@@ -17,6 +17,8 @@ public class Pintura {
     public string? EmailVendedor { get; set; } 
     public int? CodMovimentoArtistico { get; set; }
 
+    public Pintura(){}
+
     public Pintura(int? id, string nome, double? altura, double? largura, double? peso, string descricao,
     byte[]? foto, string artista, int? anoCriacao, bool? original,
     bool? verificacaoAutenticidade, string? emailVendedor, int? codMovimentoArtistico){
