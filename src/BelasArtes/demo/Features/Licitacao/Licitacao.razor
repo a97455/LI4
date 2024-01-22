@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager;
 @inject IPinturaDAO _pinturas
 @inject ILicitacaoDAO _licitacoes
+@inject ILeilaoDAO _leilao
 @using DataLayer
 
 
@@ -60,7 +61,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
     @if (licitacao != null){
         @($"{licitacao.Valor} €")
     }else{
-        <span>Loading...</span>
+        <span>0€</span>
     }</div>
 
 <div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 
@@ -69,7 +70,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões agendados<
     @if (licitacao != null){
         @($"{licitacao.EmailLicitador}")
     }else{
-        <span>Loading...</span>
+        <span>Não existe licitador atual.</span>
     }
 </div>
 
@@ -79,15 +80,20 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 <input type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;" placeholder="Valor da licitação...">
 <div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 
 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
-    @if (licitacao != null){
-        @($"Valor mínimo: {licitacao.Valor*1.05}€")
+    @if (licitacao != null && leilao != null){
+            @($"Valor mínimo: {licitacao.Valor * 1.05}€")
+        }else{
+            @($"Valor mínimo: €") //Falta aqui
+        }
+</div>
+
+<div style="width: 30%; height: 10%; left: 58.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+    @if ( pintura!= null){
+        @($"{pintura.Peso*2}€ para Portugal, {pintura.Peso*4}€ envio internacional")
     }else{
         <span>Loading...</span>
     }
 </div>
-
-
-<div style="width: 30%; height: 10%; left: 58.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">€00 para Portugal, €00 envio internacional</div>
 <img style="width: 7.5%; height: 15%; left: 52.5%; top: 93%; position: absolute" src="truckLogo.png" />
 
 <button style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
@@ -134,11 +140,15 @@ Inter; font-weight: 167; word-wrap: break-word">
 <div style="width: 30%; height: 15%; left: 7.5%; top: 165.5%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         <span>
-        @if (pintura!=null){ //Falta mudar aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-            @("Original")
-        }else{
-            @("Replica")
-        }
+            @if (pintura.Original != null){
+                @if (pintura.Original == true){
+                    @("Original")
+                }else{
+                    @("Replica")
+                }
+            }else{
+                @("Nao especificado")
+            }
         </span>
     }else{
         <span>Loading...</span>
@@ -181,14 +191,16 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
+    private DataLayer.Leilao leilao {get;set;} = null;
     private DataLayer.Licitacao licitacao { get; set; } = null;
     private DataLayer.Pintura pintura { get; set; } = null;
 
 
     protected override async Task OnInitializedAsync(){
         try{
-            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(1)).FirstOrDefault();
-            pintura = (await _pinturas.GetPinturaById(2)).FirstOrDefault(); // Mudar id
+            leilao = (await _leilao.GetLeilaoById(4)).FirstOrDefault();// Mudar id
+            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(4)).FirstOrDefault();// Mudar id
+            pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).FirstOrDefault(); 
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }

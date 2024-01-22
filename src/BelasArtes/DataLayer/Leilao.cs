@@ -9,6 +9,8 @@ public class Leilao {
         public int? CodEstado { get; set; }
         public List<int> CodLicitacoes { get; set; } = new List<int>();
 
+        public Leilao(){}
+
         public Leilao(int? id, DateTime dataInicio, DateTime dataFim, float? precoInicial,
         string? emailComprador, int? codPintura, int? codEstado){
             Id = id;
