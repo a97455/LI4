@@ -5,4 +5,5 @@ public interface ILeilaoDAO{
    public Task<List<Leilao>> GetLeilaoById(int? Id);
    public Task PutLeilao(Leilao leilao);
    public Task<List<int>> ContaLeiloesDeUmDadoTipo(int codEstado);
+   public Task<int> GetMaxLeilaoId();
 }
