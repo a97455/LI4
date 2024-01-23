@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject IUtilizadorDAO utilizadores
+@inject AppState AppState;
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -60,6 +61,7 @@
             List<Datalayer.Utilizador> list = await utilizadores.GetUtilizadorByEmail(Email);
 
             if (list.Any() && list.First().PalavraPasse.Equals(PalavraPasse)){
+                AppState.atual_user = Email;
                 NavigationManager.NavigateTo("/leiloes", forceLoad: true);
             }else{
                 NavigationManager.NavigateTo("/login", forceLoad: true);
