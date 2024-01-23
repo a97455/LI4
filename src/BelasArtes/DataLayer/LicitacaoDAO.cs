@@ -51,14 +51,16 @@ public class LicitacaoDAO : ILicitacaoDAO{
                     Valor = @Valor,
                     EmailLicitador = @EmailLicitador
                     Data = @Data
+                    IdLeilao = @IdLeilao
             WHEN NOT MATCHED THEN
-                INSERT (Valor, EmailLicitador,Data)
-                VALUES (@Valor, @EmailLicitador,@Data);";
+                INSERT (Valor, EmailLicitador,Data,IdLeilao)
+                VALUES (@Valor, @EmailLicitador,@Data,@IdLeilao);";
 
         var parameters = new{
             licitacao.Valor,
             licitacao.EmailLicitador,
-            licitacao.Data
+            licitacao.Data,
+            licitacao.IdLeilao
         };
 
         // Retorna true, pois a operação foi bem-sucedida (não houve exceção)
