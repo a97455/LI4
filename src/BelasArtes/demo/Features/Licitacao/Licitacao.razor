@@ -133,7 +133,7 @@ border: none; outline: none;" @onclick="OnButtonClick">
                 if (valorLicitacao > licitacao.Valor * 1.05){
                     DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
                     _licitacoes.PutLicitacao(licitacao_nova);
-                    NavigationManager.NavigateTo("/leiloes"); 
+                    NavigationManager.NavigateTo("/leiloesAtivos"); 
                 } else {
                     NavigationManager.NavigateTo("/licitacao"); 
                 }

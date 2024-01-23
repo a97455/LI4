@@ -62,7 +62,7 @@
 
             if (list.Any() && list.First().PalavraPasse.Equals(PalavraPasse)){
                 AppState.atual_user = Email;
-                NavigationManager.NavigateTo("/leiloes", forceLoad: true);
+                NavigationManager.NavigateTo("/leiloesAtivos", forceLoad: true);
             }else{
                 NavigationManager.NavigateTo("/login", forceLoad: true);
             }
