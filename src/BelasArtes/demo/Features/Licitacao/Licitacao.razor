@@ -99,12 +99,11 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
 <div style="width: 20%; height: 15%; left: 54.5%; top: 65%; position: absolute; text-align: center; color: black; font-size: 70px; 
 font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 <input id="valorLicitacao" type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;" @bind="idValorLicitacao" placeholder="Valor da licitação...">
-<div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 
-23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (licitacao != null && leilao != null){
             @($"Valor mínimo: {licitacao.Valor * 1.05}€")
         }else if(licitacao==null && leilao !=null){
-            @($"Valor mínimo:{leilao.PrecoInicial * 1.05}€") 
+            @($"Valor mínimo:{leilao.PrecoInicial}€") 
         }else{
             @($"") 
         }
@@ -120,14 +119,9 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 <img style="width: 7.5%; height: 15%; left: 52.5%; top: 93%; position: absolute" src="truckLogo.png" />
 
 
-<button id="submeterBtn" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
-border: none; outline: none;" @onclick="OnButtonClick">
-    <span style="color: white; font-size: 250%; font-family: Inter;">Submeter</span>
-</button>
-
 @code {
-    string idValorLicitacao { get; set; }
-    void OnButtonClick(){
+    private string idValorLicitacao {get;set;}
+    private void ValidaDados(string idValorLicitacao){
         if(licitacao != null && leilao!=null){
             if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
                 if (valorLicitacao > licitacao.Valor * 1.05){
@@ -157,6 +151,11 @@ border: none; outline: none;" @onclick="OnButtonClick">
     }
 }
 
+
+<button id="submeterBtn" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
+border: none; outline: none;" onclick="@(() => ValidaDados(idValorLicitacao))">
+    <span style="color: white; font-size: 250%; font-family: Inter;">Submeter</span>
+</button>
 <!--Fundo da pagina-->
 <div style="width: 30%; height: 15%; left: 7.5%; top: 140%; position: absolute; color: black; font-size: 25px; font-family: 
 Inter; font-weight: 400; word-wrap: break-word">Descrição:</div>
