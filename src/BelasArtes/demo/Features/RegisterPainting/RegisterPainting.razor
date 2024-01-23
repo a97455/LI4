@@ -95,17 +95,15 @@
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 68%; position: absolute">
                     <div style="width: 100%; height: 100%; left: 0%; top: -65%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Certificado:*</div>
-                    <label for="fileInput" style="width: 100%; height: 65%; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border: 4px black solid; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <InputFile OnChange="HandleCertificate" style="width: 100%; height: 65%; left: 0px; top: 15%; position: absolute; display: flex; align-items: center; justify-content: center;">
                         <span style="color: black; font-size: 30px; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose File</span>
-                        <input type="file" id="fileInput" style="display: none;" />
-                    </label>
+                    </InputFile>
                 </div>
                 <div style="width: 19%; height: 9%; left: 76%; top: 68%; position: absolute">
-                    <div style="width: 100%; height: 100%; left: 0%; top: -65%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Fotografias:</div>
-                    <label for="fileInput" style="width: 100%; height: 65%; left: 0px; top: 0px; position: absolute; background: #D9D9D9; border: 4px black solid; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 100%; height: 100%; left: 0%; top: -65%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Fotografia:</div>
+                    <InputFile OnChange="HandleFileSelected" style="width: 100%; height: 65%; left: 0px; top: 15%; position: absolute; display: flex; align-items: center; justify-content: center;">
                         <span style="color: black; font-size: 30px; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Choose File</span>
-                        <input type="file" id="fileInput" style="display: none;" />
-                    </label>
+                    </InputFile>
                 </div>
                 <div style="width: 90%; height: 5%; left: 5%; top: 95%; position: absolute; color: black; font-size: 150%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Opcional*</div>
                 <button @onclick="RegisterButton" style="border: none; padding: 0; margin: 0;"> 
@@ -125,31 +123,43 @@
     private string MovimentoArtistico { get; set; } = "";
     private int? Altura { get; set; }
     private int? Comprimento { get; set; }
-    private int? Peso { get; set; }
+    private float? Peso { get; set; }
     private string DataCriacao { get; set; } = "";
     private string DescricaoObra { get; set; } = "";
     private string Artista { get; set; } = "";
     private string Autenticidade { get; set; } = "";
-    // 2 documentos, foto e certicado
     private int? PrecoInicial { get; set; }
     private string DataInicio { get; set; } = "";
     private string DataFinal {get;set;} = "";
+    private int Verified {get;set;} = 0;
+    private IBrowserFile selectedFile;
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+    private async Task HandleCertificate(InputFileChangeEventArgs e)
+    {
+        Verified = 1;
+    }
 
     private async Task RegisterButton(){
-        //Verificar campos vazios ou inválidos
-        // String EmailVendedor = get email do utilizador
         int IdPintura = await _pinturas.GetMaxPinturaId() + 1;
-        //Meter a foto e talvez certificado no wwwroot
-        //Se tiver certificado, int Verified = 1, else 0
-        //String NomeFoto = "";
+        int IdLeilao = await _leiloes.GetMaxLeilaoId() + 1;
+
+        string NomeFoto = "leilao" + IdLeilao;
+
+        //Meter a foto no wwwroot
+        
+        int? CodMovimentoArtistico = 0;
 
         //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
-        //DataCriacao,Autenticidade,Verified,EmailVendedor,CodMovimentoArtistico);
+        //DataCriacao,Autenticidade,Verified,AppState.atual_user,CodMovimentoArtistico);
 
         try{
             //await _pinturas.PutPintura(painting);
-            //Ir buscar int IdLeilao
-            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataIncioDT, DataFinalDT, PrecoInicial, EmailVendedor, IdPintura, 0);
+            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataIncioDT, DataFinalDT, PrecoInicial, AppState.atual_user, IdPintura, 0);
             //await _leiloes.PutLeilao();
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){

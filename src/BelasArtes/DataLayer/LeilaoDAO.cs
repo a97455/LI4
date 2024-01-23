@@ -11,13 +11,28 @@ public class LeilaoDAO : ILeilaoDAO{
         return _db.LoadData<Leilao, dynamic>(sql, new { });
     }
 
-    public Task<List<Leilao>> LeiloesByEstado(int CodEstado)
-    {
+    public Task<List<Leilao>> LeiloesByEstado(int CodEstado){
         string sql = "select * from Leilao where CodEstado=@codEstado";
         var parameters = new {CodEstado};
         return _db.LoadData<Leilao, dynamic>(sql,parameters);
     }
-    
+
+    public Task<List<Leilao>> LeiloesAcabadosQueUserComprou(string emailComprador){
+        string sql = "SELECT * FROM Leilao WHERE EmailComprador = @emailComprador AND CodEstado = 3";
+        var parameters = new { emailComprador };
+        return _db.LoadData<Leilao, dynamic>(sql, parameters);
+    }
+
+
+    public Task<List<Leilao>> LeiloesAcabadosQueUserVendeu(string emailVendedor){
+        string sql = "SELECT * FROM Leilao " +
+             "INNER JOIN Pintura ON Leilao.CodPintura = Pintura.Id " +
+             "WHERE Leilao.CodEstado = 3 AND Pintura.EmailVendedor = @emailVendedor";
+        var parameters = new {emailVendedor};
+        return _db.LoadData<Leilao, dynamic>(sql,parameters);
+    }
+
+
     public Task<List<Leilao>> GetLeilaoById(int? Id)
     {
         string sql = "select * from Leilao where Id = @Id";
@@ -63,5 +78,11 @@ public class LeilaoDAO : ILeilaoDAO{
 
         // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
         return _db.LoadData<int, dynamic>(sql, parameters);
+    }
+
+    public async Task<int> GetMaxLeilaoId(){
+        string sql = "SELECT MAX(Id) FROM Leilao";
+        var result = await _db.ExecuteScalar<int, dynamic>(sql, new { });
+        return result;
     }
 }
