@@ -79,4 +79,10 @@ public class LeilaoDAO : ILeilaoDAO{
         // Obtemos o primeiro item da lista ou zero se a lista estiver vazia
         return _db.LoadData<int, dynamic>(sql, parameters);
     }
+
+    public async Task<int> GetMaxLeilaoId(){
+        string sql = "SELECT MAX(Id) FROM Leilao";
+        var result = await _db.ExecuteScalar<int, dynamic>(sql, new { });
+        return result;
+    }
 }
