@@ -11,4 +11,11 @@ public class AppState{
     //Atributos gerais ao site
     public string atual_user {get;set;} = "user1@example.com";
     public int? atual_leilao {get; set;} = null;
+
+    //Coisas para o profile
+    public int? numero_compras {get; set;}=null;
+    public int? numero_vendas {get; set;}=null;
+
+    public int? pagina_atual_vendas {get; set;}=null;
+    public int?  pagina_atual_compras {get; set;}=null;
 }

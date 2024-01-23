@@ -18,13 +18,16 @@ public class LeilaoDAO : ILeilaoDAO{
     }
 
     public Task<List<Leilao>> LeiloesAcabadosQueUserComprou(string emailComprador){
-        string sql = "select * from Leilao where EmailComprador=@emailComprador CodEstado=3";
-        var parameters = new {emailComprador};
-        return _db.LoadData<Leilao, dynamic>(sql,parameters);
+        string sql = "SELECT * FROM Leilao WHERE EmailComprador = @emailComprador AND CodEstado = 3";
+        var parameters = new { emailComprador };
+        return _db.LoadData<Leilao, dynamic>(sql, parameters);
     }
 
+
     public Task<List<Leilao>> LeiloesAcabadosQueUserVendeu(string emailVendedor){
-        string sql = "SELECT * FROM Leilao INNER JOIN Pintura ON Leilao.CodPintura = Pintura.Id WHERE Leilao.CodEstado = 3 Pintura.EmailVendedor=@emailVendedor";
+        string sql = "SELECT * FROM Leilao " +
+             "INNER JOIN Pintura ON Leilao.CodPintura = Pintura.Id " +
+             "WHERE Leilao.CodEstado = 3 AND Pintura.EmailVendedor = @emailVendedor";
         var parameters = new {emailVendedor};
         return _db.LoadData<Leilao, dynamic>(sql,parameters);
     }
