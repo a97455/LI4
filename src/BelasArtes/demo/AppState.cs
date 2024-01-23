@@ -13,9 +13,9 @@ public class AppState{
     public int? atual_leilao {get; set;} = null;
 
     //Coisas para o profile
-    public int? numero_compras {get; set;}=null;
-    public int? numero_vendas {get; set;}=null;
+    public int numero_compras {get; set;}=0;
+    public int numero_vendas {get; set;}=0;
 
-    public int? pagina_atual_vendas {get; set;}=null;
-    public int?  pagina_atual_compras {get; set;}=null;
+    public int pagina_atual_vendas {get; set;}=1;
+    public int  pagina_atual_compras {get; set;}=1;
 }
