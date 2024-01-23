@@ -61,7 +61,7 @@
 
 
 @code{
-    private async Task GuardarDados(int leilao){
+    private void GuardarDados(int leilao){
         AppState.atual_leilao=leilao;
         NavigationManager.NavigateTo("/auction", forceLoad: true);
     }
@@ -76,24 +76,28 @@
         if (dictLeilaoFacade[leilao.Id].Leilao.Id.Equals(leilao.Id)){  
             if(@i%2==0){
                 <!--Leiloes esquerda--> 
-                <button onclick="@(() => GuardarDados(leilao.Id))" style="width: 40%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></button>
+                <button onclick="@(() => GuardarDados(leilao.Id))">
+                <div style="width: 40%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
                 <div style="width: 20%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
                 <img style="width: 20%; height: 40%; left: 5%; top: @(60+(25*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 27.5%; top: @(64+(25*i))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 10%; height: 5%; left: 27.5%; top: @(72+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
-                <div style="width: 10%; height: 5%; left: 27.5%; top: @(78+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 15%; height: 7%; left: 27.5%; top: @(84+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 15%; height: 10%; left: 27.5%; top: @(90+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
+                <div style="width: 20%; height: 10%; left: 24%; top: @(64+(25*i))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+                <div style="width: 20%; height: 10%; left: 21.75% ; top: @(72+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 21.75% ; top: @(78+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 20%; height: 10%; left: 23% ; top: @(84+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 20%; height: 10%; left: 22.5%; top: @(90+(25*i))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
+                </button>
             }else{
                 <!--Leiloes direita-->
-                <button onclick="window.location.href='/auction'" style="width: 40%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></button>
+                <button onclick="@(() => GuardarDados(leilao.Id))">
+                <div style="width: 40%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
                 <div style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
                 <img style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 77.5%; top: @(64+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 10%; height: 5%; left: 77.5%; top: @(72+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
-                <div style="width: 10%; height: 5%; left: 77.5%; top: @(78+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 15%; height: 7%; left: 77.5%; top: @(84+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 15%; height: 10%; left: 77.5%; top: @(90+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
+                <div style="width: 20%; height: 10%; left: 74%; top: @(64+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+                <div style="width: 20%; height: 10%; left: 71.75%; top: @(72+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 71.75%; top: @(78+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 20%; height: 10%; left: 73%; top: @(84+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 20%; height: 10%; left: 72.5%; top: @(90+(25*(i-1)))%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">Dias restantes: @((leilao.DataFim-DateTime.Now).Days)</div>
+                </button>
             }
         }
     }
