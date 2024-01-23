@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager;
 @inject IUtilizadorDAO _utilizador
 @inject ILeilaoDAO _leilao
+@inject IPinturaDAO _pinturas
 @inject AppState AppState
 @using DataLayer
 
@@ -174,9 +175,10 @@
 @code {
     private Datalayer.Utilizador utilizador {get;set;}
     private List<DataLayer.Leilao> leiloesQueComprou {get; set; }
-    
     private List<DataLayer.Leilao> leiloesQueVendeu {get; set; }
 
+    private List<DataLayer.Pintura> pinturasQueComprou {get; set;}
+    private List<DataLayer.Pintura> pinturasQueVendeu {get;set;}
     protected override async Task OnInitializedAsync(){
         try{
             utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).First(); 
@@ -184,6 +186,12 @@
             leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
             AppState.numero_compras=leiloesQueComprou.Count();
             AppState.numero_vendas=leiloesQueVendeu.Count();  
+            for(int i=0; i<AppState.numero_compras;i++){
+                pinturasQueComprou.Add((await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First());
+            }
+            for(int i=0; i<AppState.numero_vendas;i++){
+                pinturasQueVendeu.Add((await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First());
+            }
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }
