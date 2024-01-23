@@ -1,7 +1,9 @@
-@page "/profile"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
-@inject IUtilizadorDAO _users;
+@inject IUtilizadorDAO _utilizador
+@inject ILeilaoDAO _leilao
+@inject AppState AppState
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -42,16 +44,85 @@
     </button>
     <div style="width: 25%; height: 0.52%; left: 10%; top: 3.5%; position: absolute; color: rgb(0, 0, 0); font-size: 2.6vw; font-family: Inter; font-weight: 700; word-wrap: break-word">Dados pessoais</div>
     
-    <div style="width: 50%; height: 0.29%; left: 10%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Nome: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileName</span></div>
-    <div style="width: 50%; height: 0.29%; left: 10%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Morada: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileAddress</span></div>
-    <div style="width: 50%; height: 0.29%; left: 10%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Código-Postal: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileZipCode</span></div>
-    <div style="width: 50%; height: 0.29%; left: 10%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Localidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileLocalidade</span></div>
-    <div style="width: 50%; height: 0.29%; left: 10%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Cidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileCity</span></div>
-    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">País de residência: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileCountry</span></div>
-    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">NIG: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileNIG</span></div>
-    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">IBAN: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileIBAN</span></div>
-    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Telemóvel: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profilePhoneNumber</span></div>
-    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">E-mail: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@profileEmail</span></div>
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Nome: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Nome</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Rua: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Rua</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Código-Postal: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.CodigoPostal</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Localidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Localidade</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 10%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Cidade: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Cidade</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 22%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">País de residência: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.PaisResidencia</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 37%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">NIG: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.NIG</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 52%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">IBAN: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.IBAN</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Telemóvel: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.IBAN</span>
+        }else{
+            <span></span>
+        }
+    </div>
+
+    <div style="width: 50%; height: 0.29%; left: 52.58%; top: 82%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">E-mail: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
+        @if (utilizador != null){
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Email</span>
+        }else{
+            <span></span>
+        }
+    </div>
 </div>
 
 <div style="width: 37.5%; height: 90%; left: 10%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Compras-->
@@ -130,96 +201,17 @@
 
 
 @code {
-    //private DataLayer.Utilizador user { get; set; }
+    private Datalayer.Utilizador utilizador {get;set;}
+    private List<DataLayer.Leilao> leiloesQueComprou {get; set; }
+    
+    private List<DataLayer.Leilao> leiloesQueVendeu {get; set; }
 
-    // Dados pessoais
-    private String profileName = "Afonso Oliveira e Silva";
-    private String profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
-    private String profileZipCode = "4700-000";
-    private String profileLocalidade = "Cabreiros";
-    private String profileCity = "Braga";
-    private String profileCountry = "Portugal";
-    private String profileNIG = "00000000 0 XY0";
-    private String profileIBAN = "PT50 000000000000";
-    private String profilePhoneNumber = "+351 912345678";
-    private String profileEmail = "someone@gmail.com";
-
-    // Dados das obras compradas
-    private String purchase1Name = "Nome da obra";
-    private String purchase1Seller = "Nome do vendedor";
-    private int purchase1Price = 160;
-    private String purchase1Date = "01/01/2000";
-    private String purchase2Name = "Nome da obra";
-    private String purchase2Seller = "Nome do vendedor";
-    private int purchase2Price = 120;
-    private String purchase2Date = "01/01/2000";
-    private String purchase3Name = "Nome da obra";
-    private String purchase3Seller = "Nome do vendedor";
-    private int purchase3Price = 230;
-    private String purchase3Date = "01/01/2000";
-    private int currentPagePurchases = 1;
-    private int totalPagesPurchases = 3;
-
-    // Dados das obras vendidas
-    private String sell1Name = "Nome da obra";
-    private String sell1Buyer = "Nome do comprador";
-    private int sell1Price = 160;
-    private String sell1Date = "01/01/2000";
-    private String sell2Name = "Nome da obra";
-    private String sell2Buyer = "Nome do comprador";
-    private int sell2Price = 120;
-    private String sell2Date = "01/01/2000";
-    private String sell3Name = "Nome da obra";
-    private String sell3Buyer = "Nome do comprador";
-    private int sell3Price = 230;
-    private String sell3Date = "01/01/2000";
-    private int currentPageSells = 1;
-    private int totalPagesSells = 2;
-
-    protected override async Task OnInitializedAsync(){ // Substituir valores por funções da Interface
+    protected override async Task OnInitializedAsync(){
         try{
-            String userEmail = "user1";
-            //user = (await _users.GetUtilizadorPorEmail(userEmail)).FirstOrDefault();
+            utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).First(); 
+            leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }
-        profileName = "Afonso Oliveira e Silva";
-        profileAddress = "Rua QQ Coisa, Nº36, 5ºC";
-        profileZipCode = "4700-000";
-        profileLocalidade = "Cabreiros";
-        profileCity = "Braga";
-        profileCountry = "Portugal";
-        profileNIG = "00000000 0 XY0";
-        profileIBAN = "PT50 000000000000";
-        profilePhoneNumber = "+351 912345678";
-        profileEmail = "someone@gmail.com";
-        purchase1Name = "Nome da obra";
-        purchase1Seller = "Nome do vendedor";
-        purchase1Price = 160;
-        purchase1Date = "01/01/2000";
-        purchase2Name = "Nome da obra";
-        purchase2Seller = "Nome do vendedor";
-        purchase2Price = 120;
-        purchase2Date = "01/01/2000";
-        purchase3Name = "Nome da obra";
-        purchase3Seller = "Nome do vendedor";
-        purchase3Price = 230;
-        purchase3Date = "01/01/2000";
-        currentPagePurchases = 1;
-        totalPagesPurchases = 3;
-        sell1Name = "Nome da obra";
-        sell1Buyer = "Nome do comprador";
-        sell1Price = 160;
-        sell1Date = "01/01/2000";
-        sell2Name = "Nome da obra";
-        sell2Buyer = "Nome do comprador";
-        sell2Price = 120;
-        sell2Date = "01/01/2000";
-        sell3Name = "Nome da obra";
-        sell3Buyer = "Nome do comprador";
-        sell3Price = 230;
-        sell3Date = "01/01/2000";
-        currentPageSells = 1;
-        totalPagesSells = 2;
     }
 }

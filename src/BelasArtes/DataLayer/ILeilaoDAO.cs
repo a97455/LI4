@@ -5,4 +5,6 @@ public interface ILeilaoDAO{
    public Task<List<Leilao>> GetLeilaoById(int? Id);
    public Task PutLeilao(Leilao leilao);
    public Task<List<int>> ContaLeiloesDeUmDadoTipo(int codEstado);
+   public Task<List<Leilao>> LeiloesAcabadosQueUserComprou(string emailComprador);
+   public Task<List<Leilao>> LeiloesAcabadosQueUserVendeu(string emailVendedor);
 }
