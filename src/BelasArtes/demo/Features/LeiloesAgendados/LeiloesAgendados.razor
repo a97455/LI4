@@ -22,18 +22,23 @@
 <div style="width: 30%; height: 20%; left: 2%; top: 4%; position: absolute; text-align: center; color: black; font-size: 200%; font-family: Inter; font-weight: 500; word-wrap: break-word">Leilões Belas Artes</div>
 <div style="width: 100%; height: 0px; left: 0%; top: 15% ; position: absolute; border: 1px #1E1E1E solid"></div>
 
-<button onclick="window.location.href='/profile'">
-<div style="width: 10%; height: 10%; left: 90%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
+<button onclick="window.location.href='/'">
+<div style="width: 10%; height: 10%; left: 90%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">LogOut</div>
 </button>
 <div style="width: 0%; height: 8%; left: 91%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button @onclick="RefreshPage">
-<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões</div>
+<button onclick="window.location.href='/profile'">
+<div style="width: 10%; height: 10%; left: 82%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
 </button>
 <div style="width: 0%; height: 8%; left: 83%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button onclick="window.location.href='/'">
-<div style="width: 10%; height: 10%; left: 74%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Home</div>
+<button onclick="window.location.href='/leiloesAtivos'">
+<div style="width: 10%; height: 10%; left: 74%; top: 2.5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Ativos</div>
+</button>
+<div style="width: 0%; height: 8%; left: 75%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+
+<button @onclick="RefreshPage">
+<div style="width: 10%; height: 10%; left: 65%; top: 2.%5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados</div>
 </button>
 
 
@@ -105,7 +110,7 @@
 
 
 @code{
-    private List<Leilao> ListLeiloesAgendados = new List<Leilao>(); //tem os leiloes ativos
+    private List<Leilao> ListLeiloesAgendados = new List<Leilao>(); //tem os leiloes agendados
     private List<Leilao> ListLeiloesAgendadosMostrar = new List<Leilao>(); //tem os leiloes para mostrar na pagina
 
     private Dictionary<string,int> dictMovimentosArtisticos = new Dictionary<string,int>(); //associa cada movimentoArtistico ao seu codigo
@@ -145,72 +150,6 @@
         }
         AppState.ListLeiloesAgendadosMostrar=aux;
         NavigationManager.NavigateTo("/leiloesAgendados",forceLoad:true);
-    }
-
-    public List<Leilao> OrdenarLeiloes(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
-    List<int> listMaiorLicitacaoByLeilao,int codModoOrdenacao) {
-        if (codModoOrdenacao==1){ //crescente de tempo restante
-            List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
-            for(int i=0;i<ListLeiloesAgendados.Count();i++){
-                DateTime dataFim = ListLeiloesAgendados[i].DataFim;
-                sortingList.Add((dataFim,listNumLicitacoesByLeilao[i]));
-            }
-            List<Leilao> sortedLeiloes = leiloes
-                .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderBy(item => item.SortingTuple.Item1)
-                .ThenBy(item => item.SortingTuple.Item2)
-                .Select(item => item.Leilao)
-                .ToList();
-            return sortedLeiloes;
-        }else if (codModoOrdenacao==2){ //decrescente de tempo restante
-            List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
-            for(int i=0;i<ListLeiloesAgendados.Count();i++){
-                DateTime dataFim = ListLeiloesAgendados[i].DataFim;
-                sortingList.Add((dataFim,listNumLicitacoesByLeilao[i]));
-            }
-            List<Leilao> sortedLeiloes = leiloes
-                .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderByDescending(item => item.SortingTuple.Item1)
-                .ThenBy(item => item.SortingTuple.Item2)
-                .Select(item => item.Leilao)
-                .ToList();
-            return sortedLeiloes;
-        }else if(codModoOrdenacao==3){ //crescente do valor da ultima licitacao
-            List<int> sortingList = new List<int>();
-            for(int i=0;i<ListLeiloesAgendados.Count();i++){
-                sortingList.Add(listMaiorLicitacaoByLeilao[i]);
-            }
-            List<Leilao> sortedLeiloes = leiloes
-                .Select((leilao, index) => new { Leilao = leilao, valorOrdenacao = sortingList[index] })
-                .OrderBy(item => item.valorOrdenacao)
-                .Select(item => item.Leilao)
-                .ToList();
-            return sortedLeiloes;
-        }else if(codModoOrdenacao==4){ //decrescente do valor da ultima licitacao
-            List<int> sortingList = new List<int>();
-            for(int i=0;i<ListLeiloesAgendados.Count();i++){
-                sortingList.Add(listMaiorLicitacaoByLeilao[i]);
-            }
-            List<Leilao> sortedLeiloes = leiloes
-                .Select((leilao, index) => new { Leilao = leilao, valorOrdenacao = sortingList[index] })
-                .OrderByDescending(item => item.valorOrdenacao)
-                .Select(item => item.Leilao)
-                .ToList();
-            return sortedLeiloes;
-        }else{ //default
-            List<(int,DateTime)> sortingList = new List<(int,DateTime)>();
-            for(int i=0;i<ListLeiloesAgendados.Count();i++){
-                DateTime dataFim = ListLeiloesAgendados[i].DataFim;
-                sortingList.Add((listNumLicitacoesByLeilao[i],dataFim));
-            }
-            List<Leilao> sortedLeiloes = leiloes
-                .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderByDescending(item => item.SortingTuple.Item1)
-                .ThenBy(item => item.SortingTuple.Item2)
-                .Select(item => item.Leilao)
-                .ToList();
-            return sortedLeiloes;
-        }
     }
 
     protected override async Task OnInitializedAsync(){
