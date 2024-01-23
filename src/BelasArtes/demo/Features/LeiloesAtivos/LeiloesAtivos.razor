@@ -48,6 +48,11 @@
 <div style="width: 15%; height: 7.5%; left: 76%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar por Valor</div>
 </button>
 
+<button @onclick="OrdenaByTempo">
+<div style="width: 15%; height: 7.5%; left: 56%; top: 47%; position: absolute; background: #D9D9D9"></div>
+<div style="width: 15%; height: 7.5%; left: 56%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar por Tempo</div>
+</button>
+
 
 <!--Barra pesquisa-->
 <div style="width: 100%; height: 25.5%; left: 0%; top: 14.5%; position: absolute; background: #404040;"></div>
@@ -177,12 +182,23 @@
     }
 
     public void OrdenaByValor(){
-        if (!AppState.buttonOrdenarSelecionado){
+        if (!AppState.buttonOrdenarValorSelecionado){
             AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,4);
-            AppState.buttonOrdenarSelecionado=true;
+            AppState.buttonOrdenarValorSelecionado=true;
         }else{
             AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,3);
-            AppState.buttonOrdenarSelecionado=false;
+            AppState.buttonOrdenarValorSelecionado=false;
+        }
+        NavigationManager.NavigateTo("/leiloesAtivos",forceLoad:true);
+    }
+
+    public void OrdenaByTempo(){
+        if (!AppState.buttonOrdenarTempoSelecionado){
+            AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,2);
+            AppState.buttonOrdenarTempoSelecionado=true;
+        }else{
+            AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,1);
+            AppState.buttonOrdenarTempoSelecionado=false;
         }
         NavigationManager.NavigateTo("/leiloesAtivos",forceLoad:true);
     }
@@ -191,33 +207,39 @@
     List<int> listMaiorLicitacaoByLeilao,int codModoOrdenacao) {
         if (codModoOrdenacao==1){ //crescente de tempo restante
             List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
-            for(int i=0;i<listLeiloesAtivos.Count();i++){
-                DateTime dataFim = listLeiloesAtivos[i].DataFim;
+            for(int i=0;i<leiloes.Count();i++){
+                DateTime dataFim = leiloes[i].DataFim;
                 sortingList.Add((dataFim,listNumLicitacoesByLeilao[i]));
             }
             List<Leilao> sortedLeiloes = leiloes
                 .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderBy(item => item.SortingTuple.Item1)
+                .OrderBy(item => item.SortingTuple.Item1.Day)
+                .ThenBy(item => item.SortingTuple.Item1.Hour)
+                .ThenBy(item => item.SortingTuple.Item1.Minute)
+                .ThenBy(item => item.SortingTuple.Item1.Second)
                 .ThenBy(item => item.SortingTuple.Item2)
                 .Select(item => item.Leilao)
                 .ToList();
             return sortedLeiloes;
         }else if (codModoOrdenacao==2){ //decrescente de tempo restante
             List<(DateTime,int)> sortingList = new List<(DateTime,int)>();
-            for(int i=0;i<listLeiloesAtivos.Count();i++){
-                DateTime dataFim = listLeiloesAtivos[i].DataFim;
+            for(int i=0;i<leiloes.Count();i++){
+                DateTime dataFim = leiloes[i].DataFim;
                 sortingList.Add((dataFim,listNumLicitacoesByLeilao[i]));
             }
             List<Leilao> sortedLeiloes = leiloes
                 .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderByDescending(item => item.SortingTuple.Item1)
+                .OrderByDescending(item => item.SortingTuple.Item1.Day)
+                .ThenBy(item => item.SortingTuple.Item1.Hour)
+                .ThenBy(item => item.SortingTuple.Item1.Minute)
+                .ThenBy(item => item.SortingTuple.Item1.Second)
                 .ThenBy(item => item.SortingTuple.Item2)
                 .Select(item => item.Leilao)
                 .ToList();
             return sortedLeiloes;
         }else if(codModoOrdenacao==3){ //crescente do valor da ultima licitacao
             List<int> sortingList = new List<int>();
-            for(int i=0;i<listLeiloesAtivos.Count();i++){
+            for(int i=0;i<leiloes.Count();i++){
                 sortingList.Add(listMaiorLicitacaoByLeilao[i]);
             }
             List<Leilao> sortedLeiloes = leiloes
@@ -228,7 +250,7 @@
             return sortedLeiloes;
         }else if(codModoOrdenacao==4){ //decrescente do valor da ultima licitacao
             List<int> sortingList = new List<int>();
-            for(int i=0;i<listLeiloesAtivos.Count();i++){
+            for(int i=0;i<leiloes.Count();i++){
                 sortingList.Add(listMaiorLicitacaoByLeilao[i]);
             }
             List<Leilao> sortedLeiloes = leiloes
@@ -239,8 +261,8 @@
             return sortedLeiloes;
         }else{ //default
             List<(int,DateTime)> sortingList = new List<(int,DateTime)>();
-            for(int i=0;i<listLeiloesAtivos.Count();i++){
-                DateTime dataFim = listLeiloesAtivos[i].DataFim;
+            for(int i=0;i<leiloes.Count();i++){
+                DateTime dataFim = leiloes[i].DataFim;
                 sortingList.Add((listNumLicitacoesByLeilao[i],dataFim));
             }
             List<Leilao> sortedLeiloes = leiloes
