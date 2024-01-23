@@ -1,4 +1,4 @@
-@page "/"
+@page "/leiloesAtivos"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
@@ -37,16 +37,7 @@
 </button>
 
 
-<!--Botoes de ordenar filtrar-->
-<button @onclick="MudarTipoLeilao">
-<div style="width: 15%; height: 7.5%; left: 57%; top: 47%; position: absolute; background: #D9D9D9"></div>
-@if(!AppState.buttonMudarTipoLeilaoSelecionado){
-    <div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Leilões Agendados</div>
-}else{
-    <div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Leilões Ativos</div>
-}
-</button>
-
+<!--Botoes de ordenar-->
 <button @onclick="OrdenaByValor">
 <div style="width: 15%; height: 7.5%; left: 76%; top: 47%; position: absolute; background: #D9D9D9"></div>
 <div style="width: 15%; height: 7.5%; left: 76%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Ordenar por Valor</div>
@@ -73,8 +64,8 @@
 
 
 <!--Caixas de Leilões-->
-@for (int i = 0; i < Math.Min(8, listLeiloesMostrar.Count); i++){
-    var leilao = listLeiloesMostrar[i];
+@for (int i = 0; i < Math.Min(8, ListLeiloesAtivosMostrar.Count); i++){
+    var leilao = ListLeiloesAtivosMostrar[i];
 
     if (dictLeilaoFacade.ContainsKey(leilao.Id)){
         if (dictLeilaoFacade[leilao.Id].Leilao.Id.Equals(leilao.Id)){  
@@ -124,8 +115,7 @@
     private List<Leilao> listLeiloesAtivos = new List<Leilao>(); //tem os leiloes ativos
     private List<int> listNumLicitacoesByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
     private List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
-    private List<Leilao> listLeiloesAgendados = new List<Leilao>(); //tem os leiloes agendados
-    private List<Leilao> listLeiloesMostrar = new List<Leilao>(); //tem os leiloes para mostrar na pagina
+    private List<Leilao> ListLeiloesAtivosMostrar = new List<Leilao>(); //tem os leiloes para mostrar na pagina
 
     private Dictionary<string,int> dictMovimentosArtisticos = new Dictionary<string,int>(); //associa cada movimentoArtistico ao seu codigo
     private Dictionary<int,LeilaoFacade> dictLeilaoFacade = new Dictionary<int, LeilaoFacade>(); //tem todos os leiloes
@@ -147,8 +137,8 @@
     }
 
     private void RefreshPage(){
-        AppState.ListLeiloesMostrar=listLeiloesAtivos;
-        NavigationManager.NavigateTo("/",forceLoad:true);
+        AppState.ListLeiloesAtivosMostrar=listLeiloesAtivos;
+        NavigationManager.NavigateTo("/leiloesAtivos",forceLoad:true);
     }
 
     private void SearchBar(){
@@ -162,30 +152,19 @@
                 aux.Add(leilao);
             }
         }
-        AppState.ListLeiloesMostrar=aux;
-        NavigationManager.NavigateTo("/",forceLoad:true);
+        AppState.ListLeiloesAtivosMostrar=aux;
+        NavigationManager.NavigateTo("/leiloesAtivos",forceLoad:true);
     }
 
     public void OrdenaByValor(){
         if (!AppState.buttonOrdenarSelecionado){
-            AppState.ListLeiloesMostrar=OrdenarLeiloes(listLeiloesMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,3);
+            AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,3);
             AppState.buttonOrdenarSelecionado=true;
         }else{
-            AppState.ListLeiloesMostrar=OrdenarLeiloes(listLeiloesMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,4);
+            AppState.ListLeiloesAtivosMostrar=OrdenarLeiloes(ListLeiloesAtivosMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,4);
             AppState.buttonOrdenarSelecionado=false;
         }
-        NavigationManager.NavigateTo("/",forceLoad:true);
-    }
-
-    public void MudarTipoLeilao(){
-        if(!AppState.buttonMudarTipoLeilaoSelecionado){
-            AppState.ListLeiloesMostrar=listLeiloesAgendados;
-            AppState.buttonOrdenarSelecionado=true;
-        }else{
-            AppState.ListLeiloesMostrar=listLeiloesAtivos;
-            AppState.buttonOrdenarSelecionado=false;
-        }
-        NavigationManager.NavigateTo("/",forceLoad:true);
+        NavigationManager.NavigateTo("/leiloesAtivos",forceLoad:true);
     }
 
     public List<Leilao> OrdenarLeiloes(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
@@ -260,13 +239,12 @@
             dictMovimentosArtisticos.Add(movimentoArtistico.Nome,movimentoArtistico.Id);
         }
 
-        listLeiloesAgendados = await leiloes.LeiloesByEstado(1);
         listLeiloesAtivos = await leiloes.LeiloesByEstado(2);
-        listLeiloesMostrar = AppState.ListLeiloesMostrar; 
-        if(!listLeiloesMostrar.Any()){
-            listLeiloesMostrar=listLeiloesAtivos;
+        ListLeiloesAtivosMostrar = AppState.ListLeiloesAtivosMostrar; 
+        if(!ListLeiloesAtivosMostrar.Any()){
+            ListLeiloesAtivosMostrar=listLeiloesAtivos;
         }else{
-            foreach(Leilao leilao in listLeiloesMostrar){
+            foreach(Leilao leilao in ListLeiloesAtivosMostrar){
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
                 listMaiorLicitacaoByLeilao.Add((await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First());
             }
