@@ -10,6 +10,11 @@ public class PinturaDAO : IPinturaDAO{
         return _db.LoadData<Pintura, dynamic>(sql, new { });
     }
 
+    public Task<List<MovimentoArtistico>> FindAllMovimentosArtisticos(){
+        string sql = "select * from Movimento_Artistico";
+        return _db.LoadData<MovimentoArtistico, dynamic>(sql, new { });
+    }
+
     public Task<List<Pintura>> GetPinturaById(int? Id){
         string sql = "SELECT * FROM Pintura WHERE Id = @Id";
         var parameters = new {Id};

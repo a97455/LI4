@@ -164,7 +164,7 @@ VALUES
 -- Inserting data into Movimento_Artistico table
 INSERT INTO Movimento_Artistico (Nome)
 VALUES 
-('Antiguidade Ocidental e Oriental,'),
+('Antiguidade Ocidental e Oriental'),
 ('Idade Média'),
 ('Renascentista e Barroco'),
 ('Moderno'),

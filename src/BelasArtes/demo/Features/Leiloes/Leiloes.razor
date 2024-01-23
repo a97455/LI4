@@ -1,4 +1,4 @@
-@page "/leiloes"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject ILeilaoDAO leiloes
@@ -38,9 +38,13 @@
 
 
 <!--Botoes de ordenar filtrar-->
-<button>
+<button @onclick="MudarTipoLeilao">
 <div style="width: 15%; height: 7.5%; left: 57%; top: 47%; position: absolute; background: #D9D9D9"></div>
-<div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Filtrar</div>
+@if(!AppState.buttonMudarTipoLeilaoSelecionado){
+    <div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Leilões Agendados</div>
+}else{
+    <div style="width: 15%; height: 7.5%; left: 57%; top: 47.5%; position: absolute; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Leilões Ativos</div>
+}
 </button>
 
 <button @onclick="OrdenaByValor">
@@ -53,11 +57,11 @@
 <div style="width: 100%; height: 25.5%; left: 0%; top: 14.5%; position: absolute; background: #404040;"></div>
 <div style="width: 60%; height: 10%; left: 20%; top: 22.5%; position: absolute; background: #f1f1f1; border-radius: 39px;"></div>
 
-<button  @onclick="SearchByArtista">
+<button  @onclick="SearchBar">
 <img style="width: 4%; height: 7.5%; left: 22%; top: 23.5%; position: absolute;" src="lupa.png" />
 </button>
 
-<input type="text" @bind="artistaPretendido" placeholder="Pesquisar autor..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
+<input type="text" @bind="filtroPretendido" placeholder="Pesquisar autor/movimento artístico..." style="width: 50%; height: 7.5%; left: 27%; top: 24%; position: absolute; background: #f1f1f1; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline: none;">
 
 
 @code{
@@ -122,9 +126,11 @@
     private List<int> listMaiorLicitacaoByLeilao = new List<int>(); //so tem entradas para os leiloes com licitacoes
     private List<Leilao> listLeiloesAgendados = new List<Leilao>(); //tem os leiloes agendados
     private List<Leilao> listLeiloesMostrar = new List<Leilao>(); //tem os leiloes para mostrar na pagina
+
+    private Dictionary<string,int> dictMovimentosArtisticos = new Dictionary<string,int>(); //associa cada movimentoArtistico ao seu codigo
     private Dictionary<int,LeilaoFacade> dictLeilaoFacade = new Dictionary<int, LeilaoFacade>(); //tem todos os leiloes
 
-    private string artistaPretendido {get;set;} = "";
+    private string filtroPretendido {get;set;} = "";
 
     class LeilaoFacade{
         public Leilao Leilao;
@@ -142,18 +148,22 @@
 
     private void RefreshPage(){
         AppState.ListLeiloesMostrar=listLeiloesAtivos;
-        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
+        NavigationManager.NavigateTo("/",forceLoad:true);
     }
 
-    private void SearchByArtista(){
+    private void SearchBar(){
         List<Leilao> aux = new List<Leilao>();
         foreach (Leilao leilao in this.listLeiloesAtivos) {
-            if(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(artistaPretendido)){
+            if (dictMovimentosArtisticos.ContainsKey(filtroPretendido)){
+                if (dictLeilaoFacade[leilao.Id].Pintura.CodMovimentoArtistico.Equals(dictMovimentosArtisticos[filtroPretendido])){
+                    aux.Add(leilao);
+                }
+            }else if(dictLeilaoFacade[leilao.Id].Pintura.Artista.Equals(filtroPretendido)){
                 aux.Add(leilao);
             }
         }
         AppState.ListLeiloesMostrar=aux;
-        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
+        NavigationManager.NavigateTo("/",forceLoad:true);
     }
 
     public void OrdenaByValor(){
@@ -164,7 +174,18 @@
             AppState.ListLeiloesMostrar=OrdenarLeiloes(listLeiloesMostrar,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,4);
             AppState.buttonOrdenarSelecionado=false;
         }
-        NavigationManager.NavigateTo("/leiloes",forceLoad:true);
+        NavigationManager.NavigateTo("/",forceLoad:true);
+    }
+
+    public void MudarTipoLeilao(){
+        if(!AppState.buttonMudarTipoLeilaoSelecionado){
+            AppState.ListLeiloesMostrar=listLeiloesAgendados;
+            AppState.buttonOrdenarSelecionado=true;
+        }else{
+            AppState.ListLeiloesMostrar=listLeiloesAtivos;
+            AppState.buttonOrdenarSelecionado=false;
+        }
+        NavigationManager.NavigateTo("/",forceLoad:true);
     }
 
     public List<Leilao> OrdenarLeiloes(List<Leilao> leiloes,List<int> listNumLicitacoesByLeilao,
@@ -234,6 +255,11 @@
     }
 
     protected override async Task OnInitializedAsync(){
+        List<MovimentoArtistico> listMovimentosArtisiticos = await pinturas.FindAllMovimentosArtisticos();
+        foreach(MovimentoArtistico movimentoArtistico in listMovimentosArtisiticos){
+            dictMovimentosArtisticos.Add(movimentoArtistico.Nome,movimentoArtistico.Id);
+        }
+
         listLeiloesAgendados = await leiloes.LeiloesByEstado(1);
         listLeiloesAtivos = await leiloes.LeiloesByEstado(2);
         listLeiloesMostrar = AppState.ListLeiloesMostrar; 
