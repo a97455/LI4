@@ -128,16 +128,30 @@ border: none; outline: none;" @onclick="OnButtonClick">
 @code {
     string idValorLicitacao { get; set; }
     void OnButtonClick(){
-        if(licitacao != null){
+        if(licitacao != null && leilao!=null){
             if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
                 if (valorLicitacao > licitacao.Valor * 1.05){
-                    DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
+                    DataLayer.Licitacao licitacao_nova = new DataLayer.
+                    Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
                     _licitacoes.PutLicitacao(licitacao_nova);
                     NavigationManager.NavigateTo("/leiloes"); 
                 } else {
                     NavigationManager.NavigateTo("/licitacao"); 
                 }
             }  
+        }else if(licitacao == null && leilao!=null){
+            if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
+                if (valorLicitacao > leilao.PrecoInicial ){
+                    DataLayer.Licitacao licitacao_nova = new DataLayer.
+                    Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
+                    _licitacoes.PutLicitacao(licitacao_nova);
+                    NavigationManager.NavigateTo("/leiloes"); 
+                }else{
+                    NavigationManager.NavigateTo("/licitacao"); 
+                }
+            }
+        }else{
+            NavigationManager.NavigateTo("/licitacao");
         }
         idValorLicitacao = "";
     }
