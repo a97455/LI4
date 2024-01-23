@@ -241,7 +241,7 @@ Inter; font-weight: 167; word-wrap: break-word">
             leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
             licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao)).First();
             pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
-            utilizador = (await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First(); 
+            utilizador = (await _utilizador.GetUtilizadorByEmail(licitacao.EmailLicitador)).First(); 
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }
