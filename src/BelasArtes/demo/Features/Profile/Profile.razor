@@ -4,6 +4,7 @@
 @inject IUtilizadorDAO _utilizador
 @inject ILeilaoDAO _leilao
 @inject IPinturaDAO _pinturas
+@inject ILicitacaoDAO _licitacoes
 @inject AppState AppState
 @using DataLayer
 
@@ -128,10 +129,10 @@
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">purchase1Name</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">purchase1Seller </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ purchase1Price</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">purchase1Date </div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
         </div>
     }
     
@@ -153,10 +154,10 @@
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">sell1Name</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">sell1Buyer </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">€ sell1Price</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">sell1Date </div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
         </div>
     }
     
@@ -176,9 +177,11 @@
     private Datalayer.Utilizador utilizador {get;set;}
     private List<DataLayer.Leilao> leiloesQueComprou {get; set; }
     private List<DataLayer.Leilao> leiloesQueVendeu {get; set; }
-
     private List<DataLayer.Pintura> pinturasQueComprou {get; set;}
     private List<DataLayer.Pintura> pinturasQueVendeu {get;set;}
+    private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;}
+    private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;}
+
     protected override async Task OnInitializedAsync(){
         try{
             utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).First(); 
@@ -188,9 +191,11 @@
             AppState.numero_vendas=leiloesQueVendeu.Count();  
             for(int i=0; i<AppState.numero_compras;i++){
                 pinturasQueComprou.Add((await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First());
+                licitacoesQueComprou.Add((await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).First());
             }
             for(int i=0; i<AppState.numero_vendas;i++){
                 pinturasQueVendeu.Add((await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First());
+                licitacoesQueVendeu.Add((await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).First());
             }
         }catch (Exception ex){
             Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
