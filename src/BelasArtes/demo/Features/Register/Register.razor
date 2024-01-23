@@ -79,27 +79,29 @@
 
 
 @code{
-    private string Email { get; set; } = "";
-    private string Nome {get;set;} = "";
+    private string? Email { get; set; }
+    private string? Nome {get;set;}
     private int? Telefone { get; set; }
-    private string Rua { get; set; } = "";
-    private string Localidade { get; set; } = "";
-    private string Cidade { get; set; } = "";
-    private string CodigoPostal { get; set; } = "";
-    private string PaisResidencia { get; set; } = "";
-    private string NIG {get;set;} = "";
-    private string IBAN { get; set; } = "";
-    private string PalavraPasse { get; set; } = "";
+    private string? Rua { get; set; }
+    private string? Localidade { get; set; }
+    private string? Cidade { get; set; }
+    private string? CodigoPostal { get; set; }
+    private string? PaisResidencia { get; set; }
+    private string? NIG {get;set;}
+    private string? IBAN { get; set; }
+    private string? PalavraPasse { get; set; }
 
     private async Task RegisterButton(){
-        Datalayer.Utilizador user = new Datalayer.Utilizador(Email,Nome,Telefone,Rua,Localidade,Cidade,CodigoPostal,
-        PaisResidencia,NIG,IBAN,PalavraPasse);
+        if (Email != null && Nome != null && Telefone != null && Rua != null &&
+        Localidade != null && Cidade != null && CodigoPostal != null &&
+        PaisResidencia != null && NIG != null && IBAN != null && PalavraPasse != null){
+            Datalayer.Utilizador user = new Datalayer.Utilizador(Email,Nome,Telefone,Rua,Localidade,Cidade,CodigoPostal,
+            PaisResidencia,NIG,IBAN,PalavraPasse);
 
-        try{
             await utilizadores.PutUtilizador(user);
             NavigationManager.NavigateTo("/login", forceLoad:true);
-        }catch (Exception){
-            NavigationManager.NavigateTo("/register",forceLoad:true);
+        }else{
+            NavigationManager.NavigateTo("/register", forceLoad:true);
         }
     }
 }
