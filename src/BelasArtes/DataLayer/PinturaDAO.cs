@@ -24,7 +24,7 @@ public class PinturaDAO : IPinturaDAO{
     public Task PutPintura(Pintura pintura){
         string sql = @"
             MERGE INTO Pintura AS target
-            USING (VALUES (DEFAULT)) AS source (Id)
+            USING (VALUES (@Id)) AS source (Id)
             ON target.Id = source.Id
             WHEN MATCHED THEN
                 UPDATE SET
@@ -45,6 +45,7 @@ public class PinturaDAO : IPinturaDAO{
                 VALUES (@Nome, @Altura, @Largura, @Peso, @Descricao, @Foto, @Artista, @AnoCriacao, @Original, @VerificacaoAutenticidade, @EmailVendedor, @CodMovimentoArtistico);";
 
         var parameters = new{
+            pintura.Id,
             pintura.Nome,
             pintura.Altura,
             pintura.Largura,

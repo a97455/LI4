@@ -261,17 +261,16 @@ font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     private Datalayer.Utilizador utilizador2 {get;set;}
     private Datalayer.Utilizador utilizador3 {get;set;}
     protected override async Task OnInitializedAsync(){
-    try{
-        leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
-        licitacoes = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao));
-        pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
-        numLicitacoesDoLeilao = (await _licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First();
-        utilizador1 = (await _utilizador.GetUtilizadorByEmail(licitacoes[0].EmailLicitador)).First(); 
-        utilizador2 = (await _utilizador.GetUtilizadorByEmail(licitacoes[1].EmailLicitador)).First(); 
-        utilizador3 = (await _utilizador.GetUtilizadorByEmail(licitacoes[2].EmailLicitador)).First(); 
-    }catch (Exception ex){
-        Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-    }
-}  
-    
+        try{
+            leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
+            licitacoes = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao));
+            pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
+            numLicitacoesDoLeilao = (await _licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First();
+            utilizador1 = (await _utilizador.GetUtilizadorByEmail(licitacoes[0].EmailLicitador)).First(); 
+            utilizador2 = (await _utilizador.GetUtilizadorByEmail(licitacoes[1].EmailLicitador)).First(); 
+            utilizador3 = (await _utilizador.GetUtilizadorByEmail(licitacoes[2].EmailLicitador)).First(); 
+        }catch (Exception ex){
+            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
+        }
+    }  
 }
