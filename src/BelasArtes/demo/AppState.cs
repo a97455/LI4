@@ -9,7 +9,7 @@ public class AppState{
 
 
     //Atributos gerais ao site
-    public string atual_user {get;set;} = "user1@example.com";
+    public string atual_user {get;set;} = "";
     public int? atual_leilao {get; set;} = null;
 
     //Coisas para o profile
