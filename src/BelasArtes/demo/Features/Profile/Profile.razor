@@ -10,6 +10,7 @@
 
 <PageTitle>BelasArtes</PageTitle>
 
+
 <div style="width: 100%; height: 155%; position: absolute; background: white"></div>
 
 <!-- Cabecalho -->
@@ -108,7 +109,7 @@
 
     <div style="width: 50%; height: 0.29%; left: 52.58%; top: 67%; position: absolute"><span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 550; word-wrap: break-word">Telemóvel: </span><span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word"></span>
         @if (utilizador != null){
-            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.IBAN</span>
+            <span style="color: black; font-size: 1.7vw; font-family: Inter; font-weight: 250; word-wrap: break-word">@utilizador.Telefone</span>
         }else{
             <span></span>
         }
@@ -151,7 +152,7 @@
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueComprou[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
         </div>
     }
@@ -181,7 +182,7 @@
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueVendeu[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
         </div>
     }
@@ -213,6 +214,11 @@
     private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;}
     private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;}
 
+    private void RefreshPage(){
+        NavigationManager.NavigateTo("/", forceLoad: true);
+        StateHasChanged();
+    }
+    
     protected override async Task OnInitializedAsync(){
     try{
         utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).FirstOrDefault();
