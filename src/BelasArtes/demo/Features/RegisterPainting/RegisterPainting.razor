@@ -46,51 +46,61 @@
         <div style="width: 100%; height: 100%; position: absolute">
             <div style="width: 60%; height: 90%; left: 20%; top: 25%; position: absolute; background: white; border-top-left-radius: 59px; border-top-right-radius: 59px; border-bottom-left-radius: 59px; border-bottom-right-radius: 59px">
                 <div style="width: 40%; height: 9%; left: 5%; top: 5%; position: absolute">
-                    <input type="text" @bind="Nome" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="Nome" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Nome:</div>
                 </div>
                 <div style="width: 40%; height: 9%; left: 55%; top: 5%; position: absolute">
-                    <input type="text" @bind="MovimentoArtistico" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <select @bind="MovimentoArtistico" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid">
+                        <option value="Antiguidade Ocidental e Oriental">Antiguidade Ocidental e Oriental</option>
+                        <option value="Idade Média">Idade Média</option>
+                        <option value="Renascentista e Barroco">Renascentista e Barroco</option>
+                        <option value="Moderno">Moderno</option>
+                        <option value="Contemporâneo">Contemporâneo</option>
+                        <option value="Outro">Outro</option>
+                    </select>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Movimento Artístico:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 5%; top: 25%; position: absolute">
-                    <input type="text" @bind="Altura" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="Altura" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Altura: (em cm)</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 26%; top: 25%; position: absolute">
-                    <input type="text" @bind="Comprimento" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="Comprimento" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Comprimento:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 25%; position: absolute">
-                    <input type="text" @bind="Peso" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="Peso" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Peso: (em kg)</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 76%; top: 25%; position: absolute">
-                    <input type="text" @bind="DataCriacao" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
-                    <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data de criação:</div>
+                    <input type="text" @bind="DataCriacao" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
+                    <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Ano de criação:</div>
                 </div>
                 <div style="width: 40%; height: 11%; left: 5%; top: 42%; position: absolute">
-                    <input type="text" @bind="DescricaoObra" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="DescricaoObra" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Descrição da obra:</div>
                 </div>
                 <div style="width: 40%; height: 11%; left: 55%; top: 42%; position: absolute">
-                    <input type="text" @bind="Artista" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="Artista" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Artista:</div>
                 </div>
                 <div style="width: 40%; height: 9%; left: 5%; top: 62%; position: absolute">
-                    <input type="text" @bind="Autenticidade" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <select @bind="Autenticidade" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid">
+                        <option value="Original">Original</option>
+                        <option value="Réplica">Réplica</option>
+                    </select>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden">Autenticidade: (Original/Réplica)</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 5%; top: 80%; position: absolute">
-                    <input type="text" @bind="PrecoInicial" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="PrecoInicial" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Preço inicial:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 26%; top: 80%; position: absolute">
-                    <input type="text" @bind="DataInicio" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="datetime-local" @bind="DataInicio" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 120%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data de início:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 80%; position: absolute">
-                    <input type="text" @bind="DataFinal" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="datetime-local" @bind="DataFinal" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 120%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data final:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 68%; position: absolute">
@@ -119,18 +129,23 @@
 
 
 @code{
+    protected override void OnInitialized()
+    {
+        System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("pt-PT");
+    }
+
     private string Nome {get;set;} = "";
     private string MovimentoArtistico { get; set; } = "";
     private int? Altura { get; set; }
     private int? Comprimento { get; set; }
     private float? Peso { get; set; }
-    private string DataCriacao { get; set; } = "";
+    private int? DataCriacao { get; set; }
     private string DescricaoObra { get; set; } = "";
     private string Artista { get; set; } = "";
     private string Autenticidade { get; set; } = "";
     private int? PrecoInicial { get; set; }
-    private string DataInicio { get; set; } = "";
-    private string DataFinal {get;set;} = "";
+    private DateTime DataInicio { get; set; } = DateTime.Now;
+    private DateTime DataFinal {get;set;} = DateTime.Now.AddDays(2);
     private int Verified {get;set;} = 0;
     private IBrowserFile selectedFile;
 
@@ -159,7 +174,7 @@
 
         try{
             //await _pinturas.PutPintura(painting);
-            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataIncioDT, DataFinalDT, PrecoInicial, AppState.atual_user, IdPintura, 0);
+            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataInicio, DataFinal, PrecoInicial, AppState.atual_user, IdPintura, 0);
             //await _leiloes.PutLeilao();
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){
