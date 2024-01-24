@@ -206,13 +206,13 @@
 
 
 @code {
-    private Datalayer.Utilizador utilizador {get;set;}
-    private List<DataLayer.Leilao> leiloesQueComprou {get; set; }
-    private List<DataLayer.Leilao> leiloesQueVendeu {get; set; }
-    private List<DataLayer.Pintura> pinturasQueComprou {get; set;}
-    private List<DataLayer.Pintura> pinturasQueVendeu {get;set;}
-    private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;}
-    private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;}
+    private Datalayer.Utilizador utilizador {get;set;} = new Datalayer.Utilizador();
+    private List<DataLayer.Leilao> leiloesQueComprou {get; set; } = new List<Leilao>();
+    private List<DataLayer.Leilao> leiloesQueVendeu {get; set; } = new List<Leilao>();
+    private List<DataLayer.Pintura> pinturasQueComprou {get; set;} = new List<Pintura>();
+    private List<DataLayer.Pintura> pinturasQueVendeu {get;set;} = new List<Pintura>();
+    private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;} = new List<Licitacao>();
+    private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;} = new List<Licitacao>();
 
     private void RefreshPage(){
         NavigationManager.NavigateTo("/", forceLoad: true);
@@ -220,41 +220,39 @@
     }
     
     protected override async Task OnInitializedAsync(){
-    try{
-        utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).FirstOrDefault();
+        try{
+            utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).First();
 
-        if (utilizador != null){
-            leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
-            leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
-            AppState.numero_compras = leiloesQueComprou.Count();
-            AppState.numero_vendas = leiloesQueVendeu.Count();
+            if (utilizador != null){
+                leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
+                leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
+                AppState.numero_compras = leiloesQueComprou.Count();
+                AppState.numero_vendas = leiloesQueVendeu.Count();
 
-            pinturasQueComprou = new List<DataLayer.Pintura>();
-            licitacoesQueComprou = new List<DataLayer.Licitacao>();
-            for (int i = 0; i < AppState.numero_compras; i++){
-                var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
-                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
-                if (pintura != null && licitacao != null){
-                    pinturasQueComprou.Add(pintura);
-                    licitacoesQueComprou.Add(licitacao);
+                pinturasQueComprou = new List<DataLayer.Pintura>();
+                licitacoesQueComprou = new List<DataLayer.Licitacao>();
+                for (int i = 0; i < AppState.numero_compras; i++){
+                    var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First();
+                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).First();
+                    if (pintura != null && licitacao != null){
+                        pinturasQueComprou.Add(pintura);
+                        licitacoesQueComprou.Add(licitacao);
+                    }
                 }
-            }
 
-            pinturasQueVendeu = new List<DataLayer.Pintura>();
-            licitacoesQueVendeu = new List<DataLayer.Licitacao>();
-            for (int i = 0; i < AppState.numero_vendas; i++){
-                var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
-                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
+                pinturasQueVendeu = new List<DataLayer.Pintura>();
+                licitacoesQueVendeu = new List<DataLayer.Licitacao>();
+                for (int i = 0; i < AppState.numero_vendas; i++){
+                    var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First();
+                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).First();
 
-                if (pintura != null && licitacao != null){
-                    pinturasQueVendeu.Add(pintura);
-                    licitacoesQueVendeu.Add(licitacao);
+                    if (pintura != null && licitacao != null){
+                        pinturasQueVendeu.Add(pintura);
+                        licitacoesQueVendeu.Add(licitacao);
+                    }
                 }
             }
         }
-    }
-    catch (Exception ex){
-        Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-    }
-}    
+        catch (Exception){}
+    }    
 }

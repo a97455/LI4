@@ -147,14 +147,14 @@
     private DateTime DataInicio { get; set; } = DateTime.Now;
     private DateTime DataFinal {get;set;} = DateTime.Now.AddDays(2);
     private int Verified {get;set;} = 0;
-    private IBrowserFile selectedFile;
+    private IBrowserFile? selectedFile;
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    private void HandleFileSelected(InputFileChangeEventArgs e)
     {
         selectedFile = e.File;
     }
 
-    private async Task HandleCertificate(InputFileChangeEventArgs e)
+    private void HandleCertificate(InputFileChangeEventArgs e)
     {
         Verified = 1;
     }
@@ -167,7 +167,7 @@
 
         //Meter a foto no wwwroot
         
-        int? CodMovimentoArtistico = 0;
+        //int? CodMovimentoArtistico = 0;
 
         //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
         //DataCriacao,Autenticidade,Verified,AppState.atual_user,CodMovimentoArtistico);
