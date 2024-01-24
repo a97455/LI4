@@ -161,13 +161,13 @@
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_compras+1}/{((AppState.numero_compras / 3)+1)}")</div>
 
     @if(AppState.pagina_atual_compras!=0){
-        <button style="border: none; padding: 0; margin: 0;">
+        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaCompras">
         <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
         </button>
     }
 
     @if(AppState.pagina_atual_compras<(AppState.numero_compras / 3)){
-        <button style="border: none; padding: 0; margin: 0;">
+        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaCompras">
         <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
         </button>
     }
@@ -191,13 +191,13 @@
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_vendas+1}/{((AppState.numero_vendas / 3)+1)}")</div>
     
     @if(AppState.pagina_atual_vendas!=0){
-        <button style="border: none; padding: 0; margin: 0;">
+        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaVendas">
         <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
         </button>
     }
 
     @if(AppState.pagina_atual_vendas!=(AppState.numero_vendas / 3)){
-        <button style="border: none; padding: 0; margin: 0;">
+        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaVendas">
         <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
         </button>
     }
