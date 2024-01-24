@@ -1,4 +1,4 @@
-@page "/profile"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject IUtilizadorDAO _utilizador
@@ -139,7 +139,7 @@
  
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
-    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_compras}/{((AppState.numero_compras / 3)+1)}")</div>
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_compras+1}/{((AppState.numero_compras / 3)+1)}")</div>
     <button style="border: none; padding: 0; margin: 0;">
     <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
     </button>
@@ -163,7 +163,7 @@
     
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
-    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_vendas}/{((AppState.numero_vendas / 3)+1)}")</div>
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_vendas+1}/{((AppState.numero_vendas / 3)+1)}")</div>
     <button style="border: none; padding: 0; margin: 0;">
     <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
     </button>
@@ -183,22 +183,46 @@
     private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;}
 
     protected override async Task OnInitializedAsync(){
-        try{
-            utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).First(); 
+    try{
+        utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).FirstOrDefault();
+
+        if (utilizador != null){
             leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
             leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
-            AppState.numero_compras=leiloesQueComprou.Count();
-            AppState.numero_vendas=leiloesQueVendeu.Count();  
-            for(int i=0; i<AppState.numero_compras;i++){
-                pinturasQueComprou.Add((await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First());
-                licitacoesQueComprou.Add((await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).First());
+            AppState.numero_compras = leiloesQueComprou.Count();
+            AppState.numero_vendas = leiloesQueVendeu.Count();
+
+            pinturasQueComprou = new List<DataLayer.Pintura>();
+            licitacoesQueComprou = new List<DataLayer.Licitacao>();
+            for (int i = 0; i < AppState.numero_compras; i++){
+                var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
+                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
+                if (pintura != null && licitacao != null){
+                    pinturasQueComprou.Add(pintura);
+                    licitacoesQueComprou.Add(licitacao);
+                }
             }
-            for(int i=0; i<AppState.numero_vendas;i++){
-                pinturasQueVendeu.Add((await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First());
-                licitacoesQueVendeu.Add((await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).First());
+
+            pinturasQueVendeu = new List<DataLayer.Pintura>();
+            licitacoesQueVendeu = new List<DataLayer.Licitacao>();
+            for (int i = 0; i < AppState.numero_vendas; i++){
+                var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
+                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
+
+                if (pintura != null && licitacao != null){
+                    pinturasQueVendeu.Add(pintura);
+                    licitacoesQueVendeu.Add(licitacao);
+                }
             }
-        }catch (Exception ex){
-            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
         }
     }
+    catch (Exception ex){
+        Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
+    }
+}
+
+    
+    
+    
+    
 }

@@ -16,6 +16,6 @@ public class AppState{
     public int numero_compras {get; set;}=0;
     public int numero_vendas {get; set;}=0;
 
-    public int pagina_atual_vendas {get; set;}=1;
-    public int  pagina_atual_compras {get; set;}=1;
+    public int pagina_atual_vendas {get; set;}=0;
+    public int  pagina_atual_compras {get; set;}=0;
 }
