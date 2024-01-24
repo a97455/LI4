@@ -148,7 +148,7 @@
     @for(int i=(AppState.pagina_atual_compras*3);i<AppState.pagina_atual_compras*3+Math.Min(AppState.numero_compras-AppState.pagina_atual_compras*3,3);i++){
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Valor</div>
@@ -178,7 +178,7 @@
     @for(int i=(AppState.pagina_atual_vendas*3);i<AppState.pagina_atual_vendas*3+Math.Min(AppState.numero_vendas-AppState.pagina_atual_vendas*3,3);i++){
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Valor</div>
