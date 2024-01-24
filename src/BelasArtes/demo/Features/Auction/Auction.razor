@@ -77,7 +77,7 @@
 
     <div style="width: 40%; height: 3.7%; left: 55%; top: 3%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Efetuada por</div>
     <div style="width: 40%; height: 5.8%; left: 55%; top: 12%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador1 != null && licitacoes.Count > 0){
+        @if (utilizador1 != null){
             @($"{utilizador1.Nome}")
         }else{
             <span>Não existe</span>
@@ -92,7 +92,7 @@
             <span></span>
         }</div>
     <div style="width: 40%; height: 1.7%; left: 60%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador1 != null && licitacoes.Count > 0){
+        @if (utilizador1 != null){
             @($"{utilizador1.Nome}")
         }else{
             <span></span>
@@ -111,7 +111,7 @@
             <span></span>
         }</div>
     <div style="width: 40%; height: 1.7%; left: 60%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador2 != null && licitacoes.Count > 1){
+        @if (utilizador2 != null){
             @($"{utilizador2.Nome}")
         }else{
             <span></span>
@@ -129,7 +129,7 @@
             <span></span>
         }</div>
     <div style="width: 40%; height: 1.7%; left: 60%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador3 != null && licitacoes.Count > 2){
+        @if (utilizador3 != null){
             @($"{utilizador3.Nome}")
         }else{
             <span></span>
@@ -253,13 +253,13 @@ font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
 
 
 @code {
-    private List<DataLayer.Licitacao> licitacoes { get; set; }
-    private DataLayer.Pintura pintura { get; set; }
-    private DataLayer.Leilao leilao {get; set; }
+    private List<DataLayer.Licitacao> licitacoes { get; set; } = new List<Licitacao>();
+    private DataLayer.Pintura pintura { get; set; } = new Pintura();
+    private DataLayer.Leilao leilao {get; set; } = new Leilao();
     private int numLicitacoesDoLeilao {get; set;}
-    private Datalayer.Utilizador utilizador1 {get;set;}
-    private Datalayer.Utilizador utilizador2 {get;set;}
-    private Datalayer.Utilizador utilizador3 {get;set;}
+    private Datalayer.Utilizador utilizador1 {get;set;} = new Datalayer.Utilizador();
+    private Datalayer.Utilizador utilizador2 {get;set;} = new Datalayer.Utilizador();
+    private Datalayer.Utilizador utilizador3 {get;set;} = new Datalayer.Utilizador();
     protected override async Task OnInitializedAsync(){
         try{
             leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
@@ -269,8 +269,6 @@ font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
             utilizador1 = (await _utilizador.GetUtilizadorByEmail(licitacoes[0].EmailLicitador)).First(); 
             utilizador2 = (await _utilizador.GetUtilizadorByEmail(licitacoes[1].EmailLicitador)).First(); 
             utilizador3 = (await _utilizador.GetUtilizadorByEmail(licitacoes[2].EmailLicitador)).First(); 
-        }catch (Exception ex){
-            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-        }
+        }catch (Exception){}
     }  
 }
