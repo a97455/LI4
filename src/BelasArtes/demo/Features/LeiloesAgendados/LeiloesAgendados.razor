@@ -129,7 +129,7 @@
 
 <!--Botoes de baixo-->
 <div style="width: 10%; height: 5%; left: 45%; top: 258%; position: absolute; background: white; border-radius: 10px"></div>
-<div style="width: 10%; height: 5%; left: 45%; top: 257.4%; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@((AppState.leilaoAgendadoMostrar/8)+1)/X</div>
+<div style="width: 10%; height: 5%; left: 45%; top: 257.4%; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@((AppState.leilaoAgendadoMostrar/8)+1)/@((ListLeiloesAgendadosMostrar.Count/8)+1)</div>
 <button @onclick="previousPage">
 <img style="width: auto; height: 3.5%; left: 45.8%; top: 258.8%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
 </button>
@@ -164,6 +164,7 @@
 
     private void RefreshPage(){
         AppState.ListLeiloesAgendadosMostrar=ListLeiloesAgendados;
+        AppState.leilaoAgendadoMostrar=0;
         NavigationManager.NavigateTo("/leiloesAgendados",forceLoad:true);
     }
 
