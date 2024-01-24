@@ -1,4 +1,4 @@
-@page "/profile"
+@page "/"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
 @inject IUtilizadorDAO _utilizador
@@ -9,6 +9,7 @@
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
+
 
 <div style="width: 100%; height: 155%; position: absolute; background: white"></div>
 
@@ -123,40 +124,65 @@
     </div>
 </div>
 
+@code{
+    private void IncrementaPaginaCompras(){
+        AppState.pagina_atual_compras+=1;
+        NavigationManager.NavigateTo("/profile", forceLoad: true);
+    }
+    private void DecrementaPaginaCompras(){
+        AppState.pagina_atual_compras-=1;
+        NavigationManager.NavigateTo("/profile", forceLoad: true);
+    }
+
+    private void IncrementaPaginaVendas(){
+        AppState.pagina_atual_vendas+=1;
+        NavigationManager.NavigateTo("/profile", forceLoad: true);
+    }
+    private void DecrementaPaginaVendas(){
+        AppState.pagina_atual_vendas-=1;
+        NavigationManager.NavigateTo("/profile", forceLoad: true);
+    }
+}
+
 <div style="width: 37.5%; height: 90%; left: 10%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Compras-->
     <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Compras</div>
-    @for(int i=(AppState.pagina_atual_compras*3);i<Math.Min(AppState.numero_compras-AppState.pagina_atual_compras*3,3);i++){
+    @for(int i=(AppState.pagina_atual_compras*3);i<AppState.pagina_atual_compras*3+Math.Min(AppState.numero_compras-AppState.pagina_atual_compras*3,3);i++){
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueComprou[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
         </div>
     }
-    
- 
+
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_compras+1}/{((AppState.numero_compras / 3)+1)}")</div>
-    <button style="border: none; padding: 0; margin: 0;">
-    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-    </button>
-    <button style="border: none; padding: 0; margin: 0;">
-    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-    </button>
+
+    @if(AppState.pagina_atual_compras!=0){
+        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaCompras">
+        <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+        </button>
+    }
+
+    @if(AppState.pagina_atual_compras<(AppState.numero_compras / 3)){
+        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaCompras">
+        <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+        </button>
+    }
 </div>
 
 <div style="width: 37.5%; height: 90%; left: 52.5%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Vendas-->
     <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Vendas</div>
-    @for(int i=(AppState.pagina_atual_vendas*3);i<Math.Min(AppState.numero_vendas-AppState.pagina_atual_vendas*3,3);i++){
+    @for(int i=(AppState.pagina_atual_vendas*3);i<AppState.pagina_atual_vendas*3+Math.Min(AppState.numero_vendas-AppState.pagina_atual_vendas*3,3);i++){
         <div> <!--Leilao 1 Compras-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <div style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Valor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueVendeu[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
         </div>
     }
@@ -164,12 +190,18 @@
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_vendas+1}/{((AppState.numero_vendas / 3)+1)}")</div>
-    <button style="border: none; padding: 0; margin: 0;">
-    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-    </button>
-    <button style="border: none; padding: 0; margin: 0;">
-    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-    </button>
+    
+    @if(AppState.pagina_atual_vendas!=0){
+        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaVendas">
+        <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+        </button>
+    }
+
+    @if(AppState.pagina_atual_vendas!=(AppState.numero_vendas / 3)){
+        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaVendas">
+        <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+        </button>
+    }
 </div>
 
 
@@ -182,42 +214,47 @@
     private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;}
     private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;}
 
+    private void RefreshPage(){
+        NavigationManager.NavigateTo("/", forceLoad: true);
+        StateHasChanged();
+    }
+    
     protected override async Task OnInitializedAsync(){
-        try{
-            utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).FirstOrDefault();
+    try{
+        utilizador = (await _utilizador.GetUtilizadorByEmail(AppState.atual_user)).FirstOrDefault();
 
-            if (utilizador != null){
-                leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
-                leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
-                AppState.numero_compras = leiloesQueComprou.Count();
-                AppState.numero_vendas = leiloesQueVendeu.Count();
+        if (utilizador != null){
+            leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
+            leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
+            AppState.numero_compras = leiloesQueComprou.Count();
+            AppState.numero_vendas = leiloesQueVendeu.Count();
 
-                pinturasQueComprou = new List<DataLayer.Pintura>();
-                licitacoesQueComprou = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < AppState.numero_compras; i++){
-                    var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
-                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
-                    if (pintura != null && licitacao != null){
-                        pinturasQueComprou.Add(pintura);
-                        licitacoesQueComprou.Add(licitacao);
-                    }
+            pinturasQueComprou = new List<DataLayer.Pintura>();
+            licitacoesQueComprou = new List<DataLayer.Licitacao>();
+            for (int i = 0; i < AppState.numero_compras; i++){
+                var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
+                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).FirstOrDefault();
+                if (pintura != null && licitacao != null){
+                    pinturasQueComprou.Add(pintura);
+                    licitacoesQueComprou.Add(licitacao);
                 }
+            }
 
-                pinturasQueVendeu = new List<DataLayer.Pintura>();
-                licitacoesQueVendeu = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < AppState.numero_vendas; i++){
-                    var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
-                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
+            pinturasQueVendeu = new List<DataLayer.Pintura>();
+            licitacoesQueVendeu = new List<DataLayer.Licitacao>();
+            for (int i = 0; i < AppState.numero_vendas; i++){
+                var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
+                var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).FirstOrDefault();
 
-                    if (pintura != null && licitacao != null){
-                        pinturasQueVendeu.Add(pintura);
-                        licitacoesQueVendeu.Add(licitacao);
-                    }
+                if (pintura != null && licitacao != null){
+                    pinturasQueVendeu.Add(pintura);
+                    licitacoesQueVendeu.Add(licitacao);
                 }
             }
         }
-        catch (Exception ex){
-            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-        }
-    } 
+    }
+    catch (Exception ex){
+        Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
+    }
+}    
 }
