@@ -155,11 +155,19 @@ GO
 -- Inserting data into Utilizador table
 INSERT INTO Utilizador (Email, Nome, Telefone, Rua, Localidade, Cidade, CodigoPostal, PaisResidencia, NIG, IBAN, PalavraPasse)
 VALUES 
-('user1@example.com','user1', 123456789, 'Street 1', 'Location 1', 'City 1', '12345', 'Country 1','00000000 0 XY0', 'IBAN123', 'password1'),
-('user2@example.com','user2', 987654321, 'Street 2', 'Location 2', 'City 2', '54321', 'Country 2','00000000 0 AY9', 'IBAN456', 'password2'),
-('user3@example.com','user3', 555555555, 'Street 3', 'Location 3', 'City 3', '67890', 'Country 3','00000000 0 KY6', 'IBAN789', 'password3'),
-('user4@example.com','user4', 111111111, 'Street 4', 'Location 4', 'City 4', '98765', 'Country 4','00000000 2 XY0', 'IBAN987', 'password4'),
-('user5@example.com','user5', 999999999, 'Street 5', 'Location 5', 'City 5', '54321', 'Country 5','00000000 5 XY0', 'IBAN654', 'password5');
+('emma.jones@gmail.com', 'Emma Jones', '912345678', '789 Pine Street', 'Greenfield', 'Springfield', '12345', 'United States', '123456789', 'US1234567890', 'spring789'),
+('liam.wilson@hotmail.com', 'Liam Wilson', '936345666', '456 Oak Avenue', 'Hill Valley', 'Hill Valley', '54321', 'United States', '234567890', 'US0987654321', 'valley456'),
+('olivia.smith@gmail.com', 'Olivia Smith', '958364828', '321 Cedar Street', 'Riverside', 'Riverside', '98765', 'United States', '345678901', 'US5555555550', 'river111'),
+('noah.taylor@hotmail.co.uk', 'Noah Taylor', '917269077', '654 Birch Lane', 'Windsor', 'London', '54321', 'United Kingdom', '456789012', 'GB9876543210', 'wind999'),
+('john.doe@gmail.com', 'John Doe', '911234567', '123 Main Street', 'Sunnydale', 'Los Angeles', '12345', 'United States', '567890123', 'US1234567890', 'sunshine123'),
+('jane.smith@hotmail.com', 'Jane Smith', '931234567', '456 Oak Avenue', 'Hill Valley', 'Hill Valley', '54321', 'United States', '678901234', 'US9876543210', 'valley456'),
+('bob.johnson@gmail.com', 'Bob Johnson', '961234567', '789 Pine Road', 'Greenfield', 'Springfield', '67890', 'United States', '789012345', 'US5555555550', 'spring789'),
+('alice.smith@hotmail.com', 'Alice Smith', '914742101', '321 Cedar Street', 'Riverside', 'Riverside', '98765', 'United States', '890123456', 'US1111111110', 'river111'),
+('eva.brown@gmail.com', 'Eva Brown', '969876499', '654 Birch Lane', 'Windsor', 'London', '54321', 'United Kingdom', '901234567', 'GB9999999990', 'wind999'),
+('joao.silva@hotmail.pt', 'João Silva', '919876543', 'Rua das Flores, 45', 'Lisboa', 'Lisboa', '1234-567', 'Portugal', '012345678', 'PT1234567890', 'silva123'),
+('ana.rodrigues@gmail.pt', 'Ana Rodrigues', '935345735', 'Avenida Central, 123', 'Porto', 'Porto', '8901-234', 'Portugal', '123456789', 'PT5555555550', 'rodrigues456'),
+('miguel.pereira@hotmail.pt', 'Miguel Pereira', '961235531', 'Rua do Comércio, 67', 'Faro', 'Faro', '5678-901', 'Portugal', '234567890', 'PT1111111110', 'pereira789');
+
 
 -- Inserting data into Movimento_Artistico table
 INSERT INTO Movimento_Artistico (Nome)
@@ -178,48 +186,82 @@ VALUES
 ('A decorrer'),
 ('Terminado');
 
--- Inserting data into Pintura table
+-- Inserindo dados na tabela Pintura com descrições adaptadas
 INSERT INTO Pintura (Nome, Altura, Largura, Peso, Descricao, Foto, Artista, AnoCriacao, Original, VerificacaoAutenticidade, EmailVendedor, CodMovimentoArtistico)
-VALUES 
-('Painting 1', 50.5, 30.2, 2.5, 'Description 1', 'leilao1.jpg', 'Artist 1', 2022, 1, 1, 'user1@example.com', 1),
-('Painting 2', 40.0, 20.0, 3.0, 'Description 2', 'leilao2.jpg', 'Artist 2', 2021, 1, 0, 'user2@example.com', 2),
-('Painting 3', 60.0, 40.0, 4.0, 'Description 3', 'leilao3.jpg', 'Artist 3', 2023, 1, 1, 'user3@example.com', 3),
-('Painting 4', 45.5, 25.5, 2.0, 'Description 4', 'leilao4.jpg', 'Artist 4', 2020, 1, 1, 'user4@example.com', 4),
-('Painting 5', 55.0, 35.0, 3.5, 'Description 5', 'leilao5.jpg', 'Artist 5', 2022, 0, 0, 'user5@example.com', 5),
-('Painting 6', 60.0, 35.0, 3.5, 'Description 6', 'leilao6.jpg', 'Artist 6', 2022, 0, 0, 'user5@example.com', 4),
-('Painting 7', 65.0, 35.0, 3.5, 'Description 7', 'leilao7.jpg', 'Artist 7', 2021, 0, 0, 'user5@example.com', 3),
-('Painting 8', 70.0, 35.0, 3.5, 'Description 8', 'leilao8.jpg', 'Artist 8', 2022, 0, 0, 'user5@example.com', 2),
-('Painting 9', 75.0, 35.0, 3.5, 'Description 9', 'leilao9.jpg', 'Artist 9', 2023, 0, 0, 'user5@example.com', 1),
-('Painting 10', 80.0, 35.0, 3.5, 'Description 10', 'leilao10.jpg', 'Artist 10', 2023, 0, 0, 'user5@example.com', 1);
+VALUES
+('O quarto', 50.5, 30.2, 2.5, 'Composição vibrante com cores e formas hipnotizantes.', 'leilao1.jpg', 'Pablo Picasso', 1972, 1, 1, 'emma.jones@gmail.com',1),
+('Doze girassóis', 40.0, 20.0, 3.0, 'Obra atemporal com uma mistura de cores vibrantes.', 'leilao2.jpg', 'Vincent van Gogh', 1930, 1, 0, 'emma.jones@gmail.com',4),
+('A Noite Estrelada', 60.0, 40.0, 4.0, 'Peça contemporânea com expressões artísticas modernas.', 'leilao3.jpg', 'Banksy', 2021, 1, 1, 'ana.rodrigues@gmail.pt',2),
+('Auto-retrato', 45.5, 25.5, 2.0, 'Criação intrigante com uma mistura única de cores e texturas.', 'leilao4.jpg', 'Claude Monet', 2010, 1, 1, 'alice.smith@hotmail.com',3),
+('Pela estrada', 55.0, 35.0, 3.5, 'Composição abstrata capturando a essência do movimento artístico.', 'leilao5.jpg', 'Jackson Pollock', 1985, 0, 0, 'miguel.pereira@hotmail.pt',4),
+('Céu estrelado', 60.0, 35.0, 3.5, 'Pintura antiga refletindo as tendências artísticas do século XIX.', 'leilao6.jpg', 'Claude Monet', 1870, 0, 0, 'joao.silva@hotmail.pt',2),
+('Terraço do Café à Noite', 65.0, 35.0, 3.5, 'Obra contemporânea explorando conceitos e formas inovadoras.', 'leilao7.jpg', 'Yayoi Kusama', 2005, 0, 0, 'emma.jones@gmail.com',1),
+('Árvore de amora', 70.0, 35.0, 3.5, 'Pintura recente apresentando uma interação dinâmica de cores e texturas.', 'leilao8.jpg', 'Banksy', 2022, 0, 0, 'alice.smith@hotmail.com',1),
+('Campo de Verão', 75.0, 35.0, 3.5, 'Visão futurista explorando temas imaginativos e especulativos.', 'leilao9.jpg', 'Ai Weiwei', 2005, 0, 0, 'miguel.pereira@hotmail.pt',2),
+('A cesta', 80.0, 35.0, 3.5, 'Criação inovadora empurrando os limites da arte contemporânea.', 'leilao10.jpg', 'Yayoi Kusama', 2023, 0, 0, 'emma.jones@gmail.com',3),
+('Lírios', 42.0, 25.0, 2.0, 'Criação dinâmica com elementos únicos e cativantes.', 'leilao11.jpg', 'Banksy', 2018, 0, 1, 'emma.jones@gmail.com',4),
+('Campo de Trigo com Corvos', 65.0, 35.0, 3.5, 'Composição colorida mostrando expressões artísticas vibrantes.', 'leilao12.jpg', 'Yayoi Kusama', 2015, 1, 1, 'ana.rodrigues@gmail.pt',3),
+('Amendoeira em Flor', 48.0, 28.0, 2.8, 'Criação abstrata com uma mistura única de cores.', 'leilao13.jpg', 'Jackson Pollock', 1950, 1, 0, 'alice.smith@hotmail.com',1),
+('A Vinha Encarnada', 55.0, 40.0, 4.0, 'Obra whimsical com elementos surrealistas.', 'leilao14.jpg', 'Salvador Dali', 1965, 1, 1, 'miguel.pereira@hotmail.pt',1),
+('Raízes de árvore', 72.0, 40.0, 3.0, 'Composição contemporânea com características dinâmicas e expressivas.', 'leilao15.jpg', 'Banksy', 2019, 0, 1, 'emma.jones@gmail.com',3),
+('Campo de trigo sob nuvens de tempestade', 38.0, 20.0, 2.0, 'Toque surrealista com elementos intrigantes.', 'leilao16.jpg', 'Salvador Dali', 1955, 1, 0, 'joao.silva@hotmail.pt',4),
+('Vaso com Lírios Contra um Fundo Amarelo', 55.0, 35.0, 3.5, 'Expressão abstrata com características inovadoras.', 'leilao17.jpg', 'Jackson Pollock', 1960, 0, 0, 'emma.jones@gmail.com',4),
+('Jardim com casal cortejando', 68.0, 35.0, 4.5, 'Criação inovadora com elementos visualmente impactantes.', 'leilao18.jpg', 'Yayoi Kusama', 2017, 1, 1, 'alice.smith@hotmail.com',2),
+('Vaso com rosas cor-de-rosa', 80.0, 45.0, 5.0, 'Composição abstrata com características atemporais.', 'leilao19.jpg', 'Jackson Pollock', 1975, 0, 0, 'miguel.pereira@hotmail.pt',3),
+('O bom samaritano', 60.0, 40.0, 3.0, 'Composição contemporânea com características dinâmicas e expressivas.', 'leilao20.jpg', 'Ai Weiwei', 2020, 1, 1, 'emma.jones@gmail.com',3);
+
 
 
 -- Inserting data into Leilao table
 INSERT INTO Leilao (DataInicio, DataFim, PrecoInicial, EmailComprador, CodPintura, CodEstado)
 VALUES 
-('2023-01-18 12:00:00', '2023-01-20 12:00:00', 100.00, 'user2@example.com', 1, 3),
-('2023-01-19 12:00:00', '2023-01-21 12:00:00', 150.00, 'user1@example.com', 2, 3),
-('2022-12-20 12:00:00', '2021-02-22 12:00:00', 200.00, 'user1@example.com', 3, 3),
-('2023-01-01 12:00:00', '2024-12-23 12:00:00', 120.00, NULL, 4, 2),
-('2023-01-02 12:00:00', '2024-12-24 12:00:00', 180.00, NULL, 5, 2),
-('2023-01-02 12:00:00', '2024-12-25 12:00:00', 180.00, NULL, 6, 2),
-('2023-01-02 12:00:00', '2024-12-26 12:00:00', 180.00, NULL, 7, 2),
-('2023-01-02 12:00:00', '2024-12-27 12:00:00', 180.00, NULL, 8, 2),
-('2023-01-02 12:00:00', '2024-12-28 12:00:00', 180.00, NULL, 9, 2),
-('2023-01-02 12:00:00', '2024-12-29 12:00:00', 180.00, NULL, 10, 2);
+('2024-01-21 19:40:00', '2024-01-23 17:30:00', 1140.00, 'miguel.pereira@hotmail.pt', 1, 3),
+('2024-01-22 20:20:00', '2024-01-23 16:00:00', 470.00, 'joao.silva@hotmail.pt', 2, 3),
+('2024-01-23 17:15:00', '2024-01-25 13:00:00', 2350.00, 'emma.jones@gmail.com', 3, 3),
+('2024-01-24 13:10:00', '2024-01-26 13:45:00', 450.00, 'emma.jones@gmail.com', 4, 3),
+('2024-01-25 15:45:00', '2024-01-25 21:45:00', 950.00, 'joao.silva@hotmail.pt', 5, 3),
+('2024-01-27 11:45:00', '2024-01-30 23:00:00', 2450.00,'emma.jones@gmail.com', 6, 2),
+('2024-01-27 12:30:00', '2024-01-30 11:45:00', 200.00, 'bob.johnson@gmail.com', 7, 2),
+('2024-01-27 14:30:00', '2024-01-30 12:30:00', 340.00, 'olivia.smith@gmail.com', 8, 2),
+('2024-01-28 10:45:00', '2024-01-29 23:45:00', 260.00, 'joao.silva@hotmail.pt', 9, 2),
+('2024-01-28 19:00:00', '2024-01-29 22:30:00', 200.00, 'ana.rodrigues@gmail.pt', 10, 2),
+('2024-01-28 20:30:00', '2024-01-29 15:00:00', 120.00,'miguel.pereira@hotmail.pt', 11, 2),
+('2024-01-29 09:30:00', '2024-01-29 23:30:00', 180.00, 'miguel.pereira@hotmail.pt', 12, 2),
+('2024-01-29 10:45:00', '2024-01-29 23:30:00', 500.00,'john.doe@gmail.com', 13, 2),
+('2024-01-29 11:00:00', '2024-01-30 23:30:00', 940.00, 'emma.jones@gmail.com', 14, 2),
+('2024-01-29 19:15:00', '2024-01-31 19:15:00', 250.00, 'john.doe@gmail.com', 15, 1),
+('2024-01-29 20:30:00', '2024-01-30 20:30:00', 780.00, 'ana.rodrigues@gmail.pt', 16, 1),
+('2024-01-30 21:45:00', '2024-02-02 21:45:00', 920.00, 'olivia.smith@gmail.com', 17, 1);
+('2024-01-31 13:15:00', '2024-01-31 23:15:00', 100.00, 'eva.brown@gmail.com', 18, 1),
+('2024-02-02 20:20:00', '2024-02-03 15:15:00', 1040.00, 'john.doe@gmail.com', 19, 1),
+('2024-02-03 20:20:00', '2024-02-05 16:00:00', 300.00, 'bob.johnson@gmail.com', 20, 1);
 
 
 -- Inserting data into Licitacao table
 INSERT INTO Licitacao (Valor, EmailLicitador, IdLeilao, Data)
 VALUES 
-(120.00, 'user2@example.com', 1,'2023-01-18 12:30:00'),
-(170.00, 'user1@example.com', 2,'2023-01-19 12:28:00'),
-(270.00, 'user1@example.com', 3,'2022-12-20 12:17:23'),
-(220.00, 'user4@example.com', 4,'2023-01-01 15:10:23'),
-(230.00, 'user4@example.com', 4,'2023-01-01 16:07:12'),
-(160.00, 'user3@example.com', 5,'2023-01-02 13:26:10'),
-(200.00, 'user1@example.com', 6,'2023-01-02 17:23:05'),
-(260.00, 'user2@example.com', 7,'2023-01-02 12:12:30'),
-(360.00, 'user3@example.com', 8,'2023-01-02 20:10:49'),
-(380.00, 'user3@example.com', 8,'2023-01-02 22:01:20'),
-(190.00, 'user4@example.com', 9,'2023-01-02 12:02:00'),
-(190.00, 'user1@example.com', 10,'2023-01-02 17:03:23');
+(1160.00,'emma.jones@gmail.com' , 1,'2024-01-21 19:45:10'),
+(500.00, 'bob.johnson@gmail.com', 2,'2024-01-23 12:28:20'),
+(545.00, 'ana.rodrigues@gmail.pt', 2,'2024-01-23 12:35:03'),
+(630.00, 'emma.jones@gmail.com', 2,'2024-01-23 13:40:40'),
+(2350.00, 'bob.johnson@gmail.com', 3,'2024-01-23 19:17:23'),
+(2450.00, 'miguel.pereira@hotmail.pt', 3,'2024-01-23 21:15:25'),
+(450.00, 'olivia.smith@gmail.com', 4,'2024-01-24 223:15:25'),
+(1600.00, 'olivia.smith@gmail.com', 5,'2024-01-27 13:26:10'),
+(1700.00, 'eva.brown@gmail.com', 5,'2024-01-27 15:29:12'),
+(2460.00, 'miguel.pereira@hotmail.pt', 6,'2024-01-27 17:23:05'),
+(2470.00, 'bob.johnson@gmail.com', 6,'2024-01-27 17:56:05'),
+(260.00, 'olivia.smith@gmail.com', 7,'2024-01-27 12:50:30'),
+(780.00, 'ana.rodrigues@gmail.pt', 8,'2024-01-27 15:10:49'),
+(285.00, 'emma.jones@gmail.com', 9,'2024-01-28 12:02:00'),
+(315.00, 'john.doe@gmail.com', 9,'2024-01-28 12:02:00'),
+(290.00, 'john.doe@gmail.com', 10,'2024-01-28 22:03:23'),
+(120.00, 'olivia.smith@gmail.com', 11, '2024-01-29 11:45:00'),
+(650.00, 'john.doe@gmail.com', 11, '2024-01-29 13:15:00'),
+(300.00, 'ana.rodrigues@gmail.pt', 12, '2024-01-29 10:50:00'),
+(340.00, 'john.doe@gmail.com', 12, '2024-01-29 12:20:00'),
+(530.00, 'bob.johnson@gmail.com', 13, '2024-01-29 23:25:00'),
+(550.00, 'olivia.smith@gmail.com', 14, '2024-01-29 12:40:00'),
+(1200.00, 'eva.brown@gmail.com', 14, '2024-01-29 14:10:00'),
+(1300.00, 'olivia.smith@gmail.com', 14, '2024-01-29 14:15:00'),
+(1400.00, 'bob.johnson@gmail.com', 14, '2024-01-29 13:23:00');
