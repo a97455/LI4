@@ -86,7 +86,16 @@
                 <div style="width: 20%; height: 40%; left: 5%; top: @(60+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
                 <img style="width: 20%; height: 40%; left: 5%; top: @(60+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
                 <div style="width: 20%; height: 10%; left: 23%; top: @(64+(25*(i%8)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 20% ; top: @(72+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 20% ; top: @(72+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento Artístico:
+                @{
+                    string final = "";
+                    foreach(String movimentoArtistico in dictMovimentosArtisticos.Keys){
+                        if (dictLeilaoFacade[leilao.Id].Pintura.CodMovimentoArtistico.Equals(dictMovimentosArtisticos[movimentoArtistico])){
+                            final=movimentoArtistico; 
+                        }
+                    }
+                }@final
+                </div>
                 <div style="width: 20%; height: 10%; left: 20% ; top: @(78+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
                 <div style="width: 20%; height: 10%; left: 21.25% ; top: @(84+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
                 <div style="width: 20%; height: 10%; left: 24.65%; top: @(90+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
@@ -106,7 +115,16 @@
                 <div style="width: 20%; height: 40%; left: 55%; top: @(60+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
                 <img style="width: 20%; height: 40%; left: 55%; top: @(60+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
                 <div style="width: 20%; height: 10%; left: 73%; top: @(64+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 70%; top: @(72+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 70%; top: @(72+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento Artístico:
+                @{
+                    string final = "";
+                    foreach(String movimentoArtistico in dictMovimentosArtisticos.Keys){
+                        if (dictLeilaoFacade[leilao.Id].Pintura.CodMovimentoArtistico.Equals(dictMovimentosArtisticos[movimentoArtistico])){
+                            final=movimentoArtistico; 
+                        }
+                    }
+                }@final
+                </div>
                 <div style="width: 20%; height: 10%; left: 70%; top: @(78+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
                 <div style="width: 20%; height: 10%; left: 71.25%; top: @(84+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
                 <div style="width: 20%; height: 10%; left: 74.65%; top: @(90+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
