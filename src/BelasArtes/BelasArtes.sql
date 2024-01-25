@@ -157,16 +157,16 @@ INSERT INTO Utilizador (Email, Nome, Telefone, Rua, Localidade, Cidade, CodigoPo
 VALUES 
 ('emma.jones@gmail.com', 'Emma Jones', '912345678', '789 Pine Street', 'Greenfield', 'Springfield', '12345', 'United States', '123456789', 'US1234567890', 'spring789'),
 ('liam.wilson@hotmail.com', 'Liam Wilson', '936345666', '456 Oak Avenue', 'Hill Valley', 'Hill Valley', '54321', 'United States', '234567890', 'US0987654321', 'valley456'),
-('olivia.smith@gmail.com', 'Olivia Smith', '958364828', '321 Cedar Street', 'Riverside', 'Riverside', '98765', 'United States', '345678901', 'US5555555550', 'river111'),
+('olivia.smith@gmail.com', 'Olivia Smith', '958364828', '321 Cedar Street', 'Riverside', 'Riverside', '98765', 'United States', '345678901', 'US5225555550', 'river111'),
 ('noah.taylor@hotmail.co.uk', 'Noah Taylor', '917269077', '654 Birch Lane', 'Windsor', 'London', '54321', 'United Kingdom', '456789012', 'GB9876543210', 'wind999'),
-('john.doe@gmail.com', 'John Doe', '911234567', '123 Main Street', 'Sunnydale', 'Los Angeles', '12345', 'United States', '567890123', 'US1234567890', 'sunshine123'),
+('john.doe@gmail.com', 'John Doe', '911234567', '123 Main Street', 'Sunnydale', 'Los Angeles', '12345', 'United States', '567890123', 'US1233537890', 'sunshine123'),
 ('jane.smith@hotmail.com', 'Jane Smith', '931234567', '456 Oak Avenue', 'Hill Valley', 'Hill Valley', '54321', 'United States', '678901234', 'US9876543210', 'valley456'),
-('bob.johnson@gmail.com', 'Bob Johnson', '961234567', '789 Pine Road', 'Greenfield', 'Springfield', '67890', 'United States', '789012345', 'US5555555550', 'spring789'),
+('bob.johnson@gmail.com', 'Bob Johnson', '961234567', '789 Pine Road', 'Greenfield', 'Springfield', '67890', 'United States', '789012345', 'US55535655550', 'spring789'),
 ('alice.smith@hotmail.com', 'Alice Smith', '914742101', '321 Cedar Street', 'Riverside', 'Riverside', '98765', 'United States', '890123456', 'US1111111110', 'river111'),
-('eva.brown@gmail.com', 'Eva Brown', '969876499', '654 Birch Lane', 'Windsor', 'London', '54321', 'United Kingdom', '901234567', 'GB9999999990', 'wind999'),
+('eva.brown@gmail.com', 'Eva Brown', '969876499', '654 Birch Lane', 'Windsor', 'London', '54321', 'United Kingdom', '901234567', 'GB9912399990', 'wind999'),
 ('joao.silva@hotmail.pt', 'João Silva', '919876543', 'Rua das Flores, 45', 'Lisboa', 'Lisboa', '1234-567', 'Portugal', '012345678', 'PT1234567890', 'silva123'),
-('ana.rodrigues@gmail.pt', 'Ana Rodrigues', '935345735', 'Avenida Central, 123', 'Porto', 'Porto', '8901-234', 'Portugal', '123456789', 'PT5555555550', 'rodrigues456'),
-('miguel.pereira@hotmail.pt', 'Miguel Pereira', '961235531', 'Rua do Comércio, 67', 'Faro', 'Faro', '5678-901', 'Portugal', '234567890', 'PT1111111110', 'pereira789');
+('ana.rodrigues@gmail.pt', 'Ana Rodrigues', '935345735', 'Avenida Central, 123', 'Porto', 'Porto', '8901-234', 'Portugal', '123456789', 'PT55525777550', 'rodrigues456'),
+('miguel.pereira@hotmail.pt', 'Miguel Pereira', '961235531', 'Rua do Comércio, 67', 'Faro', 'Faro', '5678-901', 'Portugal', '234567890', 'PT1153612610', 'pereira789');
 
 
 -- Inserting data into Movimento_Artistico table
@@ -231,7 +231,7 @@ VALUES
 ('2024-01-29 11:00:00', '2024-01-30 23:30:00', 940.00, 'emma.jones@gmail.com', 14, 2),
 ('2024-01-29 19:15:00', '2024-01-31 19:15:00', 250.00, 'john.doe@gmail.com', 15, 1),
 ('2024-01-29 20:30:00', '2024-01-30 20:30:00', 780.00, 'ana.rodrigues@gmail.pt', 16, 1),
-('2024-01-30 21:45:00', '2024-02-02 21:45:00', 920.00, 'olivia.smith@gmail.com', 17, 1);
+('2024-01-30 21:45:00', '2024-02-02 21:45:00', 920.00, 'olivia.smith@gmail.com', 17, 1),
 ('2024-01-31 13:15:00', '2024-01-31 23:15:00', 100.00, 'eva.brown@gmail.com', 18, 1),
 ('2024-02-02 20:20:00', '2024-02-03 15:15:00', 1040.00, 'john.doe@gmail.com', 19, 1),
 ('2024-02-03 20:20:00', '2024-02-05 16:00:00', 300.00, 'bob.johnson@gmail.com', 20, 1);
@@ -246,7 +246,7 @@ VALUES
 (630.00, 'emma.jones@gmail.com', 2,'2024-01-23 13:40:40'),
 (2350.00, 'bob.johnson@gmail.com', 3,'2024-01-23 19:17:23'),
 (2450.00, 'miguel.pereira@hotmail.pt', 3,'2024-01-23 21:15:25'),
-(450.00, 'olivia.smith@gmail.com', 4,'2024-01-24 223:15:25'),
+(450.00, 'olivia.smith@gmail.com', 4,'2024-01-24 22:15:25'),
 (1600.00, 'olivia.smith@gmail.com', 5,'2024-01-27 13:26:10'),
 (1700.00, 'eva.brown@gmail.com', 5,'2024-01-27 15:29:12'),
 (2460.00, 'miguel.pereira@hotmail.pt', 6,'2024-01-27 17:23:05'),
