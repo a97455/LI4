@@ -156,7 +156,7 @@
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Obra: {pinturasQueComprou[i].Nome}")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Vendedor: {pinturasQueComprou[i].EmailVendedor}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Vendedor: {utilizadoresQueComprou[i].Email}")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Preço: {licitacoesQueComprou[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(26+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Data: {licitacoesQueComprou[i].Data}") </div>
         </div>
@@ -181,7 +181,7 @@
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Obra: {pinturasQueVendeu[i].Nome}")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Comprador: {leiloesQueVendeu[i].EmailComprador}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Comprador: {utilizadoresQueVendeu[i].Email}")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Preço: {licitacoesQueVendeu[i].Valor}€")</div>
             <div style="width: 50%; height: 8%; left: 42.5%; top: @(26+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Data: {licitacoesQueVendeu[i].Data}")</div>
         </div>
@@ -207,6 +207,8 @@
     private List<DataLayer.Pintura> pinturasQueVendeu {get;set;} = new List<Pintura>();
     private List<DataLayer.Licitacao> licitacoesQueComprou {get; set;} = new List<Licitacao>();
     private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;} = new List<Licitacao>();
+    private List<Datalayer.Utilizador> utilizadoresQueComprou {get; set;} = new List<Datalayer.Utilizador>();
+    private List<Datalayer.Utilizador> utilizadoresQueVendeu {get; set;} = new List<Datalayer.Utilizador>();
 
     private void RefreshPage(){
         AppState.leilaoCompradoMostrar=0;
@@ -222,29 +224,27 @@
                 leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
                 leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
 
-                pinturasQueComprou = new List<DataLayer.Pintura>();
-                licitacoesQueComprou = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < leiloesQueComprou.Count; i++){
-                    var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First();
-                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).First();
-                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leiloesQueVendeu[i].EmailComprador)).First();
-                    if (pintura != null && licitacao != null){
+                foreach (Leilao leilao in leiloesQueComprou){
+                    var pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First();
+                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilao.CodPintura)).First();
+                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First();
+                    if (pintura != null && licitacao != null && leilao.EmailComprador!=null){
                         pinturasQueComprou.Add(pintura);
                         licitacoesQueComprou.Add(licitacao);
 
+                        utilizadoresQueComprou.Add(utilizador);
                     }
                 }
 
-                pinturasQueVendeu = new List<DataLayer.Pintura>();
-                licitacoesQueVendeu = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < leiloesQueVendeu.Count; i++){
-                    var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First();
-                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).First();
-                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leiloesQueVendeu[i].EmailComprador)).First();
+                foreach(Leilao leilao in leiloesQueVendeu){
+                    var pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First();
+                    var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilao.CodPintura)).First();
+                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First();
 
-                    if (pintura != null && licitacao != null){
+                    if (pintura != null && licitacao != null && leilao.EmailComprador!=null){
                         pinturasQueVendeu.Add(pintura);
                         licitacoesQueVendeu.Add(licitacao);
+                        utilizadoresQueVendeu.Add(utilizador);
                     }
                 }
             }
