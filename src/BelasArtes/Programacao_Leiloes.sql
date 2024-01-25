@@ -1,38 +1,53 @@
-CREATE PROCEDURE VerificarAtualizarLeilao
-AS
+-- Criar o procedimento armazenado, se não existir
+IF NOT EXISTS (SELECT * FROM sys.procedures WHERE name = 'VerificarAtualizarLeilao')
 BEGIN
-    UPDATE Leilao
-    SET CodEstado = 2
-    WHERE DataInicio > GETDATE() AND CodEstado = 1;
-    UPDATE Leilao
-    SET CodEstado = 3
-    WHERE DataFim > GETDATE() AND CodEstado = 2;
+    EXEC('CREATE PROCEDURE VerificarAtualizarLeilao AS
+    BEGIN
+        UPDATE Leilao
+        SET CodEstado = 2
+        WHERE DataInicio < GETDATE() AND CodEstado = 1;
+
+        UPDATE Leilao
+        SET CodEstado = 3
+        WHERE DataFim < GETDATE() AND CodEstado = 2;
+    END;');
 END;
 
+-- Criar um job no SQL Server Agent
 USE msdb;
 GO
 
-EXEC sp_add_job
-    @job_name = N'AtualizarLeiloesJob';
+DECLARE @jobId UNIQUEIDENTIFIER;
+DECLARE @jobName NVARCHAR(128);
 
-EXEC sp_add_jobstep
-    @job_name = N'AtualizarLeiloesJob',
-    @step_name = N'ExecutarProcedimento',
-    @subsystem = N'TSQL',
-    @command = N'EXEC VerificarAtualizarLeilao;',
-    @retry_attempts = 0,
-    @retry_interval = 1;
+SET @jobName = 'AtualizarLeilaoJob';
 
-EXEC sp_add_schedule
-    @job_name = N'AtualizarLeiloesJob',
-    @name = N'MinuteSchedule',
-    @freq_type = 4,
-    @freq_interval = 1;
+-- Verificar se o job já existe
+IF NOT EXISTS (SELECT job_id FROM msdb.dbo.sysjobs WHERE name = @jobName)
+BEGIN
+    -- Criar o job
+    EXEC msdb.dbo.sp_add_job
+        @job_name = @jobName,
+        @enabled = 1,
+        @notify_level_eventlog = 0,
+        @notify_level_email = 0;
 
-EXEC sp_attach_schedule
-    @job_name = N'AtualizarLeiloesJob',
-    @schedule_name = N'MinuteSchedule';
+    -- Obter o ID do job
+    SET @jobId = (SELECT job_id FROM msdb.dbo.sysjobs WHERE name = @jobName);
 
-EXEC sp_add_jobserver
-    @job_name = N'AtualizarLeiloesJob';
+    -- Adicionar uma etapa ao job
+    EXEC msdb.dbo.sp_add_jobstep
+        @job_id = @jobId,
+        @step_id = 1,
+        @step_name = 'Executar Procedimento',
+        @subsystem = 'TSQL',
+        @command = 'EXEC VerificarAtualizarLeilao;',
+        @on_success_action = 3; -- Encerrar o job em caso de sucesso
 
+    -- Agendar o job para ser executado a cada minuto
+    EXEC msdb.dbo.sp_add_jobschedule
+        @job_id = @jobId,
+        @name = 'MinutelySchedule',
+        @freq_type = 4,  -- Frequência: Minutely
+        @freq_interval = 1; -- A cada 1 minuto
+END;
