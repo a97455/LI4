@@ -43,7 +43,7 @@ public class LeilaoDAO : ILeilaoDAO{
     public Task PutLeilao(Leilao leilao){
         string mergeSql = @"
             MERGE INTO Leilao AS target
-            USING (VALUES (DEFAULT)) AS source (id)
+            USING (VALUES (@Id)) AS source (id)
             ON target.id = source.id
             WHEN MATCHED THEN
                 UPDATE SET 
@@ -58,6 +58,7 @@ public class LeilaoDAO : ILeilaoDAO{
                 VALUES (@DataInicio, @DataFim, @PrecoFinal, @EmailComprador, @CodPintura, @CodEstado);";
 
         var parameters = new{
+            leilao.Id,
             leilao.DataInicio,
             leilao.DataFim,
             leilao.PrecoInicial,

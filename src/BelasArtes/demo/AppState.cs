@@ -1,21 +1,25 @@
 using DataLayer;
 
 public class AppState{
-    //Atributos para a página com os diversos leilões
+    //Atributos gerais ao site
+    public string atual_user {get;set;} = "";
+    public int? atual_leilao {get; set;} = null;
+
+
+    //Atributos para a página com os diversos leilões (ativos e agendados)
     public List<Leilao> ListLeiloesAtivosMostrar{ get; set;} = new List<Leilao>();
     public List<Leilao> ListLeiloesAgendadosMostrar{ get; set;} = new List<Leilao>();
     public bool buttonOrdenarValorSelecionado{get;set;} = false;
     public bool buttonOrdenarTempoSelecionado{get;set;} = false;
+    public int leilaoAtivoMostrar {get;set;} = 0;
+    public int leilaoAgendadoMostrar {get;set;} = 0;
 
 
-    //Atributos gerais ao site
-    public string atual_user {get;set;} = "user1@example.com";
-    public int? atual_leilao {get; set;} = null;
 
-    //Coisas para o profile
+
+    //Atributos para o profile
     public int numero_compras {get; set;}=0;
     public int numero_vendas {get; set;}=0;
-
     public int pagina_atual_vendas {get; set;}=0;
     public int  pagina_atual_compras {get; set;}=0;
 }

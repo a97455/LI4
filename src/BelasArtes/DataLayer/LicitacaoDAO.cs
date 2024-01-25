@@ -17,7 +17,7 @@ public class LicitacaoDAO : ILicitacaoDAO{
     }
     
     public Task<List<Licitacao>> LicitacoesDoLeilaoOrdenadasPorValor(int? IdLeilao){
-        string sql = "SELECT * FROM Licitacao WHERE IdLeilao = @IdLeilao Order BY Valor";
+        string sql = "SELECT * FROM Licitacao WHERE IdLeilao = @IdLeilao Order BY Valor DESC";
         var parameters = new {IdLeilao};
         return _db.LoadData<Licitacao, dynamic>(sql, parameters);
     }   
@@ -44,19 +44,20 @@ public class LicitacaoDAO : ILicitacaoDAO{
     public Task PutLicitacao(Licitacao licitacao){
         string sql = @"
             MERGE INTO Licitacao AS target
-            USING (VALUES (DEFAULT)) AS source (Id)
+            USING (VALUES (@Id)) AS source (Id)
             ON target.Id = source.Id
             WHEN MATCHED THEN
                 UPDATE SET
                     Valor = @Valor,
-                    EmailLicitador = @EmailLicitador
-                    Data = @Data
+                    EmailLicitador = @EmailLicitador,
+                    Data = @Data,
                     IdLeilao = @IdLeilao
             WHEN NOT MATCHED THEN
-                INSERT (Valor, EmailLicitador,Data,IdLeilao)
-                VALUES (@Valor, @EmailLicitador,@Data,@IdLeilao);";
+                INSERT (Valor, EmailLicitador, Data, IdLeilao)
+                VALUES (@Valor, @EmailLicitador, @Data, @IdLeilao);";
 
         var parameters = new{
+            licitacao.Id, 
             licitacao.Valor,
             licitacao.EmailLicitador,
             licitacao.Data,

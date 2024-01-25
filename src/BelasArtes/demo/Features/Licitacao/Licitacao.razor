@@ -98,7 +98,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
 <div style="width: 20%; height: 15%; left: 61.5%; top: 65%; position: absolute; background: white"></div>
 <div style="width: 20%; height: 15%; left: 54.5%; top: 65%; position: absolute; text-align: center; color: black; font-size: 70px; 
 font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
-<input id="valorLicitacao" type="text" style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;" @bind="idValorLicitacao" placeholder="Valor da licitação...">
+<input type="text" @bind="ValorLicitacao" placeholder="Valor da licitação..." style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;">
 <div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (licitacao != null && leilao != null){
             @($"Valor mínimo: {licitacao.Valor * 1.05}€")
@@ -110,7 +110,7 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 </div>
 
 <div style="width: 30%; height: 10%; left: 58.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">
-    @if ( pintura!= null){
+    @if (pintura!= null){
         @($"{pintura.Peso*2}€ para Portugal, {pintura.Peso*4}€ envio internacional")
     }else{
         <span></span>
@@ -120,40 +120,36 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 
 
 @code {
-    private string idValorLicitacao {get;set;}
-    private void ValidaDados(string idValorLicitacao){
+    private int? ValorLicitacao {get;set;}
+    private void ValidaDados(){
+        if (ValorLicitacao==null) return;
         if(licitacao != null && leilao!=null){
-            if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
-                if (valorLicitacao > licitacao.Valor * 1.05){
-                    DataLayer.Licitacao licitacao_nova = new DataLayer.
-                    Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
-                    _licitacoes.PutLicitacao(licitacao_nova);
-                    NavigationManager.NavigateTo("/leiloesAtivos"); 
-                } else {
-                    NavigationManager.NavigateTo("/licitacao"); 
-                }
-            }  
+            if (ValorLicitacao > licitacao.Valor * 1.05){
+                DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
+                ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
+                _licitacoes.PutLicitacao(licitacao_nova);
+                NavigationManager.NavigateTo("/leiloesAtivos"); 
+            } else {
+                NavigationManager.NavigateTo("/licitacao"); 
+            }
         }else if(licitacao == null && leilao!=null){
-            if (int.TryParse(idValorLicitacao, out int valorLicitacao)){
-                if (valorLicitacao > leilao.PrecoInicial ){
-                    DataLayer.Licitacao licitacao_nova = new DataLayer.
-                    Licitacao(null,valorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
-                    _licitacoes.PutLicitacao(licitacao_nova);
-                    NavigationManager.NavigateTo("/leiloes"); 
-                }else{
-                    NavigationManager.NavigateTo("/licitacao"); 
-                }
+            if (ValorLicitacao > leilao.PrecoInicial ){
+                DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
+                ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
+                _licitacoes.PutLicitacao(licitacao_nova);
+                NavigationManager.NavigateTo("/leiloesAtivos"); 
+            }else{
+                NavigationManager.NavigateTo("/licitacao"); 
             }
         }else{
             NavigationManager.NavigateTo("/licitacao");
         }
-        idValorLicitacao = "";
     }
 }
 
 
-<button id="submeterBtn" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
-border: none; outline: none;" onclick="@(() => ValidaDados(idValorLicitacao))">
+<button @onclick="ValidaDados" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
+border: none; outline: none;">
     <span style="color: white; font-size: 250%; font-family: Inter;">Submeter</span>
 </button>
 <!--Fundo da pagina-->
@@ -244,19 +240,15 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 @code {
-    private DataLayer.Licitacao licitacao { get; set; }
-    private DataLayer.Pintura pintura { get; set; }
-    private DataLayer.Leilao leilao {get; set; }
-    private Datalayer.Utilizador utilizador {get;set;}
+    private DataLayer.Licitacao licitacao { get; set; } = new DataLayer.Licitacao();
+    private DataLayer.Pintura pintura { get; set; } = new Pintura();
+    private DataLayer.Leilao leilao {get; set; } = new Leilao();
+    private Datalayer.Utilizador utilizador {get;set;} = new Datalayer.Utilizador();
 
     protected override async Task OnInitializedAsync(){
-        try{
-            leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
-            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao)).First();
-            pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
-            utilizador = (await _utilizador.GetUtilizadorByEmail(licitacao.EmailLicitador)).First(); 
-        }catch (Exception ex){
-            Console.WriteLine($"Erro ao obter licitação: {ex.Message}");
-        }
+        leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
+        licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao)).First();
+        pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
+        if (licitacao.EmailLicitador!=null) utilizador = (await _utilizador.GetUtilizadorByEmail(licitacao.EmailLicitador)).First(); 
     }
 }

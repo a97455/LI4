@@ -61,7 +61,7 @@
             List<Datalayer.Utilizador> list = await utilizadores.GetUtilizadorByEmail(Email);
 
             if (list.Any() && list.First().PalavraPasse.Equals(PalavraPasse)){
-                AppState.atual_user = Email;
+                AppState.atual_user = list.First().Email;
                 NavigationManager.NavigateTo("/leiloesAtivos", forceLoad: true);
             }else{
                 NavigationManager.NavigateTo("/login", forceLoad: true);

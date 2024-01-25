@@ -1,9 +1,12 @@
 @page "/registerPainting"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
+@inject IWebHostEnvironment WebHostEnvironment
 @inject IUtilizadorDAO _users;
 @inject IPinturaDAO _pinturas;
+@inject Pintura Pintura;
 @inject ILeilaoDAO _leiloes;
+@inject AppState AppState;
 @using DataLayer
 
 <PageTitle>BelasArtes</PageTitle>
@@ -73,7 +76,7 @@
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Peso: (em kg)</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 76%; top: 25%; position: absolute">
-                    <input type="text" @bind="DataCriacao" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="text" @bind="AnoCriacao" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 170%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Ano de criação:</div>
                 </div>
                 <div style="width: 40%; height: 11%; left: 5%; top: 42%; position: absolute">
@@ -96,11 +99,11 @@
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Preço inicial:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 26%; top: 80%; position: absolute">
-                    <input type="datetime-local" @bind="DataInicio" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 120%; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="datetime-local" @bind="DataInicio" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 115%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data de início:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 80%; position: absolute">
-                    <input type="datetime-local" @bind="DataFinal" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 120%; background: #D9D9D9; border: 4px black solid"></input>
+                    <input type="datetime-local" @bind="DataFinal" style="width: 100%; height: 100%; left: 0px; top: 50%; position: absolute; font-size: 115%; background: #D9D9D9; border: 4px black solid"></input>
                     <div style="width: 100%; height: 100%; position: absolute; color: black; font-size: 200%; font-family: Inter; font-weight: 167; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Data final:</div>
                 </div>
                 <div style="width: 19%; height: 9%; left: 55%; top: 68%; position: absolute">
@@ -139,46 +142,79 @@
     private int? Altura { get; set; }
     private int? Comprimento { get; set; }
     private float? Peso { get; set; }
-    private int? DataCriacao { get; set; }
+    private int? AnoCriacao { get; set; }
     private string DescricaoObra { get; set; } = "";
     private string Artista { get; set; } = "";
     private string Autenticidade { get; set; } = "";
     private int? PrecoInicial { get; set; }
     private DateTime DataInicio { get; set; } = DateTime.Now;
     private DateTime DataFinal {get;set;} = DateTime.Now.AddDays(2);
-    private int Verified {get;set;} = 0;
-    private IBrowserFile selectedFile;
+    private bool Verified {get;set;} = false;
+    private IBrowserFile? selectedFile;
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    private void HandleFileSelected(InputFileChangeEventArgs e)
     {
         selectedFile = e.File;
     }
 
-    private async Task HandleCertificate(InputFileChangeEventArgs e)
+    private void HandleCertificate(InputFileChangeEventArgs e)
     {
-        Verified = 1;
+        Verified = true;
     }
 
     private async Task RegisterButton(){
         int IdPintura = await _pinturas.GetMaxPinturaId() + 1;
         int IdLeilao = await _leiloes.GetMaxLeilaoId() + 1;
 
-        string NomeFoto = "leilao" + IdLeilao;
+        string NomeFoto = "leilao" + IdLeilao + ".jpg";
 
-        //Meter a foto no wwwroot
+        if (selectedFile != null)
+        {
+            // Read the file content into a byte array
+            using (var stream = selectedFile.OpenReadStream())
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await stream.CopyToAsync(memoryStream);
+                    byte[] fileBytes = memoryStream.ToArray();
+
+                    // Save the file to wwwroot directory
+                    string wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                    string filePath = Path.Combine(wwwrootPath, NomeFoto);
+                    File.WriteAllBytes(filePath, fileBytes);
+                }
+            }
+        }
         
-        int? CodMovimentoArtistico = 0;
+        int CodMovimentoArtistico = movArtistico(MovimentoArtistico);
+        bool Original = isOriginal(Autenticidade);
 
-        //Datalayer.Pintura painting = new Datalayer.Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
-        //DataCriacao,Autenticidade,Verified,AppState.atual_user,CodMovimentoArtistico);
+        Pintura painting = new Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
+        AnoCriacao,Original,Verified,AppState.atual_user,CodMovimentoArtistico);
 
         try{
-            //await _pinturas.PutPintura(painting);
-            //DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataInicio, DataFinal, PrecoInicial, AppState.atual_user, IdPintura, 0);
-            //await _leiloes.PutLeilao();
+            await _pinturas.PutPintura(painting);
+            DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataInicio, DataFinal, PrecoInicial, AppState.atual_user, IdPintura, 0);
+            await _leiloes.PutLeilao(leilao);
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){
             NavigationManager.NavigateTo("/registerPainting",forceLoad:true);
+        }
+    }
+
+    private bool isOriginal(string original){
+        if (original == "Original") return true;
+        else return false;
+    }
+
+    private int movArtistico (string ma){
+        switch (ma){
+            case "Antiguidade Ocidental e Oriental": return 1;
+            case "Idade Média": return 2;
+            case "Renascentista e Barroco": return 3;
+            case "Moderno": return 4;
+            case "Contemporâneo": return 5;
+            default: return 0; // "Outro"
         }
     }
 }
