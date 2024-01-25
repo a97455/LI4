@@ -127,19 +127,23 @@
 
 @code{
     private void nextPageCompras(){
+        if (AppState.leilaoCompradoMostrar+3>=leiloesQueComprou.Count) return;
         AppState.leilaoCompradoMostrar+=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
     private void previousPageCompras(){
+        if (AppState.leilaoCompradoMostrar<3) return;
         AppState.leilaoCompradoMostrar-=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
 
     private void nextPageVendas(){
+        if (AppState.leilaoVendidoMostrar+3>=leiloesQueVendeu.Count) return;
         AppState.leilaoVendidoMostrar+=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
     private void previousPageVendas(){
+        if (AppState.leilaoVendidoMostrar<3) return;
         AppState.leilaoVendidoMostrar-=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
