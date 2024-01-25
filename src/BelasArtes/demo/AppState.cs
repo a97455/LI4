@@ -15,11 +15,7 @@ public class AppState{
     public int leilaoAgendadoMostrar {get;set;} = 0;
 
 
-
-
     //Atributos para o profile
-    public int numero_compras {get; set;}=0;
-    public int numero_vendas {get; set;}=0;
-    public int pagina_atual_vendas {get; set;}=0;
-    public int  pagina_atual_compras {get; set;}=0;
+    public int leilaoCompradoMostrar {get;set;} = 0;
+    public int leilaoVendidoMostrar {get;set;} = 0;
 }

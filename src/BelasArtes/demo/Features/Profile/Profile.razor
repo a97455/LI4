@@ -32,7 +32,7 @@
 </button>
 <div style="width: 0%; height: 8%; left: 55.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<button onclick="window.location.href='/profile'">
+<button @onclick="RefreshPage">
 <div style="width: 10%; height: 10%; left: 46%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
 </button>
 <div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
@@ -126,83 +126,71 @@
 </div>
 
 @code{
-    private void IncrementaPaginaCompras(){
-        AppState.pagina_atual_compras+=1;
+    private void nextPageCompras(){
+        AppState.leilaoCompradoMostrar+=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
-    private void DecrementaPaginaCompras(){
-        AppState.pagina_atual_compras-=1;
+    private void previousPageCompras(){
+        AppState.leilaoCompradoMostrar-=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
 
-    private void IncrementaPaginaVendas(){
-        AppState.pagina_atual_vendas+=1;
+    private void nextPageVendas(){
+        AppState.leilaoVendidoMostrar+=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
-    private void DecrementaPaginaVendas(){
-        AppState.pagina_atual_vendas-=1;
+    private void previousPageVendas(){
+        AppState.leilaoVendidoMostrar-=3;
         NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
 }
 
 <div style="width: 37.5%; height: 90%; left: 10%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Compras-->
     <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Compras</div>
-    @for(int i=(AppState.pagina_atual_compras*3);i<AppState.pagina_atual_compras*3+Math.Min(AppState.numero_compras-AppState.pagina_atual_compras*3,3);i++){
-        <div> <!--Leilao 1 Compras-->
-            <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueComprou[i].Valor}€")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
+    @for(int i=AppState.leilaoCompradoMostrar;i<Math.Min(3+AppState.leilaoCompradoMostrar,leiloesQueComprou.Count);i++){
+        <div> <!--Leiloes Comprados-->
+            <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].EmailVendedor</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueComprou[i].Valor}€")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
         </div>
     }
 
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
-    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_compras+1}/{((AppState.numero_compras / 3)+1)}")</div>
-
-    @if(AppState.pagina_atual_compras!=0){
-        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaCompras">
-        <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-        </button>
-    }
-
-    @if(AppState.pagina_atual_compras<(AppState.numero_compras / 3)){
-        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaCompras">
-        <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-        </button>
-    }
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@((AppState.leilaoCompradoMostrar/3)+1)/@((leiloesQueComprou.Count/3)+1)</div>
+    <button @onclick="previousPageCompras" style="border: none; padding: 0; margin: 0;" >
+    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+    <button @onclick="nextPageCompras" style="border: none; padding: 0; margin: 0;" >
+    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
 </div>
 
 <div style="width: 37.5%; height: 90%; left: 52.5%; top: 62.5%; position: absolute; border-radius: 20px; background: #D9D9D9;"> <!--Painel Vendas-->
     <div style="width: 30%; height: 0.52%; left: 7%; top:1%; position: absolute; color: black; font-size: 2.6vw; font-family: Inter; font-weight: 800; word-wrap: break-word">Vendas</div>
-    @for(int i=(AppState.pagina_atual_vendas*3);i<AppState.pagina_atual_vendas*3+Math.Min(AppState.numero_vendas-AppState.pagina_atual_vendas*3,3);i++){
-        <div> <!--Leilao 1 Compras-->
-            <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*i))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*i))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueVendeu[i].Valor}€")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*i))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
+    @for(int i=AppState.leilaoVendidoMostrar;i<Math.Min(3+AppState.leilaoVendidoMostrar,leiloesQueVendeu.Count);i++){
+        <div> <!--Leiloes Vendidos-->
+            <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+            <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@leiloesQueVendeu[i].EmailComprador </div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueVendeu[i].Valor}€")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
         </div>
     }
     
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
-    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@($"{AppState.pagina_atual_vendas+1}/{((AppState.numero_vendas / 3)+1)}")</div>
-    
-    @if(AppState.pagina_atual_vendas!=0){
-        <button style="border: none; padding: 0; margin: 0;" @onclick="DecrementaPaginaVendas">
-        <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-        </button>
-    }
-
-    @if(AppState.pagina_atual_vendas!=(AppState.numero_vendas / 3)){
-        <button style="border: none; padding: 0; margin: 0;" @onclick="IncrementaPaginaVendas">
-        <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
-        </button>
-    }
+    <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@((AppState.leilaoVendidoMostrar/3)+1)/@((leiloesQueVendeu.Count/3)+1)</div>    
+    <button @onclick="previousPageVendas" style="border: none; padding: 0; margin: 0;" >
+    <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
+    <button @onclick="nextPageVendas" style="border: none; padding: 0; margin: 0;" >
+    <img style="width: auto; height: 3%; left: 56%; top: 93.7%; position: absolute; mix-blend-mode: hard-light; transform: rotate(180deg); background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
+    </button>
 </div>
 
 
@@ -216,8 +204,9 @@
     private List<DataLayer.Licitacao> licitacoesQueVendeu {get; set;} = new List<Licitacao>();
 
     private void RefreshPage(){
-        NavigationManager.NavigateTo("/", forceLoad: true);
-        StateHasChanged();
+        AppState.leilaoCompradoMostrar=0;
+        AppState.leilaoVendidoMostrar=0;
+        NavigationManager.NavigateTo("/profile", forceLoad: true);
     }
     
     protected override async Task OnInitializedAsync(){
@@ -227,12 +216,10 @@
             if (utilizador != null){
                 leiloesQueComprou = await _leilao.LeiloesAcabadosQueUserComprou(AppState.atual_user);
                 leiloesQueVendeu = await _leilao.LeiloesAcabadosQueUserVendeu(AppState.atual_user);
-                AppState.numero_compras = leiloesQueComprou.Count();
-                AppState.numero_vendas = leiloesQueVendeu.Count();
 
                 pinturasQueComprou = new List<DataLayer.Pintura>();
                 licitacoesQueComprou = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < AppState.numero_compras; i++){
+                for (int i = 0; i < leiloesQueComprou.Count; i++){
                     var pintura = (await _pinturas.GetPinturaById(leiloesQueComprou[i].CodPintura)).First();
                     var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueComprou[i].CodPintura)).First();
                     if (pintura != null && licitacao != null){
@@ -243,7 +230,7 @@
 
                 pinturasQueVendeu = new List<DataLayer.Pintura>();
                 licitacoesQueVendeu = new List<DataLayer.Licitacao>();
-                for (int i = 0; i < AppState.numero_vendas; i++){
+                for (int i = 0; i < leiloesQueVendeu.Count; i++){
                     var pintura = (await _pinturas.GetPinturaById(leiloesQueVendeu[i].CodPintura)).First();
                     var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leiloesQueVendeu[i].CodPintura)).First();
 
