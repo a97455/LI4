@@ -244,10 +244,7 @@
             }
             List<Leilao> sortedLeiloes = leiloes
                 .Select((leilao, index) => new { Leilao = leilao, SortingTuple = sortingList[index] })
-                .OrderByDescending(item => item.SortingTuple.Item1.Day)
-                .ThenBy(item => item.SortingTuple.Item1.Hour)
-                .ThenBy(item => item.SortingTuple.Item1.Minute)
-                .ThenBy(item => item.SortingTuple.Item1.Second)
+                .OrderByDescending(item => item.SortingTuple.Item1)
                 .ThenBy(item => item.SortingTuple.Item2)
                 .Select(item => item.Leilao)
                 .ToList();

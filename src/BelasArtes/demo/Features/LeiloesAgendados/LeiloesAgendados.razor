@@ -70,14 +70,14 @@
             if(@i%2==0){
                 <!--Leiloes esquerda--> 
                 <button onclick="@(() => GuardarDados(leilao.Id))">
-                <div style="width: 40%; height: 40%; left: 5%; top: @(60+(25*((i-1)%8)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-                <div style="width: 20%; height: 40%; left: 5%; top: @(60+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-                <img style="width: 20%; height: 40%; left: 5%; top: @(60+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 23%; top: @(64+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 20% ; top: @(72+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
-                <div style="width: 20%; height: 10%; left: 20% ; top: @(78+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 20%; height: 10%; left: 21.25% ; top: @(84+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 20%; height: 10%; left: 24.65%; top: @(90+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
+                <div style="width: 40%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+                <div style="width: 20%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+                <img style="width: 20%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
+                <div style="width: 20%; height: 10%; left: 23%; top: @(59+(25*(i%8)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+                <div style="width: 20%; height: 10%; left: 20% ; top: @(67+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 20% ; top: @(73+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 20%; height: 10%; left: 21.25% ; top: @(79+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 20%; height: 10%; left: 24.65%; top: @(85+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
 
@@ -90,14 +90,14 @@
             }else{
                 <!--Leiloes direita-->
                 <button onclick="@(() => GuardarDados(leilao.Id))">
-                <div style="width: 40%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-                <div style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-                <img style="width: 20%; height: 40%; left: 55%; top: @(60+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 73%; top: @(64+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 70%; top: @(72+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
-                <div style="width: 20%; height: 10%; left: 70%; top: @(78+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 20%; height: 10%; left: 71.25%; top: @(84+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 20%; height: 10%; left: 74.65%; top: @(90+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
+                <div style="width: 40%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+                <div style="width: 20%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+                <img style="width: 20%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
+                <div style="width: 20%; height: 10%; left: 73%; top: @(59+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
+                <div style="width: 20%; height: 10%; left: 70%; top: @(67+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Vendedor: @dictLeilaoFacade[leilao.Id].Vendedor.Nome</div>
+                <div style="width: 20%; height: 10%; left: 70%; top: @(73+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 20%; height: 10%; left: 71.25%; top: @(79+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 20%; height: 10%; left: 74.65%; top: @(85+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
                     TimeSpan tempoRestante = leilao.DataFim - DateTime.Now;
@@ -154,9 +154,8 @@
         public Pintura Pintura {get;set;}
         public Datalayer.Utilizador Vendedor {get;set;}
 
-        public LeilaoFacade (Leilao Leilao, int MaiorLicitacao, Pintura Pintura, Datalayer.Utilizador Vendedor){
+        public LeilaoFacade (Leilao Leilao, Pintura Pintura, Datalayer.Utilizador Vendedor){
             this.Leilao=Leilao;
-            this.MaiorLicitacao=MaiorLicitacao;
             this.Pintura=Pintura;
             this.Vendedor=Vendedor;
         }
@@ -200,8 +199,8 @@
         foreach(Leilao leilao in ListLeiloesAgendados){
             Pintura pintura = (await pinturas.GetPinturaById(leilao.CodPintura)).First();
             if (pintura.EmailVendedor!= null){
-                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,(await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First(),
-                pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
+                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,pintura,
+                (await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
             }
         }
     }
