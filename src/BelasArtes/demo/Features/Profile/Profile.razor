@@ -155,16 +155,17 @@
         <div> <!--Leiloes Comprados-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueComprou[i].Foto />
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueComprou[i].Nome</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@utilizadoresQueComprou[i].Nome</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueComprou[i].Valor}€")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueComprou[i].Data </div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Obra: {pinturasQueComprou[i].Nome}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Vendedor: {utilizadoresQueComprou[i].Email}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Preço: {licitacoesQueComprou[i].Valor}€")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(26+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Data: {licitacoesQueComprou[i].Data}") </div>
         </div>
     }
 
     <!--Seta-->
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.5%; position: absolute; background: white; border-radius: 10px"></div>
     <div style="width: 25%; height: 5%; left: 37.5%; top: 92.2%; position: absolute; color: black; font-size: 30px; font-family: Inter; font-weight: 500; text-align: center; word-wrap: break-word">@((AppState.leilaoCompradoMostrar/3)+1)/@((leiloesQueComprou.Count/3)+1)</div>
+    
     <button @onclick="previousPageCompras" style="border: none; padding: 0; margin: 0;" >
     <img style="width: auto; height: 3%; left: 40%; top: 93.5%; position: absolute; mix-blend-mode: hard-light; background: linear-gradient(0deg, white 0%, white 100%)" src="arrow.png" />
     </button>
@@ -179,10 +180,10 @@
         <div> <!--Leiloes Vendidos-->
             <div style="width: 85%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
             <img style="width: 35%; height: 25%; left: 7.5%; top: @(10+(27*(i%3)))%; position: absolute; border-radius: 59px; border: 1px black solid" src=@pinturasQueVendeu[i].Foto />
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@pinturasQueVendeu[i].Nome</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(16+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@utilizadoresQueVendeu[i].Nome </div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"{licitacoesQueVendeu[i].Valor}€")</div>
-            <div style="width: 50%; height: 8%; left: 42.5%; top: @(28+(27*(i%3)))%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@licitacoesQueVendeu[i].Data</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(11+(27*(i%3)))%; position: absolute; color: black; font-size: 1.5vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Obra: {pinturasQueVendeu[i].Nome}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(18+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 167; text-align: center; word-wrap: break-word">@($"Comprador: {utilizadoresQueVendeu[i].Email}")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(22+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Preço: {licitacoesQueVendeu[i].Valor}€")</div>
+            <div style="width: 50%; height: 8%; left: 42.5%; top: @(26+(27*(i%3)))%; position: absolute; color: black; font-size: 1vw; font-family: Inter; font-weight: 250; text-align: center; word-wrap: break-word">@($"Data: {licitacoesQueVendeu[i].Data}")</div>
         </div>
     }
     
@@ -226,21 +227,24 @@
                 foreach (Leilao leilao in leiloesQueComprou){
                     var pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First();
                     var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilao.CodPintura)).First();
+                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First();
                     if (pintura != null && licitacao != null && leilao.EmailComprador!=null){
                         pinturasQueComprou.Add(pintura);
                         licitacoesQueComprou.Add(licitacao);
-                        utilizadoresQueComprou.Add((await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First());
+
+                        utilizadoresQueComprou.Add(utilizador);
                     }
                 }
 
                 foreach(Leilao leilao in leiloesQueVendeu){
                     var pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First();
                     var licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(leilao.CodPintura)).First();
+                    var utilizador = (await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First();
 
                     if (pintura != null && licitacao != null && leilao.EmailComprador!=null){
                         pinturasQueVendeu.Add(pintura);
                         licitacoesQueVendeu.Add(licitacao);
-                        utilizadoresQueVendeu.Add((await _utilizador.GetUtilizadorByEmail(leilao.EmailComprador)).First());
+                        utilizadoresQueVendeu.Add(utilizador);
                     }
                 }
             }
