@@ -32,12 +32,12 @@
 <div style="width: 0%; height: 8%; left: 72.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <button onclick="window.location.href='/leiloesAtivos'">
-<div style="width: 20%; height: 10%; left: 54%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Ativos</div>
+<div style="width: 20%; height: 10%; left: 55.5%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Ativos</div>
 </button>
-<div style="width: 0%; height: 8%; left: 55.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
+<div style="width: 0%; height: 8%; left: 58%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
 <button onclick="window.location.href='/profile'">
-<div style="width: 10%; height: 10%; left: 46%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
+<div style="width: 10%; height: 10%; left: 49%; top: 5%; position: absolute; text-align: center; color: black; font-size: 175%; font-family: Inter; font-weight: 100; word-wrap: break-word">Perfil</div>
 </button>
 <div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
@@ -84,7 +84,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(75+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(81+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial @dictLeilaoFacade[leilao.Id].PrecoInicial</div>
+                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(81+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial: @dictLeilaoFacade[leilao.Id].PrecoInicial€</div>
                 <div style="width: 15%; height: 10%; left: 26.4%; top: @(87+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Começa em: 
                 @{
                     string tempoRestanteFormatado = "";
@@ -111,7 +111,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 74% ; top: @(75+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(81+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial @dictLeilaoFacade[leilao.Id].PrecoInicial</div>
+                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(81+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial: @dictLeilaoFacade[leilao.Id].PrecoInicial€</div>
                 <div style="width: 15%; height: 10%; left: 73.9%; top: @(87+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Começa em: 
                 @{
                     string tempoRestanteFormatado = "";
