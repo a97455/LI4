@@ -4,7 +4,6 @@
 @inject IWebHostEnvironment WebHostEnvironment
 @inject IUtilizadorDAO _users;
 @inject IPinturaDAO _pinturas;
-@inject Pintura Pintura;
 @inject ILeilaoDAO _leiloes;
 @inject AppState AppState;
 @using DataLayer
@@ -132,7 +131,7 @@
 
 
 @code{
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("pt-PT");
     }
@@ -189,12 +188,12 @@
         int CodMovimentoArtistico = movArtistico(MovimentoArtistico);
         bool Original = isOriginal(Autenticidade);
 
-        Pintura painting = new Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
+        DataLayer.Pintura painting = new DataLayer.Pintura(IdPintura,Nome,Altura,Comprimento,Peso,DescricaoObra,NomeFoto,Artista,
         AnoCriacao,Original,Verified,AppState.atual_user,CodMovimentoArtistico);
 
         try{
             await _pinturas.PutPintura(painting);
-            DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataInicio, DataFinal, PrecoInicial, AppState.atual_user, IdPintura, 0);
+            DataLayer.Leilao leilao = new DataLayer.Leilao(IdLeilao,DataInicio, DataFinal, PrecoInicial, AppState.atual_user, IdPintura, 1);
             await _leiloes.PutLeilao(leilao);
             NavigationManager.NavigateTo("/profile", forceLoad:true);
         }catch (Exception){

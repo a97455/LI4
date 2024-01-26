@@ -1,7 +1,7 @@
-using System.Drawing;
-
+using System.Data;
 
 namespace DataLayer;
+
 public class Pintura {
     public int? Id { get; set; }
     public string Nome { get; set; } = "";
