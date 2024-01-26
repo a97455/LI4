@@ -256,5 +256,4 @@ VALUES
 (570.00, 'emma.jones@gmail.com', 13, '2024-01-29 23:25:00'),
 (1050.00, 'olivia.smith@gmail.com', 14, '2024-01-29 12:40:00'),
 (1200.00, 'john.doe@gmail.com', 14, '2024-01-29 14:10:00'),
-(350.00, 'olivia.smith@gmail.com', 15, '2024-01-29 14:15:00'),
-(900.00, 'emma.jones@gmail.com', 16, '2024-01-29 13:23:00');
+(350.00, 'olivia.smith@gmail.com', 15, '2024-01-29 14:15:00');

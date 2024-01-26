@@ -131,7 +131,7 @@
 
 
 @code{
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("pt-PT");
     }
@@ -145,7 +145,7 @@
     private string DescricaoObra { get; set; } = "";
     private string Artista { get; set; } = "";
     private string Autenticidade { get; set; } = "";
-    private double PrecoInicial { get; set; }
+    private int PrecoInicial { get; set; }
     private DateTime DataInicio { get; set; } = DateTime.Now;
     private DateTime DataFinal {get;set;} = DateTime.Now.AddDays(2);
     private bool Verified {get;set;} = false;

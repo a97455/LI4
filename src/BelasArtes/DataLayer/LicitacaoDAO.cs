@@ -29,7 +29,7 @@ public class LicitacaoDAO : ILicitacaoDAO{
     }
 
     public Task<List<int>> MaiorLicitacaoByLeilao(int? IdLeilao) {
-        string sql = "SELECT MAX(Valor) FROM Licitacao WHERE IdLeilao = @IdLeilao";
+        string sql = "SELECT COALESCE(MAX(Valor), 0) FROM Licitacao WHERE IdLeilao = @IdLeilao";
         var parameters = new {IdLeilao};
         return  _db.LoadData<int, dynamic>(sql, parameters);
     }

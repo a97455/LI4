@@ -97,7 +97,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(80+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(86+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(86+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Valor: @dictLeilaoFacade[leilao.Id].MaiorLicitacao€</div>
                 <div style="width: 15%; height: 10%; left: 26.4%; top: @(92+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
@@ -126,7 +126,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 74% ; top: @(80+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(86+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(86+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Valor: @dictLeilaoFacade[leilao.Id].MaiorLicitacao€</div>
                 <div style="width: 15%; height: 10%; left: 73.9%; top: @(92+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
@@ -319,7 +319,9 @@
         }else{
             foreach(Leilao leilao in ListLeiloesAtivosMostrar){
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
-                listMaiorLicitacaoByLeilao.Add((await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First());
+                int MaiorLicitacao= (await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First();
+                if (MaiorLicitacao>0) listMaiorLicitacaoByLeilao.Add(MaiorLicitacao);
+                else listMaiorLicitacaoByLeilao.Add(leilao.PrecoInicial);
             }
         }
 
@@ -328,15 +330,20 @@
         foreach(Leilao leilao in listLeiloesAtivos){
             if ((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).Any()){        
                 listNumLicitacoesByLeilao.Add((await this.licitacoes.NumbLicitacoesByLeilao(leilao.Id)).First());
-                listMaiorLicitacaoByLeilao.Add((await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First());
+                int MaiorLicitacao=(await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First();
+                if (MaiorLicitacao>0)listMaiorLicitacaoByLeilao.Add(MaiorLicitacao);
+                else listMaiorLicitacaoByLeilao.Add(leilao.PrecoInicial);
                 auxLicitados.Add(leilao);
             }else{
                 auxNaoLicitados.Add(leilao);
             }
             Pintura pintura = (await pinturas.GetPinturaById(leilao.CodPintura)).First();
             if (pintura.EmailVendedor!= null){
-                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,(await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First(),
-                pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
+                int MaiorLicitacao=(await this.licitacoes.MaiorLicitacaoByLeilao(leilao.Id)).First();
+                if (MaiorLicitacao>0) dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,MaiorLicitacao,
+                pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));   
+                else dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,leilao.PrecoInicial,
+                pintura,(await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));   
             }
         }
         listLeiloesAtivos=OrdenarLeiloes(auxLicitados,listNumLicitacoesByLeilao,listMaiorLicitacaoByLeilao,0);
