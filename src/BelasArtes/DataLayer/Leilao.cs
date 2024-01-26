@@ -3,7 +3,7 @@ public class Leilao {
         public int Id { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
-        public double? PrecoInicial { get; set; }
+        public double PrecoInicial { get; set; }
         public string? EmailComprador { get; set; }
         public int? CodPintura { get; set; }
         public int? CodEstado { get; set; }
@@ -11,7 +11,7 @@ public class Leilao {
 
         public Leilao(){}
 
-        public Leilao(int id, DateTime dataInicio, DateTime dataFim, double? precoInicial,
+        public Leilao(int id, DateTime dataInicio, DateTime dataFim, double precoInicial,
         string? emailComprador, int? codPintura, int? codEstado){
             Id = id;
             DataInicio = dataInicio;
