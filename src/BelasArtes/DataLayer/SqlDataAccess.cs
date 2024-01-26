@@ -21,13 +21,14 @@ public class SqlDataAccess : ISqlDataAccess
         return data.ToList();
     }
     public async Task<T> ExecuteScalar<T, U>(string sql, U parameters)
-        {
-            using (var connection = new SqlConnection(ConnectionStringName))
-            {
-                connection.Open();
-                return await connection.ExecuteScalarAsync<T>(sql, parameters);
-            }
-        }
+    {
+        string? connectionString = _config.GetConnectionString(ConnectionStringName);
+
+        using IDbConnection connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        return await connection.ExecuteScalarAsync<T>(sql, parameters);
+    }
     public async Task SaveData<T>(string sql, T parameters)
     {
         string? connectionString = _config.GetConnectionString(ConnectionStringName);
