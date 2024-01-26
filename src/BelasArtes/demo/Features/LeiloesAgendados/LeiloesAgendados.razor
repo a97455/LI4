@@ -84,7 +84,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(75+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(81+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(81+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial @dictLeilaoFacade[leilao.Id].PrecoInicial</div>
                 <div style="width: 15%; height: 10%; left: 26.4%; top: @(87+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
@@ -111,7 +111,7 @@
                 }@final
                 </div>
                 <div style="width: 12.5%; height: 10%; left: 74% ; top: @(75+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(81+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(81+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Preço Inicial @dictLeilaoFacade[leilao.Id].PrecoInicial</div>
                 <div style="width: 15%; height: 10%; left: 73.9%; top: @(87+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
@@ -165,12 +165,13 @@
 
     class LeilaoFacade{
         public Leilao Leilao;
-        public int MaiorLicitacao {get;set;}
+        public double PrecoInicial {get;set;}
         public Pintura Pintura {get;set;}
         public Datalayer.Utilizador Vendedor {get;set;}
 
-        public LeilaoFacade (Leilao Leilao, Pintura Pintura, Datalayer.Utilizador Vendedor){
+        public LeilaoFacade (Leilao Leilao, double PrecoInicial,Pintura Pintura, Datalayer.Utilizador Vendedor){
             this.Leilao=Leilao;
+            this.PrecoInicial=PrecoInicial;
             this.Pintura=Pintura;
             this.Vendedor=Vendedor;
         }
@@ -214,7 +215,7 @@
         foreach(Leilao leilao in ListLeiloesAgendados){
             Pintura pintura = (await pinturas.GetPinturaById(leilao.CodPintura)).First();
             if (pintura.EmailVendedor!= null){
-                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,pintura,
+                dictLeilaoFacade.Add(leilao.Id,new LeilaoFacade(leilao,leilao.PrecoInicial,pintura,
                 (await utilizadores.GetUtilizadorByEmail(pintura.EmailVendedor)).First()));    
             }
         }
