@@ -69,12 +69,11 @@
         if (dictLeilaoFacade[leilao.Id].Leilao.Id.Equals(leilao.Id)){  
             if(@i%2==0){
                 <!--Leiloes esquerda--> 
-                <button onclick="@(() => GuardarDados(leilao.Id))">
-                <div style="width: 40%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+                <div style="width: 42.5%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
                 <div style="width: 20%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
                 <img style="width: 20%; height: 40%; left: 5%; top: @(55+(25*(i%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 23%; top: @(59+(25*(i%8)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 20% ; top: @(67+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento Artístico: 
+                <div style="width: 20%; height: 10%; left: 26%; top: @(57+(25*(i%8)))%; position: absolute; color: black; font-size: 150%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: center; display: flex; align-items: center; justify-content: center;">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome</div>
+                <div style="width: 20%; height: 10%; left: 26.5%; top: @(69+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Movimento:
                 @{
                     string final = "";
                     foreach(String movimentoArtistico in dictMovimentosArtisticos.Keys){
@@ -84,26 +83,24 @@
                     }
                 }@final
                 </div>
-                <div style="width: 20%; height: 10%; left: 20% ; top: @(73+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 20%; height: 10%; left: 21.25% ; top: @(79+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 20%; height: 10%; left: 24.65%; top: @(85+(25*(i%8)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Começa em: 
+                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(75+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 12.5%; height: 10%; left: 26.5% ; top: @(81+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 15%; height: 10%; left: 26.4%; top: @(87+(25*(i%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
 
-                    TimeSpan tempoRestante = leilao.DataInicio - DateTime.Now;
+                    TimeSpan tempoRestante = leilao.DataFim - DateTime.Now;
                     tempoRestanteFormatado = $"{tempoRestante.Days}D {tempoRestante.Hours}H {tempoRestante.Minutes}M {tempoRestante.Seconds}S";
                 }
                 @tempoRestanteFormatado
                 </div>
-                </button>
             }else{
                 <!--Leiloes direita-->
-                <button onclick="@(() => GuardarDados(leilao.Id))">
-                <div style="width: 40%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
-                <div style="width: 20%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
-                <img style="width: 20%; height: 40%; left: 55%; top: @(55+(25*(i-1)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
-                <div style="width: 20%; height: 10%; left: 73%; top: @(59+(25*(i-1)))%; position: absolute; color: black; font-size: 32px; font-family: Inter; font-weight: 167; word-wrap: break-word">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome </div>
-                <div style="width: 20%; height: 10%; left: 70%; top: @(67+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Movimento Artístico: 
+                <div style="width: 42.5%; height: 40%; left: 52.5%; top: @(55+(25*((i-1)%8)))%; position: absolute; background: white; border-radius: 59px; border: 5px black solid"></div>
+                <div style="width: 20%; height: 40%; left: 52.5%; top: @(55+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid"></div>
+                <img style="width: 20%; height: 40%; left: 52.5%; top: @(55+(25*((i-1)%8)))%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 1px black solid" src = "@dictLeilaoFacade[leilao.Id].Pintura.Foto"/>
+                <div style="width: 20%; height: 10%; left: 73.5%; top: @(57+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 150%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: center; display: flex; align-items: center; justify-content: center;">Obra: @dictLeilaoFacade[leilao.Id].Pintura.Nome</div>
+                <div style="width: 20%; height: 10%; left: 74%; top: @(69+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Movimento:
                 @{
                     string final = "";
                     foreach(String movimentoArtistico in dictMovimentosArtisticos.Keys){
@@ -113,17 +110,17 @@
                     }
                 }@final
                 </div>
-                <div style="width: 20%; height: 10%; left: 70%; top: @(73+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
-                <div style="width: 20%; height: 10%; left: 71.25%; top: @(79+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
-                <div style="width: 20%; height: 10%; left: 74.65%; top: @(85+(25*(i-1)))%; position: absolute; color: black; font-size: 18px; font-family: Inter; font-weight: 167; word-wrap: break-word">Começa em: 
+                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(75+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Artista: @dictLeilaoFacade[leilao.Id].Pintura.Artista</div>
+                <div style="width: 12.5%; height: 10%; left: 74% ; top: @(81+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Licitação Atual: @dictLeilaoFacade[leilao.Id].MaiorLicitacao</div>
+                <div style="width: 15%; height: 10%; left: 73.9%; top: @(87+(25*((i-1)%8)))%; position: absolute; color: black; font-size: 100%; font-family: Inter; font-weight: 167; word-wrap: break-word; text-align: left;">Tempo restante: 
                 @{
                     string tempoRestanteFormatado = "";
-                    TimeSpan tempoRestante = leilao.DataInicio - DateTime.Now;
+
+                    TimeSpan tempoRestante = leilao.DataFim - DateTime.Now;
                     tempoRestanteFormatado = $"{tempoRestante.Days}D {tempoRestante.Hours}H {tempoRestante.Minutes}M {tempoRestante.Seconds}S";
                 }
                 @tempoRestanteFormatado
                 </div>
-                </button>
             }
         }
     }
