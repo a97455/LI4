@@ -41,15 +41,8 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
 </button>
 <div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
-<!--Caixa Esquerda-->
-@if (!string.IsNullOrEmpty(pintura?.Foto)){
-    <img style="width: 42.5%; height: 87.5%; left: 5%; top: 35%; position: absolute; background: white; border-radius: 59px; border: 4px black solid" src="@pintura.Foto">
-}else{
-    <div style="width: 100%; height: 100%;left: -25%; text-align: center; color: red; font-size: 20px; font-family: Inter; font-weight: 500; position: absolute; top: 50%;">Foto não disponível</div>
-}
-
-<div style="width: 42.5%; height: 87.5% ; left : 5%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 
-64px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<!--Resto-->
+<div style="width: 40%; height: 4.5% ; left : 5%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;  display: flex; align-items: center; justify-content: center;">
     @if (pintura != null){
         @($"{pintura.Nome}")
     }else{
@@ -57,13 +50,17 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
     }
 </div>
 
+@if (!string.IsNullOrEmpty(pintura?.Foto)){
+    <img style="width: 42.5%; height: 87.5%; left: 5%; top: 35%; position: absolute; background: white; border-radius: 59px; border: 4px black solid" src="@pintura.Foto">
+}else{
+    <div style="width: 100%; height: 100%;left: -25%; text-align: center; color: red; font-size: 20px; font-family: Inter; font-weight: 500; position: absolute; top: 50%;">Foto não disponível</div>
+}
+
 
 <!--Caixa Direita-->
-<div style="width: 42.5%; height: 87.5%; left: 50%; top: 35%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 4px black solid"></div>
-<div style="width: 42.5%; height: 87.5%; left: 50%; top: 25%; position: absolute; text-align: center; color: black; font-size: 45px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 40%; height: 4.5%; left: 55%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 2.7vw; font-family: Inter; font-weight: 600; word-wrap: break-word; display: flex; align-items: center; justify-content: center;">
     @{
         string tempoRestanteFormatado = "";
-
         if (leilao != null){
             TimeSpan tempoRestante = leilao.DataFim - DateTime.Now;
             tempoRestanteFormatado = $"Termina em: {tempoRestante.Days}D {tempoRestante.Hours}H {tempoRestante.Minutes}M {tempoRestante.Seconds}S";
@@ -71,59 +68,54 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
             tempoRestanteFormatado = "00D:00H:00M:00S";
         }
     }
-
     @tempoRestanteFormatado
 </div>
 
 
-
-<div style="width: 42.5%; height: 87.5%; left: 40%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Licitação atual:</div>
-<div style="width: 42.5%; height: 87.5%; left: 40%; top: 44.5%; position: absolute; text-align: center; color: black; font-size: 55px; font-family: Inter; font-weight: 300; word-wrap: break-word">
-    @if (licitacao != null){
+<div style="width: 42.5%; height: 87.5%; left: 52.5%; top: 35%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 4px black solid"></div>
+<div style="width: 42.5%; height: 87.5%; left: 42%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Valor:</div>
+<div style="width: 42.5%; height: 87.5%; left: 42%; top: 48.5%; position: absolute; text-align: center; color: black; font-size: 2.7vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacao != null && licitacao.Valor!=null){
         @($"{licitacao.Valor} €")
-    }else{
-        <span>0€</span>
+    }else if (leilao!=null){
+        <span>@(leilao.PrecoInicial)€</span>
     }</div>
 
-<div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 
-27px; font-family: Inter; font-weight: 167; word-wrap: break-word">Efetuada por:</div>
-<div style="width: 42.5%; height: 87.5%; left: 58.5%; top: 47%; position: absolute; text-align: center; color: black; font-size: 28px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-    @if (utilizador != null){
+<div style="width: 42.5%; height: 87.5%; left: 61%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Efetuada por:</div>
+<div style="width: 42.5%; height: 87.5%; left: 61%; top: 48.5%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (utilizador != null && licitacao!=null && licitacao.Valor > 0){
         @($"{utilizador.Nome}")
     }else{
-        <span>Não existe licitador atual.</span>
+        <span>Não licitado</span>
     }
 </div>
 
-<div style="width: 20%; height: 15%; left: 61.5%; top: 65%; position: absolute; background: white"></div>
-<div style="width: 20%; height: 15%; left: 54.5%; top: 65%; position: absolute; text-align: center; color: black; font-size: 70px; 
+<div style="width: 20%; height: 15%; left: 64%; top: 67.5%; position: absolute; background: white"></div>
+<div style="width: 20%; height: 15%; left: 57%; top: 67.5%; position: absolute; text-align: center; color: black; font-size: 70px; 
 font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
-<input type="text" @bind="ValorLicitacao" placeholder="Valor da licitação..." style="width: 14%; height: 15%; left: 66.5%; top: 65%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;">
-<div style="width: 20%; height: 15%; left: 58.5%; top: 80%; position: absolute; text-align: center; color: black; font-size: 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
-    @if (licitacao != null && leilao != null){
+<input type="text" @bind="ValorLicitacao" placeholder="Valor da licitação..." style="width: 14%; height: 15%; left: 70%; top: 67.5%; position: absolute; background: #ffffff; padding: 5px; border: none; font-size: 20px; font-family: Inter; font-weight: 167; box-sizing: border-box; outline:none;">
+<div style="width: 20%; height: 15%; left: 64%; top: 84%; position: absolute; text-align: center; color: black; font-size: 23px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+    @if (licitacao != null && leilao != null && licitacao.Valor>0){
             @($"Valor mínimo: {licitacao.Valor * 1.05}€")
-        }else if(licitacao==null && leilao !=null){
-            @($"Valor mínimo:{leilao.PrecoInicial}€") 
-        }else{
-            @($"") 
+        }else if (leilao!=null){
+            @($"Valor mínimo: {leilao.PrecoInicial}€") 
         }
 </div>
 
-<div style="width: 30%; height: 10%; left: 58.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 30%; height: 10%; left: 61.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura!= null){
         @($"{pintura.Peso*2}€ para Portugal, {pintura.Peso*4}€ envio internacional")
     }else{
-        <span></span>
+        <span>Sem informação</span>
     }
 </div>
-<img style="width: 7.5%; height: 15%; left: 52.5%; top: 93%; position: absolute" src="truckLogo.png" />
 
 
 @code {
     private int? ValorLicitacao {get;set;}
     private void ValidaDados(){
         if (ValorLicitacao==null) return;
-        if(licitacao != null && leilao!=null){
+        if(licitacao != null && leilao!=null && licitacao.Valor!=null){
             if (ValorLicitacao > licitacao.Valor * 1.05){
                 DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
                 ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
@@ -132,7 +124,7 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
             } else {
                 NavigationManager.NavigateTo("/licitacao"); 
             }
-        }else if(licitacao == null && leilao!=null){
+        }else if (leilao!=null){
             if (ValorLicitacao > leilao.PrecoInicial ){
                 DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
                 ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
@@ -141,21 +133,21 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
             }else{
                 NavigationManager.NavigateTo("/licitacao"); 
             }
-        }else{
-            NavigationManager.NavigateTo("/licitacao");
         }
     }
 }
 
-
-<button @onclick="ValidaDados" style="width: 17.5%; height: 10%; left: 62.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
+<img style="width: 7.5%; height: 15%; left: 55.5%; top: 94%; position: absolute" src="truckLogo.png" />
+<button @onclick="ValidaDados" style="width: 17.5%; height: 10%; left: 65.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
 border: none; outline: none;">
     <span style="color: white; font-size: 250%; font-family: Inter;">Submeter</span>
 </button>
+
+
 <!--Fundo da pagina-->
 <div style="width: 30%; height: 15%; left: 7.5%; top: 140%; position: absolute; color: black; font-size: 25px; font-family: 
 Inter; font-weight: 400; word-wrap: break-word">Descrição:</div>
-<div style="width: 30%; height: 15%; left: 7.5%; top: 145.5%; position: absolute; color: black; font-size: 20px; font-family: 
+<div style="width: 70%; height: 15%; left: 7.5%; top: 145.5%; position: absolute; color: black; font-size: 20px; font-family: 
 Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         @($"{pintura.Descricao}")
@@ -247,8 +239,10 @@ Inter; font-weight: 167; word-wrap: break-word">
 
     protected override async Task OnInitializedAsync(){
         leilao = (await _leilao.GetLeilaoById(AppState.atual_leilao)).First();
-        licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao)).First();
+        try{
+            licitacao = (await _licitacoes.LicitacoesDoLeilaoOrdenadasPorValor(AppState.atual_leilao)).First();
+            if (licitacao.EmailLicitador!=null) utilizador = (await _utilizador.GetUtilizadorByEmail(licitacao.EmailLicitador)).First(); 
+        }catch (Exception){}
         pintura = (await _pinturas.GetPinturaById(leilao.CodPintura)).First(); 
-        if (licitacao.EmailLicitador!=null) utilizador = (await _utilizador.GetUtilizadorByEmail(licitacao.EmailLicitador)).First(); 
     }
 }

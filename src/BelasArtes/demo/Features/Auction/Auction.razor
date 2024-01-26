@@ -11,7 +11,7 @@
 <PageTitle>BelasArtes</PageTitle>
 
 <div style="width: 100%; height: 200%; position: absolute; background: white"></div>
-<div style="width: 100%; height: 110%; position: absolute; top: 14.5%; background: #D9D9D9; border-radius: 10px;"></div>
+<div style="width: 100%; height: 120%; position: absolute; top: 14.5%; background: #D9D9D9; border-radius: 10px;"></div>
 
 <!-- Cabecalho -->
 <img style="width: 5; height: 14%; left: 0%; top: 0.5%; position: absolute" src="logo.png" />
@@ -39,20 +39,22 @@
 
 
 <!--Resto-->
-<div style="width: 40%; height: 4.4%; left: 5%; top: 15%; position: absolute; text-align: center; color: black; font-size: 3.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+<div style="width: 40%; height: 4.5% ; left : 5%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;  display: flex; align-items: center; justify-content: center;">
     @if (pintura != null){
         @($"{pintura.Nome}")
     }else{
         <span></span>
     }
 </div>
+
 @if (!string.IsNullOrEmpty(pintura?.Foto)){
-    <img style="width: 40%; height: 80%; position: absolute; top: 25%; left: 5%; background: white; border-radius: 10px; border: 2px solid black;" src="@pintura.Foto"> <!-- Contorno Fotografia -->
+    <img style="width: 42.5%; height: 87.5%; left: 5%; top: 35%; position: absolute; background: white; border-radius: 59px; border: 4px black solid" src="@pintura.Foto">
 }else{
-    <div style="width: 100%; height: 100%; left: -25%; text-align: center; color: red; font-size: 20px; font-family: Inter; font-weight: 500; position: absolute; top: 50%;">Foto não disponível</div>
+    <div style="width: 100%; height: 100%;left: -25%; text-align: center; color: red; font-size: 20px; font-family: Inter; font-weight: 500; position: absolute; top: 50%;">Foto não disponível</div>
 }
 
-<div style="width: 40%; height: 3.7%; left: 55%; top: 16%; position: absolute; text-align: center; color: black; font-size: 2.7vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+<!--Caixa Direita-->
+<div style="width: 40%; height: 4.5%; left: 55%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 2.7vw; font-family: Inter; font-weight: 600; word-wrap: break-word; display: flex; align-items: center; justify-content: center;">
     @{
         string tempoRestanteFormatado = "";
         if (leilao != null){
@@ -65,107 +67,128 @@
     @tempoRestanteFormatado
 </div>
 
-<!-- Caixa Licitações -->
-<div style="width: 40%; height: 80%; position: absolute; top: 25%; left: 55%; background: #D9D9D9; border-radius: 10px; border: 2px solid black;"> <!-- Contorno caixa licitações -->
-    <div style="width: 40%; height: 3.7%; left: 5%; top: 3%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Valor</div>
-    <div style="width: 40%; height: 5.8%; left: 5%; top: 12%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 0){
-            @($"{licitacoes[0].Valor} €")
-        }else if (leilao!=null){
-            <span>@(leilao.PrecoInicial)€</span>
-        }</div>
+<div style="width: 42.5%; height: 87.5%; left: 52.5%; top: 35%; position: absolute; background: #D9D9D9; border-radius: 59px; border: 4px black solid"></div>
+<div style="width: 42.5%; height: 87.5%; left: 42%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Valor:</div>
+<div style="width: 42.5%; height: 87.5%; left: 42%; top: 48.5%; position: absolute; text-align: center; color: black; font-size: 2.7vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 0){
+        @($"{licitacoes[0].Valor} €")
+    }else if (leilao!=null){
+        <span>@(leilao.PrecoInicial)€</span>
+    }
+</div>
 
-    <div style="width: 40%; height: 3.7%; left: 55%; top: 3%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Efetuada por</div>
-    <div style="width: 40%; height: 5.8%; left: 55%; top: 12%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador1 != null && licitacoes!=null && licitacoes.Count > 0){
-            @($"{utilizador1.Nome}")
-        }else{          
-            <span>Não licitado</span>
-        }</div>
-    
-    
-    <div style="width: 40%; height: 3.7%; left: 5%; top: 35%; position: absolute; text-align: center; color: black; font-size: 1.9vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Últimas licitações:</div>
-    <div style="width: 20%; height: 1.7%; left: 40%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 0){
-            @($"{licitacoes[0].Valor} €")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 40%; height: 1.7%; left: 60%; top: 47%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador1 != null){
-            @($"{utilizador1.Nome}")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 30%; height: 1.7%; left: 10%; top: 47%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 0){
-            @($"{licitacoes[0].Data}")
-        }else{
-            <span></span>
-        }</div>
-
-    <div style="width: 20%; height: 1.7%; left: 40%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 1){
-            @($"{licitacoes[1].Valor} €")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 40%; height: 1.7%; left: 60%; top: 58%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador2 != null){
-            @($"{utilizador2.Nome}")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 30%; height: 1.7%; left: 10%; top: 58%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 1){
-            @($"{licitacoes[1].Data}")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 20%; height: 1.7%; left: 40%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 2){
-            @($"{licitacoes[2].Valor} €")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 40%; height: 1.7%; left: 60%; top: 68%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (utilizador3 != null){
-            @($"{utilizador3.Nome}")
-        }else{
-            <span></span>
-        }</div>
-    <div style="width: 30%; height: 1.7%; left: 10%; top: 68%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if (licitacoes != null && licitacoes.Count > 2){
-            @($"{licitacoes[2].Data}")
-        }else{
-            <span></span>
-        }</div>
-
-    <div style="width: 50%; height: 3.7%; left: 17.5%; top: 83%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 300; word-wrap: break-word">Número de licitações:</div>
-    <div style="width: 20%; height: 8%; left: 60%; top: 83%; position: absolute; background: white">
-        <div style="width: 100%; height: 0%; left: 0%; top: 0%; position: absolute; text-align: center; color: black; font-size: 2vw; font-family: Inter; font-weight: 600; word-wrap: break-word">@numLicitacoesDoLeilao</div>
-    </div>
-
-    <div style="width: 80%; height: 1.8%; left: 25%; top: 92%; position: absolute; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
-        @if ( pintura!= null){
-            @($"{pintura.Peso*2}€ para Portugal, {pintura.Peso*4}€ envio internacional")
-        }else{
-            <span>Sem informação</span>
-        }
-        </div>
-    <img style="width: auto; height: 15%; left: 10%; top: 87%; position: absolute" src="truckLogo.png" />
-    <button style="border: none; padding: 0; margin: 0; " onclick="window.location.href='/licitacao'">
-        <div style="width: 80%; height: 15%; position: absolute; top: 103%; left: 10%; background: #1E1E1E; border-radius: 30px;"></div>
-        <div style="width: 80%; height: 15%; position: absolute; top: 104.5%; left: 10%; text-align: center; color: white; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;">LICITAR</div>
-    </button>
-
+<div style="width: 42.5%; height: 87.5%; left: 61%; top: 39.5%; position: absolute; text-align: center; color: black; font-size: 2.1vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Efetuada por:</div>
+<div style="width: 42.5%; height: 87.5%; left: 61%; top: 48.5%; position: absolute; text-align: center; color: black; font-size: 2.8vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (utilizador1 != null && licitacoes!=null && licitacoes.Count > 0){
+        @($"{utilizador1.Nome}")
+    }else{          
+        <span>Não licitado</span>
+    }
 </div>
 
 
+<div style="width: 40%; height: 3.7%; left: 44%; top: 63%; position: absolute; text-align: center; color: black; font-size: 1.9vw; font-family: Inter; font-weight: 500; word-wrap: break-word">Últimas licitações:</div>
+
+<div style="width: 30%; height: 1.7%; left: 50%; top: 70.5%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 0){
+        @($"{licitacoes[0].Data}")
+    }else{
+        <span></span>
+    }
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 65%; top: 70.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 0){
+        @($"{licitacoes[0].Valor} €")
+    }else{
+        <span></span>
+    }
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 72.5%; top: 70.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (utilizador1 != null){
+        @($"{utilizador1.Nome}")
+    }else{
+        <span></span>
+    }
+</div>
+
+
+<div style="width: 30%; height: 1.7%; left: 50%; top: 75.5%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 1){
+        @($"{licitacoes[1].Data}")
+    }else{
+        <span></span>
+    }
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 65%; top: 75.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 1){
+        @($"{licitacoes[1].Valor} €")
+    }else{
+        <span></span>
+    }
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 72.5%; top: 75.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (utilizador2 != null){
+        @($"{utilizador2.Nome}")
+    }else{
+        <span></span>
+    }
+</div>
+
+
+<div style="width: 30%; height: 1.7%; left: 50%; top: 80.5%; position: absolute; text-align: center; color:black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 2){
+        @($"{licitacoes[2].Data}")
+    }else{
+        <span></span>
+    }
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 65%; top: 80.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (licitacoes != null && licitacoes.Count > 2){
+        @($"{licitacoes[2].Valor} €")
+    }else{
+        <span></span>
+    }    
+</div>
+
+<div style="width: 20%; height: 1.7%; left: 72.5%; top: 80.5%; position: absolute; text-align: center; color: black; font-size: 1.3vw; font-family: Inter; font-weight: 600; word-wrap: break-word">
+    @if (utilizador3 != null){
+        @($"{utilizador3.Nome}")
+    }else{
+        <span></span>
+    }
+</div>
+
+
+<div style="width: 50%; height: 3.7%; left: 57.5%; top: 89%; position: absolute; color: black; font-size: 1.8vw; font-family: Inter; font-weight: 300; word-wrap: break-word">Número de licitações:</div>
+<div style="width: 10%; height: 8%; left: 75%; top: 88%; position: absolute; background: white">
+    <div style="width: 100%; height: 0%; left: 0%; top: 10%; position: absolute; text-align: center; color: black; font-size: 2vw; font-family: Inter; font-weight: 600; word-wrap: break-word">@numLicitacoesDoLeilao</div>
+</div>
+
+
+<div style="width: 30%; height: 10%; left: 61.5%; top: 98%; position: absolute; text-align: center; color: black; font-size: 24px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+    @if (pintura!= null){
+        @($"{pintura.Peso*2}€ para Portugal, {pintura.Peso*4}€ envio internacional")
+    }else{
+        <span>Sem informação</span>
+    }
+</div>
+
+<img style="width: 7.5%; height: 15%; left: 55.5%; top: 94%; position: absolute" src="truckLogo.png" />
+<button  onclick="window.location.href='/licitacao'"style="width: 17.5%; height: 10%; left: 65.5%; top: 106.5%; position: absolute; background: black; border-radius: 59px; 
+border: none; outline: none;">
+    <span style="color: white; font-size: 250%; font-family: Inter;">Licitar</span>
+</button>
+
+
 <!-- Info Obra -->
-<div style="width: 30%; height: 15%; left: 7.5%; top: 130%; position: absolute; color: black; font-size: 25px; font-family: 
+<div style="width: 30%; height: 15%; left: 7.5%; top: 140%; position: absolute; color: black; font-size: 25px; font-family: 
 Inter; font-weight: 400; word-wrap: break-word">Descrição:</div>
-<div style="width: 80%; height: 15%; left: 7.5%; top: 135.5%; position: absolute; color: black; font-size: 20px; font-family: 
+<div style="width: 70%; height: 15%; left: 7.5%; top: 145.5%; position: absolute; color: black; font-size: 20px; font-family: 
 Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         @($"{pintura.Descricao}")
@@ -174,8 +197,9 @@ Inter; font-weight: 167; word-wrap: break-word">
     }
 </div>
 
-<div style="width: 30%; height: 15%; left: 7.5%; top: 145%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Dimensão:</div>
-<div style="width: 30%; height: 15%; left: 7.5%; top: 150.5%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 30%; height: 15%; left: 7.5%; top: 155%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Dimensão:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 160.5%; position: absolute; color: black; font-size: 20px; font-family: 
+Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         @($"A: {pintura.Altura}cm x L: {pintura.Largura}cm")
     }else{
@@ -183,9 +207,9 @@ Inter; font-weight: 167; word-wrap: break-word">
     }
 </div>
 
-<div style="width: 30%; height: 15%; left: 35%; top: 145%; position: absolute; color: black; font-size: 25px; font-family: 
+<div style="width: 30%; height: 15%; left: 35%; top: 155%; position: absolute; color: black; font-size: 25px; font-family: 
 Inter; font-weight: 400; word-wrap: break-word">Peso:</div>
-<div style="width: 30%; height: 15%; left: 35%; top: 150.5%; position: absolute; color: black; font-size: 20px; font-family: 
+<div style="width: 30%; height: 15%; left: 35%; top: 160.5%; position: absolute; color: black; font-size: 20px; font-family: 
 Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         @($"{pintura.Peso}kg")
@@ -194,8 +218,8 @@ Inter; font-weight: 167; word-wrap: break-word">
     }
 </div>
 
-<div style="width: 30%; height: 15%; left: 7.5%; top: 160%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Autenticidade:</div>
-<div style="width: 30%; height: 15%; left: 7.5%; top: 165.5%; position: absolute; color: black; font-size:20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 30%; height: 15%; left: 7.5%; top: 170%; position: absolute; color: black; font-size:25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Autenticidade:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 175.5%; position: absolute; color: black; font-size:20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         <span>
             @if (pintura.Original != null){
@@ -214,9 +238,9 @@ Inter; font-weight: 167; word-wrap: break-word">
 </div>
 
 
-<div style="width: 30%; height: 15%; left: 35%; top: 160%; position: absolute; color: black; font-size: 25px; font-family: 
+<div style="width: 30%; height: 15%; left: 35%; top: 170%; position: absolute; color: black; font-size: 25px; font-family: 
 Inter; font-weight: 400; word-wrap: break-word">Ano de criação:</div>
-<div style="width: 30%; height: 15%; left: 35%; top: 165.5%; position: absolute; color: black; font-size: 20px; font-family: 
+<div style="width: 30%; height: 15%; left: 35%; top: 175.5%; position: absolute; color: black; font-size: 20px; font-family: 
 Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         @($"{pintura.AnoCriacao}")
@@ -225,10 +249,8 @@ Inter; font-weight: 167; word-wrap: break-word">
     }
 </div>
 
-<div style="width: 30%; height: 15%; left: 7.5%; top: 175%; position: absolute; color: black;
- font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Movimento artístico:</div>
-<div style="width: 30%; height: 15%; left: 7.5%; top: 180.5%; position: absolute; color: black; 
-font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
+<div style="width: 30%; height: 15%; left: 7.5%; top: 185%; position: absolute; color: black; font-size: 25px; font-family: Inter; font-weight: 400; word-wrap: break-word">Movimento artístico:</div>
+<div style="width: 30%; height: 15%; left: 7.5%; top: 190.5%; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
     @if (pintura != null){
         <span>
         @if (pintura.CodMovimentoArtistico==1){
@@ -249,7 +271,6 @@ font-size: 20px; font-family: Inter; font-weight: 167; word-wrap: break-word">
         <span></span>
     }
 </div>
-
 
 
 @code {
