@@ -49,13 +49,13 @@ public class LeilaoDAO : ILeilaoDAO{
                 UPDATE SET 
                     target.DataInicio = @DataInicio,
                     target.DataFim = @DataFim,
-                    target.PrecoFinal = @PrecoFinal,
+                    target.PrecoInicial = @PrecoInicial,
                     target.EmailComprador = @EmailComprador,
                     target.CodPintura = @CodPintura,
                     target.CodEstado = @CodEstado
             WHEN NOT MATCHED THEN
-                INSERT (DataInicio, DataFim, PrecoFinal, EmailComprador, CodPintura, CodEstado)
-                VALUES (@DataInicio, @DataFim, @PrecoFinal, @EmailComprador, @CodPintura, @CodEstado);";
+                INSERT (DataInicio, DataFim, PrecoInicial, EmailComprador, CodPintura, CodEstado)
+                VALUES (@DataInicio, @DataFim, @PrecoInicial, @EmailComprador, @CodPintura, @CodEstado);";
 
         var parameters = new{
             leilao.Id,
