@@ -41,6 +41,7 @@ font-family: Inter; font-weight: 100; word-wrap: break-word">Leilões Agendados<
 </button>
 <div style="width: 0%; height: 8%; left: 89.5%; top: 3.5%; position: absolute; border: 1px rgb(0, 0, 0) solid"></div>
 
+
 <!--Resto-->
 <div style="width: 40%; height: 4.5% ; left : 5%; top: 22.5%; position: absolute; text-align: center; color: black; font-size: 3vw; font-family: Inter; font-weight: 600; word-wrap: break-word;  display: flex; align-items: center; justify-content: center;">
     @if (pintura != null){
@@ -125,7 +126,7 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
                 NavigationManager.NavigateTo("/licitacao"); 
             }
         }else if (leilao!=null){
-            if (ValorLicitacao > leilao.PrecoInicial ){
+            if (ValorLicitacao >= leilao.PrecoInicial ){
                 DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
                 ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
                 _licitacoes.PutLicitacao(licitacao_nova);
