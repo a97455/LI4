@@ -1,6 +1,7 @@
 @page "/licitacao"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager;
+@inject IJSRuntime JSRuntime
 @inject IPinturaDAO _pinturas
 @inject ILicitacaoDAO _licitacoes
 @inject ILeilaoDAO _leilao
@@ -115,25 +116,25 @@ font-family: Inter; font-weight: 167; word-wrap: break-word">€</div>
 
 @code {
     private int? ValorLicitacao {get;set;}
-    private void ValidaDados(){
+    private async Task ValidaDados(){
         if (ValorLicitacao==null) return;
         if(licitacao != null && leilao!=null && licitacao.Valor!=null){
             if (ValorLicitacao > licitacao.Valor * 1.05){
                 DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
                 ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
-                _licitacoes.PutLicitacao(licitacao_nova);
-                NavigationManager.NavigateTo("/leiloesAtivos"); 
+                await _licitacoes.PutLicitacao(licitacao_nova);
+                await JSRuntime.InvokeVoidAsync("history.back");
             } else {
-                NavigationManager.NavigateTo("/licitacao"); 
+                ValorLicitacao = 0; 
             }
         }else if (leilao!=null){
             if (ValorLicitacao >= leilao.PrecoInicial ){
                 DataLayer.Licitacao licitacao_nova = new DataLayer.Licitacao(null,
                 ValorLicitacao,AppState.atual_user,DateTime.Now,AppState.atual_leilao);
-                _licitacoes.PutLicitacao(licitacao_nova);
-                NavigationManager.NavigateTo("/leiloesAtivos"); 
+                await _licitacoes.PutLicitacao(licitacao_nova);
+                await JSRuntime.InvokeVoidAsync("history.back");
             }else{
-                NavigationManager.NavigateTo("/licitacao"); 
+                ValorLicitacao = 0;
             }
         }
     }
